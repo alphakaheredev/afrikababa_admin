@@ -1,0 +1,20 @@
+.auth_or::before {
+  content: "";
+  position: absolute;
+  width: 47%;
+  height: 1px;
+  background-color: #000;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.auth_or::after {
+  content: "";
+  position: absolute;
+  width: 47%;
+  height: 1px;
+  background-color: #000;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
