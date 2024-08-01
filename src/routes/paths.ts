@@ -4,5 +4,7 @@ export const authPaths = {
   resetPassword: "reinitisliser-mot-de-passe",
 };
 export const adminPaths = {
-  dashboard: "dashboard",
+  dashboard: "tableau-de-bord",
+  boutique: "boutiques",
+  createBoutique: "boutiques/creer",
 };

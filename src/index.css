@@ -66,6 +66,6 @@ div[data-radix-popper-content-wrapper] {
 
 @media screen and (min-width: 1024px) {
   .outlet-container {
-    width: calc(100% - 136px) !important;
+    width: calc(100% - 200px) !important;
   }
 }

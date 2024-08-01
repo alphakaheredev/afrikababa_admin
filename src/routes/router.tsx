@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import { adminPaths, authPaths } from "./paths";
 import App from "@/App";
 import AdminLayout from "@/pages/admin/Layout/Layout";
@@ -8,6 +8,10 @@ import ForgotPassword from "@/pages/auth/ForgotPassword/ForgotPassword";
 import ResetPassword from "@/pages/auth/ForgotPassword/ResetPassword";
 
 export const adminRoutes = [
+  {
+    path: "/admin",
+    element: <Navigate to={adminPaths.dashboard} />,
+  },
   {
     path: adminPaths.dashboard,
     element: <Dashboard />,
