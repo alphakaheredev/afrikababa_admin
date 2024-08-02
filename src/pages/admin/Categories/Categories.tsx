@@ -1,29 +1,28 @@
+import React from "react";
+import CategoriesTable from "./CategoriesTable";
 import { InputSearch } from "@/components/ui/input";
-import ProductsTable from "./ProductsTable";
 import { Link } from "react-router-dom";
-import { adminPaths } from "@/routes/paths";
 import { addAdminPrefix } from "@/lib/utils";
-import FilterProductSection from "@/components/common/FilterProductSection";
+import { adminPaths } from "@/routes/paths";
 
-const Products = () => {
+const Categories = () => {
   return (
-    <>
+    <React.Fragment>
       <div className="flex items-center justify-between mb-8">
-        <h3 className="text-dark font-semibold">Touts les produits</h3>
+        <h3 className="text-dark font-semibold">Toutes les catégories</h3>
         <div className="flex items-center justify-end gap-3 lg:w-2/3">
           <InputSearch placeholder="Recherchez par nom" />
           <Link
-            to={addAdminPrefix(adminPaths.productOutOfStock)}
+            to={addAdminPrefix(adminPaths.addCategory)}
             className="bg-dark p-2 text-white whitespace-nowrap font-normal text-sm leading-5"
           >
-            Produits en rupture de stock
+            Ajouter une catégorie
           </Link>
         </div>
       </div>
-      <FilterProductSection />
-      <ProductsTable />
-    </>
+      <CategoriesTable />
+    </React.Fragment>
   );
 };
 
-export default Products;
+export default Categories;

@@ -10,6 +10,10 @@ import Shops from "@/pages/admin/Shops/Shops";
 import Stores from "@/pages/admin/Stores/Stores";
 import Products from "@/pages/admin/Products/Products";
 import ProductOutOfStock from "@/pages/admin/Products/ProductOutOfStock";
+import EditCategory from "@/pages/admin/Categories/EditCategory";
+import AddCategory from "@/pages/admin/Categories/AddCategory";
+import Categories from "@/pages/admin/Categories/Categories";
+import Inventory from "@/pages/admin/Inventory/Inventory";
 
 export const adminRoutes = [
   {
@@ -35,6 +39,22 @@ export const adminRoutes = [
   {
     path: adminPaths.productOutOfStock,
     element: <ProductOutOfStock />,
+  },
+  {
+    path: adminPaths.inventory,
+    element: <Inventory />,
+  },
+  {
+    path: adminPaths.categories,
+    element: <Categories />,
+  },
+  {
+    path: adminPaths.addCategory,
+    element: <AddCategory />,
+  },
+  {
+    path: adminPaths.editCategory,
+    element: <EditCategory />,
   },
 ];
 

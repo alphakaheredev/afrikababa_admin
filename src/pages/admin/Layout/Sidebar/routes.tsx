@@ -56,12 +56,12 @@ export const routes = [
       {
         label: "Inventaire",
         icon: <IconBox />,
-        path: "inventory",
+        path: adminPaths.inventory,
       },
       {
         label: "Catégories",
         icon: <IconGridPlus />,
-        path: "categories",
+        path: adminPaths.categories,
       },
       {
         label: "Fabricants",
