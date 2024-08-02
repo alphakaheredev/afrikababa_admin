@@ -6,6 +6,8 @@ import Dashboard from "@/pages/admin/Dashboard/Dashboard";
 import Register from "@/pages/auth/Register.tsx/Register";
 import ForgotPassword from "@/pages/auth/ForgotPassword/ForgotPassword";
 import ResetPassword from "@/pages/auth/ForgotPassword/ResetPassword";
+import Shops from "@/pages/admin/Shops/Shops";
+import Stores from "@/pages/admin/Stores/Stores";
 
 export const adminRoutes = [
   {
@@ -15,6 +17,14 @@ export const adminRoutes = [
   {
     path: adminPaths.dashboard,
     element: <Dashboard />,
+  },
+  {
+    path: adminPaths.boutique,
+    element: <Shops />,
+  },
+  {
+    path: adminPaths.store,
+    element: <Stores />,
   },
 ];
 

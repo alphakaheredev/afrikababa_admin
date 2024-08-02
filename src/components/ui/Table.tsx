@@ -1,59 +1,50 @@
-// Table.tsx
-import React from "react";
+type Formatter<T> = (cell: any, row: T) => any;
 
-interface Column {
+export interface Column<T> {
   header: string;
-  key: string;
+  name: keyof T | "actions";
+  formatter?: Formatter<T>;
 }
 
-interface TableProps {
-  columns: Column[];
-  data: Record<string, any>[];
+interface TableProps<T> {
+  data: T[];
+  columns: Column<T>[];
 }
 
-const Table: React.FC<TableProps> = ({ columns, data }) => {
+const Table = <T,>({ data, columns }: TableProps<T>) => {
   return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full bg-white">
-        <thead>
-          <tr>
-            {columns.map((column) => (
-              <th
-                key={column.key}
-                className="py-3 px-4 border-b border-gray-200 bg-th-gray-e6 text-left text-sm font-semibold text-dark"
-              >
-                {column.header}
-              </th>
-            ))}
+    <table className="min-w-full bg-white border border-[#E4E4E4]">
+      <thead>
+        <tr>
+          {columns.map((column, index) => (
+            <th
+              key={index}
+              className="px-4 py-3 border-b text-[#060506] font-semibold text-left bg-[#E4E4E4] text-sm"
+            >
+              {column.header}
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {data.map((row, rowIndex) => (
+          <tr key={rowIndex} className="border-b border-dashed">
+            {columns.map((column, colIndex) => {
+              const cell =
+                column.name === "actions" ? undefined : row[column.name];
+              return (
+                <td
+                  key={colIndex}
+                  className="px-4 py-3 text-[#909090] text-[13px] text-left"
+                >
+                  {column.formatter ? column.formatter(cell, row) : cell}
+                </td>
+              );
+            })}
           </tr>
-        </thead>
-        <tbody>
-          {data.length > 0 ? (
-            data.map((row, rowIndex) => (
-              <tr key={rowIndex}>
-                {columns.map((column) => (
-                  <td
-                    key={column.key}
-                    className="py-3 px-4 border-b border-gray-200 text-sm text-gray-700"
-                  >
-                    {row[column.key]}
-                  </td>
-                ))}
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td
-                colSpan={columns.length}
-                className="py-3 px-4 border-b border-gray-200 text-sm text-dark text-center font-light"
-              >
-                Pas de données
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
-    </div>
+        ))}
+      </tbody>
+    </table>
   );
 };
 

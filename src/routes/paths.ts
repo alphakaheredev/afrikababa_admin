@@ -7,4 +7,5 @@ export const adminPaths = {
   dashboard: "tableau-de-bord",
   boutique: "boutiques",
   createBoutique: "boutiques/creer",
+  store: "magasins",
 };

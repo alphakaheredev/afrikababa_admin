@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { CiSearch } from "react-icons/ci";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -52,6 +53,24 @@ const Input: React.FC<Props> = (props) => {
         className={`${inputVariants[variant]} w-full`}
         type={type}
         {...rest}
+      />
+    </div>
+  );
+};
+
+export const InputSearch: React.FC<
+  React.InputHTMLAttributes<HTMLInputElement>
+> = (props) => {
+  return (
+    <div className="relative text-dark">
+      <CiSearch
+        className="font-bold absolute top-[10px] left-1"
+        fontSize={18}
+      />
+      <input
+        className="w-full min-w-72 border-[#E4E4E4] bg-[#E4E4E4] border py-2 px-3 pl-6 text-dark text-sm outline-none placeholder:text-dark"
+        type="search"
+        {...props}
       />
     </div>
   );

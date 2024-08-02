@@ -36,12 +36,12 @@ export const routes = [
       {
         label: "Magasins",
         icon: <BiShoppingBag fontSize={22} />,
-        path: "stores",
+        path: adminPaths.store,
       },
       {
         label: "Boutiques",
         icon: <MdOutlineStorefront fontSize={22} />,
-        path: "my-stores",
+        path: adminPaths.boutique,
       },
     ],
   },
