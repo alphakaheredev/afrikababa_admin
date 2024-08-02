@@ -205,9 +205,32 @@ export function IconDoc() {
     </svg>
   );
 }
-// export function Icon() {
-//   return;
-// }
+export function IconEdit() {
+  return (
+    <svg
+      width="16"
+      height="15"
+      viewBox="0 0 16 15"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M5.3334 14H1.81493C1.6594 14 1.51025 13.9394 1.40027 13.8314C1.2903 13.7235 1.22852 13.5771 1.22852 13.4244V10.2093C1.22852 10.1337 1.24368 10.0589 1.27315 9.98907C1.30262 9.91923 1.34582 9.85578 1.40027 9.80233L10.1964 1.16858C10.3064 1.06064 10.4556 1 10.6111 1C10.7666 1 10.9158 1.06064 11.0258 1.16858L14.3013 4.38367C14.4113 4.49161 14.4731 4.63801 14.4731 4.79067C14.4731 4.94332 14.4113 5.08972 14.3013 5.19767L5.3334 14Z"
+        stroke="#32605A"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M8.29199 2.7334L12.7068 7.06673"
+        stroke="#32605A"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
 // export function Icon() {
 //   return;
 // }

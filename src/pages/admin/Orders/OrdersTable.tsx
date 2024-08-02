@@ -1,6 +1,6 @@
 import Table, { Column } from "@/components/ui/Table";
 import { orders } from "./data";
-import ButtonDelete from "@/components/ui/button";
+import { ButtonDelete } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { getInitialsOfName } from "@/lib/utils";
 

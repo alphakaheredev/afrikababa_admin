@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/badge";
-import ButtonDelete from "@/components/ui/button";
+import { ButtonDelete } from "@/components/ui/button";
 import Table, { Column } from "@/components/ui/Table";
 
 interface Store {

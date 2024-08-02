@@ -1,6 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import Table, { Column } from "@/components/ui/Table";
 import productImg from "@/assets/images/admin/computer.png";
+import { ButtonDelete, ButtonEdit } from "@/components/ui/button";
 
 interface Product {
   id: number;
@@ -9,6 +10,7 @@ interface Product {
   price: string;
   stockStatus: string;
   shop: string;
+  type: string;
 }
 
 const products: Product[] = [
@@ -19,6 +21,7 @@ const products: Product[] = [
     price: "1500F",
     stockStatus: "In Stock",
     shop: "TechShop",
+    type: "Hybride",
   },
   {
     id: 102,
@@ -27,6 +30,7 @@ const products: Product[] = [
     price: "800F",
     stockStatus: "Out of Stock",
     shop: "TechShop",
+    type: "électrique",
   },
   {
     id: 103,
@@ -35,6 +39,7 @@ const products: Product[] = [
     price: "200F",
     stockStatus: "Low Stock",
     shop: "TechShop",
+    type: "Hybride",
   },
   {
     id: 104,
@@ -43,6 +48,7 @@ const products: Product[] = [
     price: "300F",
     stockStatus: "Low Stock",
     shop: "TechShop",
+    type: "Hybride",
   },
   {
     id: 105,
@@ -51,6 +57,7 @@ const products: Product[] = [
     price: "100F",
     stockStatus: "Low Stock",
     shop: "Vision XR",
+    type: "Hybride",
   },
 ];
 
@@ -84,17 +91,26 @@ const ProductsTable = () => {
     );
   };
 
+  const actionFormatter = () => (
+    <div className="flex items-center gap-2">
+      <ButtonEdit />
+      <ButtonDelete />
+    </div>
+  );
+
   const columns: Column<Product>[] = [
     { header: "Identifiant", name: "id" },
     { header: "Produit", name: "name", formatter: nameProductFormatter },
     { header: "Catégories", name: "category" },
     { header: "Boutique", name: "shop" },
+    { header: "Type de produits", name: "type" },
     { header: "Prix unitaire", name: "price" },
     {
       header: "Etat de stock",
       name: "stockStatus",
       formatter: stockStatusFormatter,
     },
+    { header: "Actions", name: "actions", formatter: actionFormatter },
   ];
 
   return <Table<Product> data={products} columns={columns} />;

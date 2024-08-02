@@ -3,7 +3,7 @@ const Shops = () => {
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
       {[...Array(12)].map((_item, i) => (
         <div
-          className="flex items-center gap-2 border border-th-gray-c9 p-3"
+          className="flex items-center gap-4 border border-th-gray-c9 p-3"
           key={i}
         >
           <div className="bg-dark w-20 h-20 rounded-full flex justify-center items-center p-2">

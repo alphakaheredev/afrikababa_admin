@@ -12,3 +12,7 @@ export function getInitialsOfName(name: string) {
 
   return initials;
 }
+
+export function addAdminPrefix(route: string) {
+  return `/admin/${route}`;
+}

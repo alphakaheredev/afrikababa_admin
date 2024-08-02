@@ -51,7 +51,7 @@ export const routes = [
       {
         label: "Produits",
         icon: <IconProduct />,
-        path: "products",
+        path: adminPaths.products,
       },
       {
         label: "Inventaire",

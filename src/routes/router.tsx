@@ -8,6 +8,8 @@ import ForgotPassword from "@/pages/auth/ForgotPassword/ForgotPassword";
 import ResetPassword from "@/pages/auth/ForgotPassword/ResetPassword";
 import Shops from "@/pages/admin/Shops/Shops";
 import Stores from "@/pages/admin/Stores/Stores";
+import Products from "@/pages/admin/Products/Products";
+import ProductOutOfStock from "@/pages/admin/Products/ProductOutOfStock";
 
 export const adminRoutes = [
   {
@@ -25,6 +27,25 @@ export const adminRoutes = [
   {
     path: adminPaths.store,
     element: <Stores />,
+  },
+  {
+    path: adminPaths.products,
+    element: <Products />,
+  },
+  {
+    path: adminPaths.productOutOfStock,
+    element: <ProductOutOfStock />,
+  },
+];
+
+export const manufactureRoutes = [
+  {
+    path: "/fabricant",
+    element: <Navigate to={adminPaths.dashboard} />,
+  },
+  {
+    path: adminPaths.dashboard,
+    element: <Dashboard />,
   },
 ];
 
