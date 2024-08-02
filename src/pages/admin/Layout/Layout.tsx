@@ -12,7 +12,7 @@ function AdminLayout() {
     <>
       <Topbar open={open} />
       <Sidebar close={close} isOpen={isOpen} />
-      <main className="bg-white  min-h-screen pt-24 pb-10 app-container">
+      <main className="bg-white  min-h-screen pt-28 pb-10 app-container">
         <div className="outlet-container ml-auto">
           <Outlet />
         </div>

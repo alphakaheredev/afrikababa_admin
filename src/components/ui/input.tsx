@@ -62,13 +62,13 @@ export const InputSearch: React.FC<
   React.InputHTMLAttributes<HTMLInputElement>
 > = (props) => {
   return (
-    <div className="relative text-dark">
+    <div className="relative text-dark w-full  max-w-lg">
       <CiSearch
         className="font-bold absolute top-[10px] left-1"
         fontSize={18}
       />
       <input
-        className="w-full min-w-72 border-[#E4E4E4] bg-[#E4E4E4] border py-2 px-3 pl-6 text-dark text-sm outline-none placeholder:text-dark"
+        className="w-full border-[#E4E4E4] bg-[#E4E4E4] border py-2 px-3 pl-6 text-dark text-sm outline-none placeholder:text-dark"
         type="search"
         {...props}
       />

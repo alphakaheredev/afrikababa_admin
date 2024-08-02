@@ -53,7 +53,7 @@ div[data-radix-popper-content-wrapper] {
 }
 
 .app-card {
-  @apply shadow-xl bg-white px-5 py-3;
+  @apply bg-white my-2 mx-1 shadow-gray-100 drop-shadow-xl py-5 px-5;
 }
 
 .react-multi-carousel-list {
