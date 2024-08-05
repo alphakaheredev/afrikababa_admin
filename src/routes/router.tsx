@@ -18,6 +18,7 @@ import Manufacturers from "@/pages/admin/Manufacturers/Manufacturers";
 import AddManufacturer from "@/pages/admin/Manufacturers/AddManufacturer";
 import EditManufacturer from "@/pages/admin/Manufacturers/EditManufacturer";
 import CreateShop from "@/pages/admin/Shops/CreateShop";
+import AddProduct from "@/pages/admin/Products/AddProduct";
 
 export const adminRoutes = [
   {
@@ -43,6 +44,10 @@ export const adminRoutes = [
   {
     path: adminPaths.products,
     element: <Products />,
+  },
+  {
+    path: adminPaths.addProduct,
+    element: <AddProduct />,
   },
   {
     path: adminPaths.productOutOfStock,

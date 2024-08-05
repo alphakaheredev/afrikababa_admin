@@ -71,6 +71,9 @@ div[data-radix-popper-content-wrapper] {
 .react-tel-input .form-control {
   height: 40px !important;
 }
+.ql-editor {
+  min-height: 150px !important;
+}
 @media screen and (min-width: 1024px) {
   .outlet-container {
     width: calc(100% - 200px) !important;

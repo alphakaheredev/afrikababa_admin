@@ -17,4 +17,18 @@ const InputFile: React.FC<Props> = ({ label, id, ...rest }) => {
   );
 };
 
+export const InputFileVideo: React.FC<Props> = ({ label, id, ...rest }) => {
+  return (
+    <label
+      htmlFor={id}
+      className="flex items-center justify-center cursor-pointer space-x-1 h-full border border-dashed border-th-gray-e6 p-3"
+    >
+      <span className="bg-[#5DB3A8] font-medium p-2 text-white text-sm">
+        {label}
+      </span>
+      <input type="file" id={id} className="w-0 h-0" {...rest} />
+    </label>
+  );
+};
+
 export default InputFile;
