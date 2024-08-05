@@ -66,7 +66,7 @@ export const routes = [
       {
         label: "Fabricants",
         icon: <IconBuilding />,
-        path: "manufacturers",
+        path: adminPaths.manufacturers,
       },
     ],
   },

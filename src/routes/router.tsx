@@ -14,6 +14,9 @@ import EditCategory from "@/pages/admin/Categories/EditCategory";
 import AddCategory from "@/pages/admin/Categories/AddCategory";
 import Categories from "@/pages/admin/Categories/Categories";
 import Inventory from "@/pages/admin/Inventory/Inventory";
+import Manufacturers from "@/pages/admin/Manufacturers/Manufacturers";
+import AddManufacturer from "@/pages/admin/Manufacturers/AddManufacturer";
+import EditManufacturer from "@/pages/admin/Manufacturers/EditManufacturer";
 
 export const adminRoutes = [
   {
@@ -55,6 +58,18 @@ export const adminRoutes = [
   {
     path: adminPaths.editCategory,
     element: <EditCategory />,
+  },
+  {
+    path: adminPaths.manufacturers,
+    element: <Manufacturers />,
+  },
+  {
+    path: adminPaths.addManufacturer,
+    element: <AddManufacturer />,
+  },
+  {
+    path: adminPaths.editManufacturer,
+    element: <EditManufacturer />,
   },
 ];
 

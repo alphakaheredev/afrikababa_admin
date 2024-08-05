@@ -17,4 +17,7 @@ export const adminPaths = {
   categories: "categories",
   addCategory: "categories/ajouter",
   editCategory: "categories/modifier/:id",
+  manufacturers: "fabricants",
+  addManufacturer: "fabricants/ajouter",
+  editManufacturer: "fabricants/modifier/:id",
 };
