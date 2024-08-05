@@ -1,5 +1,7 @@
+import ManufacturerForm from "./ManufacturerForm";
+
 const EditManufacturer = () => {
-  return <div>EditManufacturer</div>;
+  return <ManufacturerForm />;
 };
 
 export default EditManufacturer;
