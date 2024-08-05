@@ -76,22 +76,22 @@ export const routes = [
       {
         label: "Expéditions",
         icon: <FiTruck fontSize={22} />,
-        path: "shipping",
+        path: adminPaths.shipping,
       },
       {
         label: "Remboursements",
         icon: <IconHandHolding />,
-        path: "refunds",
+        path: adminPaths.refunds,
       },
       {
         label: "Commandes",
         icon: <IconCartCheck />,
-        path: "orders",
+        path: adminPaths.orders,
       },
       {
         label: "Transactions",
         icon: <IconExchange />,
-        path: "transactions",
+        path: adminPaths.transactions,
       },
     ],
   },

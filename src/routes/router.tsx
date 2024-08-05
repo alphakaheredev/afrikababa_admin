@@ -19,6 +19,13 @@ import AddManufacturer from "@/pages/admin/Manufacturers/AddManufacturer";
 import EditManufacturer from "@/pages/admin/Manufacturers/EditManufacturer";
 import CreateShop from "@/pages/admin/Shops/CreateShop";
 import AddProduct from "@/pages/admin/Products/AddProduct";
+import Shippings from "@/pages/admin/Shipping/Shippings";
+import AddShippingPrice from "@/pages/admin/Shipping/AddShippingPrice";
+import Refunds from "@/pages/admin/Refunds/Refunds";
+import AddNewRefundReason from "@/pages/admin/Refunds/AddNewRefundReason";
+import Orders from "@/pages/admin/Orders/Orders";
+import DetailOrder from "@/pages/admin/Orders/DetailOrder";
+import Transactions from "@/pages/admin/Transactions/Transactions";
 
 export const adminRoutes = [
   {
@@ -80,6 +87,34 @@ export const adminRoutes = [
   {
     path: adminPaths.editManufacturer,
     element: <EditManufacturer />,
+  },
+  {
+    path: adminPaths.shipping,
+    element: <Shippings />,
+  },
+  {
+    path: adminPaths.addShippingPrice,
+    element: <AddShippingPrice />,
+  },
+  {
+    path: adminPaths.refunds,
+    element: <Refunds />,
+  },
+  {
+    path: adminPaths.addRefund,
+    element: <AddNewRefundReason />,
+  },
+  {
+    path: adminPaths.orders,
+    element: <Orders />,
+  },
+  {
+    path: adminPaths.detailOrder,
+    element: <DetailOrder />,
+  },
+  {
+    path: adminPaths.transactions,
+    element: <Transactions />,
   },
 ];
 
