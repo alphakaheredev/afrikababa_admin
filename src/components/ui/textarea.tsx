@@ -1,15 +1,16 @@
 import React from "react";
+import Label from "./label";
 
 interface Props extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   label: string;
 }
 
-const Textarea: React.FC<Props> = ({ label, id, ...props }) => {
+const Textarea: React.FC<Props> = ({ label, id, required, ...props }) => {
   return (
-    <div className="mb-4">
-      <label className="block text-dark text-sm font-medium mb-2" htmlFor={id}>
+    <div>
+      <Label htmlFor={id} required={required}>
         {label}
-      </label>
+      </Label>
       <textarea
         {...props}
         id={id}

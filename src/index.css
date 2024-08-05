@@ -64,6 +64,13 @@ div[data-radix-popper-content-wrapper] {
   width: 100% !important;
 }
 
+.card-shadow {
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.react-tel-input .form-control {
+  height: 40px !important;
+}
 @media screen and (min-width: 1024px) {
   .outlet-container {
     width: calc(100% - 200px) !important;

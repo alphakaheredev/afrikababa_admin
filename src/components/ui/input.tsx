@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import Label from "./label";
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
@@ -16,18 +17,15 @@ export const inputVariants = {
 };
 
 const Input: React.FC<Props> = (props) => {
-  const { label, variant = "primary", type, id, ...rest } = props;
+  const { label, variant = "primary", type, id, required, ...rest } = props;
   if (type === "password") {
     const [showPassword, setShowPassword] = useState<boolean>(false);
 
     return (
       <div className="relative">
-        <label
-          className="block text-dark text-sm font-medium mb-2"
-          htmlFor={id}
-        >
+        <Label htmlFor={id} required={required}>
           {label}
-        </label>
+        </Label>
         <input
           id={id}
           className={`${inputVariants[variant]} w-full`}
@@ -45,9 +43,9 @@ const Input: React.FC<Props> = (props) => {
   }
   return (
     <div>
-      <label className="block text-dark text-sm font-medium mb-2" htmlFor={id}>
+      <Label htmlFor={id} required={required}>
         {label}
-      </label>
+      </Label>
       <input
         id={id}
         className={`${inputVariants[variant]} w-full`}

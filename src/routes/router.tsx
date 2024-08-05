@@ -17,6 +17,7 @@ import Inventory from "@/pages/admin/Inventory/Inventory";
 import Manufacturers from "@/pages/admin/Manufacturers/Manufacturers";
 import AddManufacturer from "@/pages/admin/Manufacturers/AddManufacturer";
 import EditManufacturer from "@/pages/admin/Manufacturers/EditManufacturer";
+import CreateShop from "@/pages/admin/Shops/CreateShop";
 
 export const adminRoutes = [
   {
@@ -30,6 +31,10 @@ export const adminRoutes = [
   {
     path: adminPaths.boutique,
     element: <Shops />,
+  },
+  {
+    path: adminPaths.createBoutique,
+    element: <CreateShop />,
   },
   {
     path: adminPaths.store,
