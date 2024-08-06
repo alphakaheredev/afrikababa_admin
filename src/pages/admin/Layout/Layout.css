@@ -23,3 +23,17 @@ nav ul li a.active::before {
   width: 20px;
   background-size: cover;
 }
+
+ul.stepper li:not(:last-child)::before {
+  content: "";
+  width: 90%;
+  height: 3px;
+  background-color: #e6e6e6;
+  position: absolute;
+  left: 55%;
+  top: 13px;
+}
+
+ul.stepper li.active::before {
+  background-color: #66b32e;
+}

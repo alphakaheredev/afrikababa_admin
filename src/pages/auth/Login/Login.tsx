@@ -1,4 +1,4 @@
-import ButtonSubmit from "@/components/ui/buttonSubmit";
+// import ButtonSubmit from "@/components/ui/buttonSubmit";
 import Input from "@/components/ui/input";
 import img from "@/assets/images/auth/woman.png";
 import { Link } from "react-router-dom";
@@ -40,7 +40,13 @@ const Login = () => {
             >
               Mot de passe oublié ?
             </Link>
-            <ButtonSubmit label="Connexion" />
+            <Link
+              to="admin"
+              className="bg-emeraldGreen text-white font-medium text-base w-full text-left py-3 px-4 focus:outline-none focus:shadow-outline min-w-80 inline-block"
+            >
+              Connexion
+            </Link>
+            {/* <ButtonSubmit label="Connexion" /> */}
           </form>
           <p className="auth_or relative text-center font-medium text-dark mb-3">
             ou

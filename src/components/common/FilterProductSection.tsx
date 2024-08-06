@@ -1,4 +1,4 @@
-import FilterSelect from "@/components/ui/Select";
+import { FilterSelect } from "@/components/ui/Select";
 
 const groupOptions = [
   { label: "Groupe 1", value: "group1" },

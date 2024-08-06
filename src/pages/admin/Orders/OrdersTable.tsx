@@ -3,6 +3,7 @@ import { orders } from "./data";
 import { ButtonDelete } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { getInitialsOfName } from "@/lib/utils";
+import { Link } from "react-router-dom";
 
 interface Order {
   trackingNumber: string;
@@ -42,8 +43,16 @@ const OrdersTable = () => {
     );
   };
 
+  const redirectFormatter = (cell: string) => {
+    return <Link to={`detail/${cell}`}>{cell}</Link>;
+  };
+
   const columns: Column<Order>[] = [
-    { header: "Numéro de suivi", name: "trackingNumber" },
+    {
+      header: "Numéro de suivi",
+      name: "trackingNumber",
+      formatter: redirectFormatter,
+    },
     { header: "Client", name: "client", formatter: clientFormatter },
     { header: "Produits", name: "products" },
     { header: "Date de commande", name: "orderDate" },

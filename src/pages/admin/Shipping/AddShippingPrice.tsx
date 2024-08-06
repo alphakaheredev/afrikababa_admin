@@ -57,7 +57,7 @@ const AddShippingPrice = () => {
         <div className="flex justify-end pt-10">
           <ButtonSubmit
             className="ml-auto w-min"
-            label="Ajoutez l’expéditiong"
+            label="Ajoutez l’expédition"
           />
         </div>
       </form>
