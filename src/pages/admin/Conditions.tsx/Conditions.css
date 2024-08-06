@@ -1,0 +1,15 @@
+.condition h3 {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 26px;
+  margin-bottom: 6px;
+  color: #18192f;
+}
+
+.condition p {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  margin-bottom: 2rem;
+  color: #18192f;
+}

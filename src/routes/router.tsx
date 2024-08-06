@@ -28,6 +28,12 @@ import DetailOrder from "@/pages/admin/Orders/DetailOrder";
 import Transactions from "@/pages/admin/Transactions/Transactions";
 import AdminsList from "@/pages/admin/Admins/AdminsList";
 import Customers from "@/pages/admin/Customers/Customers";
+import ViewTemplate from "@/pages/admin/View/ViewTemplate";
+import Faq from "@/pages/admin/Faq/Faq";
+import AddDiscountCoupon from "@/pages/admin/Discount/AddDiscountCoupon";
+import Chat from "@/pages/admin/Chat/Chat";
+import Terme from "@/pages/admin/Conditions.tsx/Terme";
+import Discounts from "@/pages/admin/Discount/Discount";
 
 export const adminRoutes = [
   {
@@ -125,6 +131,42 @@ export const adminRoutes = [
   {
     path: adminPaths.customers,
     element: <Customers />,
+  },
+  {
+    path: adminPaths.group,
+    element: <ViewTemplate />,
+  },
+  {
+    path: adminPaths.faq,
+    element: <Faq />,
+  },
+  {
+    path: adminPaths.conditions,
+    element: <Terme />,
+  },
+  {
+    path: adminPaths.discounts,
+    element: <Discounts />,
+  },
+  {
+    path: adminPaths.addDiscount,
+    element: <AddDiscountCoupon />,
+  },
+  {
+    path: adminPaths.chat,
+    element: <Chat />,
+  },
+  {
+    path: adminPaths.comments,
+    element: <Chat />,
+  },
+  {
+    path: adminPaths.reviews,
+    element: <Chat />,
+  },
+  {
+    path: adminPaths.settings,
+    element: <Chat />,
   },
 ];
 
