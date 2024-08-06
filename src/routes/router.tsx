@@ -26,6 +26,8 @@ import AddNewRefundReason from "@/pages/admin/Refunds/AddNewRefundReason";
 import Orders from "@/pages/admin/Orders/Orders";
 import DetailOrder from "@/pages/admin/Orders/DetailOrder";
 import Transactions from "@/pages/admin/Transactions/Transactions";
+import AdminsList from "@/pages/admin/Admins/AdminsList";
+import Customers from "@/pages/admin/Customers/Customers";
 
 export const adminRoutes = [
   {
@@ -115,6 +117,14 @@ export const adminRoutes = [
   {
     path: adminPaths.transactions,
     element: <Transactions />,
+  },
+  {
+    path: adminPaths.admins,
+    element: <AdminsList />,
+  },
+  {
+    path: adminPaths.customers,
+    element: <Customers />,
   },
 ];
 

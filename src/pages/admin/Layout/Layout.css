@@ -37,3 +37,11 @@ ul.stepper li:not(:last-child)::before {
 ul.stepper li.active::before {
   background-color: #66b32e;
 }
+
+.custom-cancel-button-class {
+  background-color: transparent !important;
+  color: #66b333;
+}
+.custom-confirm-button-class {
+  border-radius: 0;
+}

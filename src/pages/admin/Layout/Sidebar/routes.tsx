@@ -101,12 +101,12 @@ export const routes = [
       {
         label: "Administrateurs",
         icon: <FiUser fontSize={22} />,
-        path: "admins",
+        path: adminPaths.admins,
       },
       {
         label: "Clients",
         icon: <FiUsers fontSize={22} />,
-        path: "clients",
+        path: adminPaths.customers,
       },
     ],
   },
@@ -116,17 +116,17 @@ export const routes = [
       {
         label: "Pages / Groupes",
         icon: <IconDoc />,
-        path: "pages-groups",
+        path: adminPaths.group,
       },
       {
         label: "FAQ",
         icon: <IconFaq />,
-        path: "faq",
+        path: adminPaths.faq,
       },
       {
         label: "Termes et conditions",
         icon: <IoDocumentTextOutline />,
-        path: "terms",
+        path: adminPaths.conditions,
       },
     ],
   },
@@ -136,7 +136,7 @@ export const routes = [
       {
         label: "Bons de réduction",
         icon: <FiGift fontSize={22} />,
-        path: "coupons",
+        path: adminPaths.discounts,
       },
     ],
   },
@@ -146,17 +146,17 @@ export const routes = [
       {
         label: "Messages",
         icon: <FaRegEnvelope fontSize={22} />,
-        path: "messages",
+        path: adminPaths.chat,
       },
       {
         label: "Commentaires",
         icon: <LiaCommentSolid fontSize={24} />,
-        path: "comments",
+        path: adminPaths.comments,
       },
       {
         label: "Avis de magasin",
         icon: <HiOutlineStar fontSize={24} />,
-        path: "reviews",
+        path: adminPaths.reviews,
       },
     ],
   },
@@ -166,7 +166,7 @@ export const routes = [
       {
         label: "Paramètres",
         icon: <FiSettings fontSize={22} />,
-        path: "settings",
+        path: adminPaths.settings,
       },
     ],
   },
