@@ -34,6 +34,7 @@ import AddDiscountCoupon from "@/pages/admin/Discount/AddDiscountCoupon";
 import Chat from "@/pages/admin/Chat/Chat";
 import Terme from "@/pages/admin/Conditions.tsx/Terme";
 import Discounts from "@/pages/admin/Discount/Discount";
+import Comments from "@/pages/admin/Comments/Comments";
 
 export const adminRoutes = [
   {
@@ -158,7 +159,7 @@ export const adminRoutes = [
   },
   {
     path: adminPaths.comments,
-    element: <Chat />,
+    element: <Comments />,
   },
   {
     path: adminPaths.reviews,
