@@ -34,7 +34,8 @@ import AddDiscountCoupon from "@/pages/admin/Discount/AddDiscountCoupon";
 import Chat from "@/pages/admin/Chat/Chat";
 import Terme from "@/pages/admin/Conditions.tsx/Terme";
 import Discounts from "@/pages/admin/Discount/Discount";
-import Comments from "@/pages/admin/Comments/Comments";
+import Reviews from "@/pages/admin/Reviews/Reviews";
+import Settings from "@/pages/admin/Settings/Settings";
 
 export const adminRoutes = [
   {
@@ -158,16 +159,12 @@ export const adminRoutes = [
     element: <Chat />,
   },
   {
-    path: adminPaths.comments,
-    element: <Comments />,
-  },
-  {
     path: adminPaths.reviews,
-    element: <Chat />,
+    element: <Reviews />,
   },
   {
     path: adminPaths.settings,
-    element: <Chat />,
+    element: <Settings />,
   },
 ];
 

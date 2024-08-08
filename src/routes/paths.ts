@@ -36,7 +36,6 @@ export const adminPaths = {
   discounts: "coupons",
   addDiscount: "coupons/ajouter",
   chat: "messages",
-  comments: "commentaires",
   reviews: "avis",
   settings: "parametres",
 };

@@ -15,7 +15,6 @@ import {
 } from "@/components/common/Icons";
 import { FiGift, FiSettings, FiTruck, FiUser, FiUsers } from "react-icons/fi";
 import { FaRegEnvelope } from "react-icons/fa6";
-import { LiaCommentSolid } from "react-icons/lia";
 import { HiOutlineStar } from "react-icons/hi";
 import { IoDocumentTextOutline } from "react-icons/io5";
 
@@ -147,11 +146,6 @@ export const routes = [
         label: "Messages",
         icon: <FaRegEnvelope fontSize={22} />,
         path: adminPaths.chat,
-      },
-      {
-        label: "Commentaires",
-        icon: <LiaCommentSolid fontSize={24} />,
-        path: adminPaths.comments,
       },
       {
         label: "Avis de magasin",
