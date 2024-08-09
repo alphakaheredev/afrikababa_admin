@@ -38,6 +38,7 @@ import Reviews from "@/pages/admin/Reviews/Reviews";
 import Settings from "@/pages/admin/Settings/Settings";
 import SupplierLayout from "@/pages/supplier/Layout/Layout";
 import SupplierDashboard from "@/pages/supplier/Dashboard/SupplierDashboard";
+import SettingsSupplier from "@/pages/supplier/Settings/SettingsSupplier";
 
 export const adminRoutes = [
   {
@@ -241,7 +242,7 @@ export const supplierRoutes = [
   },
   {
     path: supplierPaths.settings,
-    element: <Settings />,
+    element: <SettingsSupplier />,
   },
 ];
 
