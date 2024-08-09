@@ -3,6 +3,7 @@ export const authPaths = {
   forgotPassword: "mot-de-passe-oublie",
   resetPassword: "reinitisliser-mot-de-passe",
 };
+
 export const adminPaths = {
   dashboard: "tableau-de-bord",
   boutique: "boutiques",
@@ -33,6 +34,26 @@ export const adminPaths = {
   addGroup: "pages-groups/ajouter",
   faq: "faq",
   conditions: "conditions-et-termes",
+  discounts: "coupons",
+  addDiscount: "coupons/ajouter",
+  chat: "messages",
+  reviews: "avis",
+  settings: "parametres",
+};
+
+export const supplierPaths = {
+  dashboard: "tableau-de-bord",
+  products: "produits",
+  addProduct: "produits/creer",
+  productOutOfStock: "produits/en-rupture-stock",
+  categories: "categories",
+  addCategory: "categories/ajouter",
+  editCategory: "categories/modifier/:id",
+  refunds: "remboursements",
+  orders: "commandes",
+  detailOrder: "commandes/detail/:id",
+  transactions: "transactions",
+  customers: "clients",
   discounts: "coupons",
   addDiscount: "coupons/ajouter",
   chat: "messages",

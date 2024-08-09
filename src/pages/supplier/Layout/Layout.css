@@ -1,0 +1,47 @@
+nav ul li a {
+  transition: all 500ms ease;
+}
+nav ul li a.active::after {
+  content: "";
+  position: absolute;
+  right: -25px;
+  bottom: 0;
+  width: 50px;
+  height: 40px;
+  background-color: #fff;
+  border-radius: 100%;
+  z-index: 2;
+}
+
+nav ul li a.active::before {
+  content: url(@/assets/images/admin/ellipse.png);
+  position: absolute;
+  right: 0;
+  z-index: 20;
+  bottom: 0;
+  border-radius: 100%;
+  width: 20px;
+  background-size: cover;
+}
+
+ul.stepper li:not(:last-child)::before {
+  content: "";
+  width: 90%;
+  height: 3px;
+  background-color: #e6e6e6;
+  position: absolute;
+  left: 55%;
+  top: 13px;
+}
+
+ul.stepper li.active::before {
+  background-color: #66b32e;
+}
+
+.custom-cancel-button-class {
+  background-color: transparent !important;
+  color: #66b333;
+}
+.custom-confirm-button-class {
+  border-radius: 0;
+}

@@ -1,5 +1,5 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
-import { adminPaths, authPaths } from "./paths";
+import { adminPaths, authPaths, supplierPaths } from "./paths";
 import App from "@/App";
 import AdminLayout from "@/pages/admin/Layout/Layout";
 import Dashboard from "@/pages/admin/Dashboard/Dashboard";
@@ -36,6 +36,8 @@ import Terme from "@/pages/admin/Conditions.tsx/Terme";
 import Discounts from "@/pages/admin/Discount/Discount";
 import Reviews from "@/pages/admin/Reviews/Reviews";
 import Settings from "@/pages/admin/Settings/Settings";
+import SupplierLayout from "@/pages/supplier/Layout/Layout";
+import SupplierDashboard from "@/pages/supplier/Dashboard/SupplierDashboard";
 
 export const adminRoutes = [
   {
@@ -168,14 +170,78 @@ export const adminRoutes = [
   },
 ];
 
-export const manufactureRoutes = [
+export const supplierRoutes = [
   {
-    path: "/fabricant",
-    element: <Navigate to={adminPaths.dashboard} />,
+    path: "/fournisseur",
+    element: <Navigate to={supplierPaths.dashboard} />,
   },
   {
-    path: adminPaths.dashboard,
-    element: <Dashboard />,
+    path: supplierPaths.dashboard,
+    element: <SupplierDashboard />,
+  },
+  {
+    path: supplierPaths.products,
+    element: <Products />,
+  },
+  {
+    path: supplierPaths.addProduct,
+    element: <AddProduct />,
+  },
+  {
+    path: supplierPaths.productOutOfStock,
+    element: <ProductOutOfStock />,
+  },
+  {
+    path: supplierPaths.categories,
+    element: <Categories />,
+  },
+  {
+    path: supplierPaths.addCategory,
+    element: <AddCategory />,
+  },
+  {
+    path: supplierPaths.editCategory,
+    element: <EditCategory />,
+  },
+  {
+    path: supplierPaths.refunds,
+    element: <Refunds />,
+  },
+  {
+    path: supplierPaths.orders,
+    element: <Orders />,
+  },
+  {
+    path: supplierPaths.detailOrder,
+    element: <DetailOrder />,
+  },
+  {
+    path: supplierPaths.transactions,
+    element: <Transactions />,
+  },
+  {
+    path: supplierPaths.customers,
+    element: <Customers />,
+  },
+  {
+    path: supplierPaths.discounts,
+    element: <Discounts />,
+  },
+  {
+    path: supplierPaths.addDiscount,
+    element: <AddDiscountCoupon />,
+  },
+  {
+    path: supplierPaths.chat,
+    element: <Chat />,
+  },
+  {
+    path: supplierPaths.reviews,
+    element: <Reviews />,
+  },
+  {
+    path: supplierPaths.settings,
+    element: <Settings />,
   },
 ];
 
@@ -200,5 +266,10 @@ export const router = createBrowserRouter([
     path: "admin",
     element: <AdminLayout />,
     children: adminRoutes,
+  },
+  {
+    path: "fournisseur",
+    element: <SupplierLayout />,
+    children: supplierRoutes,
   },
 ]);
