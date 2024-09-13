@@ -5,6 +5,14 @@ import { Link, LinkProps } from "react-router-dom";
 
 type Props = React.ButtonHTMLAttributes<HTMLButtonElement>;
 
+export const ButtonEditLink: React.FC<LinkProps> = ({ ...props }) => {
+	return (
+		<Link {...props}>
+			<IconEdit />
+		</Link>
+	);
+};
+
 export const ButtonEdit: React.FC<Props> = ({ ...props }) => {
   return (
     <button {...props}>

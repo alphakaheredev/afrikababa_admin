@@ -1,6 +1,5 @@
-import { ButtonDelete, ButtonEdit } from "@/components/ui/button";
+import { ButtonDelete, ButtonEditLink } from "@/components/ui/button";
 import Table, { Column } from "@/components/ui/Table";
-import noImg from "@/assets/images/admin/no-image.png";
 import icon from "@/assets/images/admin/diamond.png";
 import { Category } from "@/redux/api/category/category.type";
 import {
@@ -8,6 +7,8 @@ import {
 	useGetCategorysListQuery,
 } from "@/redux/api/category/category.api";
 import { useDelete } from "@/hooks/useDelete";
+import { addAdminPrefix } from "@/lib/utils";
+import { adminPaths } from "@/routes/paths";
 
 export function Delete({ item }: { item: Category }) {
 	const [deleteItem, { isSuccess, isError, error }] =
@@ -25,20 +26,13 @@ export function Delete({ item }: { item: Category }) {
 
 const CategoriesTable = () => {
 	const { data: result, isLoading } = useGetCategorysListQuery({});
-	const iconFormatter = () => (
-		<img
-			src={icon}
-			alt="Icon"
-			className="w-6 h-6 object-cover rounded"
-		/>
-	);
 
 	const categoryNameFormatter = (cell: string) => (
 		<div className="flex items-center gap-2">
 			<img
-				src={noImg}
-				alt="Product"
-				className="object-contain rounded"
+				src={icon}
+				alt="Icon"
+				className="w-6 h-6 object-cover rounded"
 			/>
 			<span className="capitalize">{cell}</span>
 		</div>
@@ -46,7 +40,10 @@ const CategoriesTable = () => {
 
 	const actionFormatter = (_cell: string, row: Category) => (
 		<div className="flex space-x-2">
-			<ButtonEdit />
+			<ButtonEditLink
+				to={addAdminPrefix(adminPaths.editCategory)}
+				state={row}
+			/>
 			<Delete item={row} />
 		</div>
 	);
@@ -62,7 +59,7 @@ const CategoriesTable = () => {
 			name: "name",
 			formatter: categoryNameFormatter,
 		},
-		{ header: "Icône", name: "icon", formatter: iconFormatter },
+		{ header: "Description", name: "description" },
 		{ header: "Action", name: "id", formatter: actionFormatter },
 	];
 

@@ -83,12 +83,12 @@ export const InputSearch = forwardRef<
 	return (
 		<div className="relative text-dark w-full max-w-lg">
 			<CiSearch
-				className="font-bold absolute top-[10px] left-1"
+				className="font-bold absolute top-[14px] left-1"
 				fontSize={18}
 			/>
 			<input
 				ref={ref}
-				className="w-full border-[#E4E4E4] bg-[#E4E4E4] border py-2 px-3 pl-6 text-dark text-sm outline-none placeholder:text-dark"
+				className="w-full border-[#E4E4E4] bg-[#E4E4E4] border py-3 px-4 pl-7 text-dark text-sm outline-none placeholder:text-dark"
 				type="search"
 				{...props}
 			/>

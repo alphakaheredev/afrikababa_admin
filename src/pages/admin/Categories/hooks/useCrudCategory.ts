@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -8,6 +8,7 @@ import { Category, CategoryFormData } from "@/redux/api/category/category.type";
 import { useCreateOrUpdateCategoryMutation } from "@/redux/api/category/category.api";
 import { cleannerError } from "@/lib/utils";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 setLocale(fr);
 
@@ -16,7 +17,7 @@ const schema = yup.object().shape({
 	description: yup.string().label("Description"),
 });
 
-export const useCrudCategorie = (closeModal: () => void, item?: Category) => {
+export const useCrudCategory = (item?: Category) => {
 	const {
 		register,
 		handleSubmit,
@@ -27,6 +28,8 @@ export const useCrudCategorie = (closeModal: () => void, item?: Category) => {
 	} = useForm<CategoryFormData>({
 		resolver: yupResolver(schema),
 	});
+
+	const navigate = useNavigate();
 
 	const [createOrUpdate, { isLoading }] =
 		useCreateOrUpdateCategoryMutation();
@@ -47,6 +50,12 @@ export const useCrudCategorie = (closeModal: () => void, item?: Category) => {
 		}
 	}, [item, setValue, reset]);
 
+	const handleSelectIcon = (e: React.FormEvent<HTMLInputElement>) => {
+		// handle select icon
+		let file = e.currentTarget.files?.[0];
+		setValue("icon", file);
+	};
+
 	const onSubmit = async (data: CategoryFormData) => {
 		const res = await createOrUpdate({
 			id: item?.id,
@@ -54,13 +63,13 @@ export const useCrudCategorie = (closeModal: () => void, item?: Category) => {
 		});
 
 		if ("data" in res) {
-			closeModal();
 			toast.success(
 				`Catégorie ${
 					item?.id ? "modifiée" : "ajoutée"
 				} avec succès`
 			);
 			reset();
+			navigate(-1);
 		} else if ("error" in res) {
 			const error = res.error as any;
 			let errorMessage = error?.data?.message;
@@ -75,5 +84,6 @@ export const useCrudCategorie = (closeModal: () => void, item?: Category) => {
 		errors,
 		onSubmit: handleSubmit(onSubmit),
 		isLoading,
+		handleSelectIcon,
 	};
 };
