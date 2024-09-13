@@ -31,3 +31,14 @@ export const ButtonAddLink: React.FC<LinkProps> = ({ children, ...rest }) => {
     </Link>
   );
 };
+
+export const ButtonAdd: React.FC<Props> = ({ children, ...rest }) => {
+	return (
+		<button
+			{...rest}
+			className="bg-dark p-2 text-white whitespace-nowrap font-normal text-sm leading-5"
+		>
+			{children}
+		</button>
+	);
+};

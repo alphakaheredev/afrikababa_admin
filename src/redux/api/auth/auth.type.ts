@@ -5,7 +5,7 @@ export type LoginFormData = {
 	password: string;
 };
 
-export type LoginResult = { user: User; token: string | null };
+export type LoginResult = { user: User; access_token: string | null };
 
 export type ChangePasswordData = {
 	old_password: string;

@@ -52,7 +52,7 @@ export const useLoginForm = () => {
 					dispatch(
 						onSetUserToken({
 							user: res.data.user as User,
-							token: res.data.token,
+							token: res.data.access_token,
 						})
 					);
 				}

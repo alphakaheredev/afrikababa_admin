@@ -10,3 +10,19 @@ export interface ModalProps<T> {
 	isOpen: boolean;
 	close: () => void;
 }
+
+
+
+export type PaginationResults<T> = {
+	meta: {
+		total: number;
+	};
+	data: T[];
+};
+
+export type TypeQuery = Partial<{
+	page?: number;
+	limit?: number;
+	q?: string;
+	slug?: string;
+}>;

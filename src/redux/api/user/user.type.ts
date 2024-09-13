@@ -3,6 +3,7 @@ export enum ROLE {
 	supplier = "SUPPLIER",
 	customer = "CUSTOMER",
 }
+
 export type User = {
 	id: number;
 	slug: string;
@@ -10,7 +11,6 @@ export type User = {
 	lastname: string;
 	email: string;
 	phone_number: string;
-	address: string;
 	email_verified_at: string;
 	role: ROLE;
 	password: string;
@@ -21,7 +21,7 @@ export type User = {
 
 export type UserFormData = Pick<
 	User,
-	"firstname" | "lastname" | "email" | "phone_number" | "address" | "role"
+	"firstname" | "lastname" | "email" | "phone_number" | "role"
 >;
 
 export interface AuthState {
@@ -29,16 +29,3 @@ export interface AuthState {
 	token?: string | null;
 }
 
-export type PaginationResults<T> = {
-	count?: number;
-	next?: string | null;
-	previous?: string | null;
-	results: T[];
-};
-
-export type TypeQuery = Partial<{
-	page?: number;
-	limit?: number;
-	q?: string;
-	slug?: string;
-}>;

@@ -3,6 +3,7 @@ import { AuthState, User, UserFormData } from "./user.type";
 import { RootState } from "../../store";
 import { ApiBaseUrl } from "@/lib/http";
 import { AppStorage } from "@/lib/storage";
+import { PaginationResults, TypeQuery } from "@/lib/type";
 
 export const prepareHeaders = (
 	headers: Headers,
@@ -20,23 +21,32 @@ export const prepareHeaders = (
 
 export const UserApi = createApi({
 	reducerPath: "userApi",
-	tagTypes: ["user"],
+	tagTypes: ["users"],
 	baseQuery: fetchBaseQuery({
 		baseUrl: `${ApiBaseUrl}/api/`,
 		prepareHeaders,
 	}),
 	endpoints: (build) => ({
+		getUsersList: build.query<PaginationResults<User>, TypeQuery>({
+			query: (query) => ({
+				url: `users/`,
+				method: "GET",
+				params: { ...query },
+			}),
+			providesTags: ["users"],
+		}),
+
 		createOrUpdateUser: build.mutation<
 			User,
 			{
-				slug?: string;
+				id?: number;
 				data: UserFormData | FormData;
 			}
 		>({
-			query: ({ slug, data }) => {
-				if (slug) {
+			query: ({ id, data }) => {
+				if (id) {
 					return {
-						url: `users/${slug}/`,
+						url: `users/${id}/`,
 
 						method: "PUT",
 						body: data,
@@ -48,9 +58,21 @@ export const UserApi = createApi({
 					body: data,
 				};
 			},
-			invalidatesTags: ["user"],
+			invalidatesTags: ["users"],
+		}),
+
+		deleteUser: build.mutation<User, number>({
+			query: (slug) => ({
+				url: `users/${slug}/`,
+				method: "DELETE",
+			}),
+			invalidatesTags: ["users"],
 		}),
 	}),
 });
 
-export const { useCreateOrUpdateUserMutation } = UserApi;
+export const {
+	useCreateOrUpdateUserMutation,
+	useGetUsersListQuery,
+	useDeleteUserMutation,
+} = UserApi;

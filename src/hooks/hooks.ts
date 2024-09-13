@@ -11,3 +11,31 @@ export function useToggle() {
     toggle,
   };
 }
+
+export function useModal<T>() {
+	const [isOpen, setIsOpen] = useState<boolean>(false);
+	const [item, setItem] = useState<T>();
+
+	const openModal = () => setIsOpen(true);
+
+	const closeModal = () => {
+		setItem(undefined);
+		setIsOpen(false);
+	};
+
+	const resetModalItem = () => setItem(undefined);
+
+	const openEditModal = (item: T) => {
+		setItem(item);
+		setIsOpen(true);
+	};
+
+	return {
+		isOpen,
+		item,
+		closeModal,
+		openModal,
+		openEditModal,
+		resetModalItem,
+	};
+}
