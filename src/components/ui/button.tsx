@@ -23,12 +23,12 @@ export const ButtonDelete: React.FC<Props> = ({ ...props }) => {
 
 export const ButtonAddLink: React.FC<LinkProps> = ({ children, ...rest }) => {
   return (
-    <Link
-      {...rest}
-      className="bg-dark p-2 text-white whitespace-nowrap font-normal text-sm leading-5"
-    >
-      {children}
-    </Link>
+		<Link
+			{...rest}
+			className="bg-dark px-4 py-3 text-white whitespace-nowrap font-normal text-sm leading-5"
+		>
+			{children}
+		</Link>
   );
 };
 
@@ -36,7 +36,7 @@ export const ButtonAdd: React.FC<Props> = ({ children, ...rest }) => {
 	return (
 		<button
 			{...rest}
-			className="bg-dark p-2 text-white whitespace-nowrap font-normal text-sm leading-5"
+			className="bg-dark px-4 py-3 text-white whitespace-nowrap font-normal text-sm leading-5"
 		>
 			{children}
 		</button>

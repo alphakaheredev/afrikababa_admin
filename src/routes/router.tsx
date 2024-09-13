@@ -39,6 +39,7 @@ import Settings from "@/pages/admin/Settings/Settings";
 import SupplierLayout from "@/pages/supplier/Layout/Layout";
 import SupplierDashboard from "@/pages/supplier/Dashboard/SupplierDashboard";
 import SettingsSupplier from "@/pages/supplier/Settings/SettingsSupplier";
+import { ProtectedRoute, RedirectAuthRoute } from "./routerUtils";
 
 export const adminRoutes = [
   {
@@ -247,30 +248,42 @@ export const supplierRoutes = [
 ];
 
 export const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />,
-  },
-  {
-    path: authPaths.register,
-    element: <Register />,
-  },
-  {
-    path: authPaths.forgotPassword,
-    element: <ForgotPassword />,
-  },
-  {
-    path: authPaths.resetPassword,
-    element: <ResetPassword />,
-  },
-  {
-    path: "admin",
-    element: <AdminLayout />,
-    children: adminRoutes,
-  },
-  {
-    path: "fournisseur",
-    element: <SupplierLayout />,
-    children: supplierRoutes,
-  },
+	{
+		path: "/",
+		element: (
+			<RedirectAuthRoute>
+				<App />
+			</RedirectAuthRoute>
+		),
+	},
+	{
+		path: authPaths.register,
+		element: <Register />,
+	},
+	{
+		path: authPaths.forgotPassword,
+		element: <ForgotPassword />,
+	},
+	{
+		path: authPaths.resetPassword,
+		element: <ResetPassword />,
+	},
+	{
+		path: "admin",
+		element: (
+			<ProtectedRoute>
+				<AdminLayout />
+			</ProtectedRoute>
+		),
+		children: adminRoutes,
+	},
+	{
+		path: "fournisseur",
+		element: (
+			<ProtectedRoute>
+				<SupplierLayout />
+			</ProtectedRoute>
+		),
+		children: supplierRoutes,
+	},
 ]);

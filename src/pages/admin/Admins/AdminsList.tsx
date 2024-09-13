@@ -1,6 +1,6 @@
 import Table, { Column } from "@/components/ui/Table";
 // import { Badge } from "@/components/ui/badge";
-import { ButtonAdd, ButtonDelete } from "@/components/ui/button";
+import { ButtonAdd, ButtonDelete, ButtonEdit } from "@/components/ui/button";
 import { useModal } from "@/hooks/hooks";
 import { useDelete } from "@/hooks/useDelete";
 import { formatRole, getUserAvatarUrl, getUserName } from "@/lib/utils";
@@ -33,11 +33,15 @@ export function Delete({ item }: { item: User }) {
 
 const AdminsList = () => {
 	const { data: result, isLoading } = useGetUsersListQuery({});
-	const { isOpen, item, closeModal, openModal } = useModal<User>();
+	const { isOpen, item, closeModal, openModal, openEditModal } =
+		useModal<User>();
 	// console.log(result);
 
 	const actionFormatter = (_cell: string, row: User) => (
-		<Delete item={row} />
+		<div className="flex items-center gap-3">
+			<ButtonEdit onClick={() => openEditModal(row)} />
+			<Delete item={row} />
+		</div>
 	);
 
 	// const statusFormatter = (status: string) => {
@@ -70,7 +74,11 @@ const AdminsList = () => {
 			),
 		},
 		{
-			header: "Autorisations",
+			header: "Téléphone",
+			name: "phone_number",
+		},
+		{
+			header: "Type",
 			name: "role",
 			formatter: rolesFormatter,
 		},

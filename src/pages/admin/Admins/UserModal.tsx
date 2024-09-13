@@ -98,7 +98,7 @@ const UserModal: React.FC<ModalProps<User>> = (props) => {
 					</div> */}
 					<DialogFooter className="pt-5">
 						<ButtonSubmit
-							label="Ajouter"
+							label={item ? "Modifier" : "Ajouter"}
 							type="submit"
 							isLoading={isLoading}
 						/>
