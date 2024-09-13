@@ -16,7 +16,6 @@ export type User = {
 	password: string;
 	avatar_url: string;
 	created_at: string;
-	created_by: number;
 };
 
 export type UserFormData = Pick<

@@ -3,6 +3,7 @@ import { AuthApi } from "./api/auth/auth.api";
 import { UserSlice } from "./features/user.slice";
 import { UserApi } from "./api/user/user.api";
 import { currentEnv, Env } from "@/lib/http";
+import { CategoryApi } from "./api/category/category.api";
 
 export const store = configureStore({
 	reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
 
 		[AuthApi.reducerPath]: AuthApi.reducer,
 		[UserApi.reducerPath]: UserApi.reducer,
+		[CategoryApi.reducerPath]: CategoryApi.reducer,
 	},
 	devTools: Env === currentEnv,
 	// @ts-ignore
@@ -17,6 +19,7 @@ export const store = configureStore({
 		...getDefaultMiddleware(),
 		AuthApi.middleware,
 		UserApi.middleware,
+		CategoryApi.middleware,
 	],
 });
 
