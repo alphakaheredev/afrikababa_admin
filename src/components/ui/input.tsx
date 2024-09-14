@@ -34,7 +34,7 @@ const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
 	if (type === "password") {
 		return (
 			<>
-				<div className="relative m-0">
+				<div className="relative">
 					<Label htmlFor={id} required={required}>
 						{label}
 					</Label>
@@ -47,11 +47,16 @@ const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
 					/>
 					<span
 						className="absolute right-0 pr-3 cursor-pointer"
-						onClick={() => setShowPassword((prev) => !prev)}
+						onClick={() =>
+							setShowPassword((prev) => !prev)
+						}
 					>
 						{showPassword ? <FiEyeOff /> : <FiEye />}
 					</span>
-					<Error error={error} className="absolute left-0 pr-3 cursor-pointer" />
+					<Error
+						error={error}
+						className="absolute left-0 pr-3 cursor-pointer"
+					/>
 				</div>
 			</>
 		);

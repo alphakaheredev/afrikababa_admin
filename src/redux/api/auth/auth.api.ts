@@ -1,5 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { LoginFormData, LoginResult, ChangePasswordData } from "./auth.type";
+import {
+	LoginFormData,
+	LoginResult,
+	ChangePasswordData,
+	RegisterFormData,
+} from "./auth.type";
 import { User } from "../user/user.type";
 import { prepareHeaders } from "../user/user.api";
 import { ApiBaseUrl } from "@/lib/http";
@@ -12,6 +17,15 @@ export const AuthApi = createApi({
 		prepareHeaders,
 	}),
 	endpoints: (build) => ({
+		// register user mutation
+		registerUser: build.mutation<LoginResult, RegisterFormData>({
+			query: (data) => ({
+				url: "auth/register",
+				method: "POST",
+				body: data,
+			}),
+			invalidatesTags: ["auth"],
+		}),
 		// login user mutation
 		loginUser: build.mutation<LoginResult, LoginFormData>({
 			query: (data) => ({
@@ -33,4 +47,8 @@ export const AuthApi = createApi({
 	}),
 });
 
-export const { useLoginUserMutation, useChangePasswordMutation } = AuthApi;
+export const {
+	useLoginUserMutation,
+	useChangePasswordMutation,
+	useRegisterUserMutation,
+} = AuthApi;
