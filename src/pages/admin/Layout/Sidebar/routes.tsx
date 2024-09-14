@@ -4,9 +4,8 @@ import { MdOutlineStorefront } from "react-icons/md";
 import {
 	IconBuilding,
 	IconCartCheck,
-	IconDoc,
 	IconExchange,
-	IconFaq,
+	// IconFaq,
 	IconGridPlus,
 	IconHandHolding,
 	IconProduct,
@@ -14,7 +13,7 @@ import {
 import { FiGift, FiSettings, FiTruck, FiUser, FiUsers } from "react-icons/fi";
 import { FaRegEnvelope } from "react-icons/fa6";
 import { HiOutlineStar } from "react-icons/hi";
-import { IoDocumentTextOutline } from "react-icons/io5";
+// import { IoDocumentTextOutline } from "react-icons/io5";
 
 export const routes = [
 	{
@@ -107,26 +106,26 @@ export const routes = [
 			},
 		],
 	},
-	{
-		category: "PERSONNALISATION PAGE / CATÉGORIE",
-		items: [
-			{
-				label: "Pages / Groupes",
-				icon: <IconDoc />,
-				path: adminPaths.group,
-			},
-			{
-				label: "FAQ",
-				icon: <IconFaq />,
-				path: adminPaths.faq,
-			},
-			{
-				label: "Termes et conditions",
-				icon: <IoDocumentTextOutline />,
-				path: adminPaths.conditions,
-			},
-		],
-	},
+	// {
+	// 	category: "PERSONNALISATION PAGE",
+	// 	items: [
+	// 		{
+	// 			label: "Pages / Groupes",
+	// 			icon: <IconDoc />,
+	// 			path: adminPaths.group,
+	// 		},
+	// 		{
+	// 			label: "FAQ",
+	// 			icon: <IconFaq />,
+	// 			path: adminPaths.faq,
+	// 		},
+	// 		{
+	// 			label: "Termes et conditions",
+	// 			icon: <IoDocumentTextOutline />,
+	// 			path: adminPaths.conditions,
+	// 		},
+	// 	],
+	// },
 	{
 		category: "GESTION PROMOTIONNELLE",
 		items: [
