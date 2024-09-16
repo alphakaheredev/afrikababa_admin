@@ -1,3 +1,4 @@
+import { Category } from "../category/category.type";
 import { User } from "../user/user.type";
 
 export type Shop = {
@@ -23,4 +24,25 @@ export type Shop = {
 	total_order: number;
 	user: User;
 	created_at: string;
+};
+
+export type Product = {
+	id: number;
+	name: string;
+	slug: string;
+	shop_id: number;
+	shop: Shop;
+	description: string;
+	price: string;
+	quantity: number;
+	sku: string;
+	category_id: number;
+	category: Category;
+	status: string;
+	product_length: number;
+	product_height: number;
+	product_weight: number;
+	product_width: number;
+	created_at: string;
+	updated_at: string;
 };

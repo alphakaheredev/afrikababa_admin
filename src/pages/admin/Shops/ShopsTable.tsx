@@ -19,7 +19,7 @@ export function Delete({ item }: { item: Shop }) {
 		isSuccess,
 		isError,
 		error,
-		successMessage: "Catégorie supprimée",
+		successMessage: "Boutique supprimée",
 	});
 	return <ButtonDelete onClick={onDelete} />;
 }

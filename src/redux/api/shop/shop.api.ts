@@ -1,12 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Shop } from "./shop.type";
+import { Product, Shop } from "./shop.type";
 import { ApiBaseUrl } from "@/lib/http";
 import { PaginationResults, TypeQuery } from "@/lib/type";
 import { prepareHeaders } from "../user/user.api";
 
 export const ShopApi = createApi({
 	reducerPath: "shopApi",
-	tagTypes: ["shops"],
+	tagTypes: ["shops", "products"],
 	baseQuery: fetchBaseQuery({
 		baseUrl: `${ApiBaseUrl}/api/`,
 		prepareHeaders,
@@ -28,7 +28,30 @@ export const ShopApi = createApi({
 			}),
 			invalidatesTags: ["shops"],
 		}),
+		getProductsList: build.query<PaginationResults<Product>, TypeQuery>(
+			{
+				query: (query) => ({
+					url: `products/`,
+					method: "GET",
+					params: { ...query },
+				}),
+				providesTags: ["products"],
+			}
+		),
+
+		deleteProduct: build.mutation<Product, number>({
+			query: (slug) => ({
+				url: `products/${slug}/`,
+				method: "DELETE",
+			}),
+			invalidatesTags: ["products"],
+		}),
 	}),
 });
 
-export const { useGetShopsListQuery, useDeleteShopMutation } = ShopApi;
+export const {
+	useGetShopsListQuery,
+	useDeleteShopMutation,
+	useGetProductsListQuery,
+	useDeleteProductMutation,
+} = ShopApi;
