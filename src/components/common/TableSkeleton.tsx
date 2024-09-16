@@ -17,7 +17,7 @@ const TableSkeleton = ({ columns }: { columns: string[] }) => {
 									key={`${rowIndex}-${colIndex}`}
 									className="animate-pulse"
 								>
-									<div className="w-full h-8  bg-slate-200" />
+									<div className="w-full h-8  bg-gray-200" />
 								</td>
 							))}
 						</tr>

@@ -44,6 +44,11 @@ export function getCategoryIconUrl(icon: string) {
 	return "/images/diamond.png";
 }
 
+export function getLogoUrl(icon: string) {
+	if (icon) return icon;
+	return "/images/diamond.png";
+}
+
 export function cleannerError(
 	errors: any,
 	cleanner: any,

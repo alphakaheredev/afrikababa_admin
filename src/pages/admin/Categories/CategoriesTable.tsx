@@ -25,7 +25,6 @@ export function Delete({ item }: { item: Category }) {
 
 const CategoriesTable = ({ q }: { q?: string }) => {
 	const { data: result, isLoading } = useGetCategorysListQuery({ q });
-	console.log(result);
 
 	const categoryNameFormatter = (cell: string, row: Category) => (
 		<div className="flex items-center gap-2">

@@ -1,17 +1,23 @@
 import { InputSearch } from "@/components/ui/input";
-import StoresTable from "../Stores/StoresTable";
+import ShopsTable from "./ShopsTable";
+import { useSearch } from "@/hooks/hooks";
 
 const Shops = () => {
+	const { search, handleSearch } = useSearch();
+
 	return (
 		<>
 			<div className="flex items-center justify-between mb-8">
 				<h3 className="text-dark font-semibold">
-					Touts les magasins
+					Toutes les boutiques
 				</h3>
-				<InputSearch placeholder="Recherchez par nom" />
+				<InputSearch
+					placeholder="Recherchez par nom"
+					onChange={handleSearch}
+				/>
 			</div>
 			<div className="app-card">
-				<StoresTable />
+				<ShopsTable q={search} />
 			</div>
 		</>
 	);
