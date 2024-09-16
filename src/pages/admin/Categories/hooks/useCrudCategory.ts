@@ -26,6 +26,7 @@ export const useCrudCategory = (item?: Category) => {
 		clearErrors,
 		setValue,
 	} = useForm<CategoryFormData>({
+		// @ts-ignore
 		resolver: yupResolver(schema),
 	});
 
@@ -53,13 +54,17 @@ export const useCrudCategory = (item?: Category) => {
 	const handleSelectIcon = (e: React.FormEvent<HTMLInputElement>) => {
 		// handle select icon
 		let file = e.currentTarget.files?.[0];
-		setValue("icon", file);
+		if (file) setValue("logo", file);
 	};
 
 	const onSubmit = async (data: CategoryFormData) => {
+		const fd = new FormData();
+		fd.append("name", data.name);
+		fd.append("description", data.description);
+		fd.append("logo", data.logo);
 		const res = await createOrUpdate({
 			id: item?.id,
-			data: { ...data },
+			data: fd,
 		});
 
 		if ("data" in res) {

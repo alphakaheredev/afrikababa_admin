@@ -1,13 +1,12 @@
 import { ButtonDelete, ButtonEditLink } from "@/components/ui/button";
 import Table, { Column } from "@/components/ui/Table";
-import icon from "@/assets/images/admin/diamond.png";
 import { Category } from "@/redux/api/category/category.type";
 import {
 	useDeleteCategoryMutation,
 	useGetCategorysListQuery,
 } from "@/redux/api/category/category.api";
 import { useDelete } from "@/hooks/useDelete";
-import { addAdminPrefix } from "@/lib/utils";
+import { addAdminPrefix, getCategoryIconUrl } from "@/lib/utils";
 import { adminPaths } from "@/routes/paths";
 
 export function Delete({ item }: { item: Category }) {
@@ -24,13 +23,14 @@ export function Delete({ item }: { item: Category }) {
 	return <ButtonDelete onClick={onDelete} />;
 }
 
-const CategoriesTable = () => {
-	const { data: result, isLoading } = useGetCategorysListQuery({});
+const CategoriesTable = ({ q }: { q?: string }) => {
+	const { data: result, isLoading } = useGetCategorysListQuery({ q });
+	console.log(result);
 
-	const categoryNameFormatter = (cell: string) => (
+	const categoryNameFormatter = (cell: string, row: Category) => (
 		<div className="flex items-center gap-2">
 			<img
-				src={icon}
+				src={getCategoryIconUrl(row?.logo)}
 				alt="Icon"
 				className="w-6 h-6 object-cover rounded"
 			/>

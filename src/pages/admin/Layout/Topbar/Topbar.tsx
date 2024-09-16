@@ -10,13 +10,19 @@ import { IconBurger } from "@/components/common/Icons";
 import { adminPaths } from "@/routes/paths";
 import avatar from "@/assets/images/avatar.png";
 import { CiSearch } from "react-icons/ci";
-import { useAppSelector } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { isSupplier } from "@/routes/routerUtils";
 import { User } from "@/redux/api/user/user.type";
+import { onlogout } from "@/redux/features/user.slice";
 
 const Topbar = ({ open }: { open: () => void }) => {
 	const scrollPosition = useScrollPosition();
 	const { user } = useAppSelector((state) => state.user);
+	const dispatch = useAppDispatch();
+
+	const onLogout = () => {
+		dispatch(onlogout());
+	};
 
 	return (
 		<div
@@ -78,6 +84,12 @@ const Topbar = ({ open }: { open: () => void }) => {
 								>
 									Mon profil
 								</Link>
+								<button
+									className="border-t border-gray-300 w-full mt-2 pt-2 text-left text-dark text-sm"
+									onClick={onLogout}
+								>
+									Se déconnecter
+								</button>
 							</HoverCardContent>
 						</HoverCard>
 					</div>

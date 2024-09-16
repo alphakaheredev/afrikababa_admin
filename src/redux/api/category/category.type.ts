@@ -1,12 +1,12 @@
 export type Category = {
 	id: number;
 	name: string;
-	description?: string;
-	icon: string;
+	description: string;
+	logo: string;
 	created_at: string;
 };
 
-export type CategoryFormData = { icon?: File } & Pick<
+export type CategoryFormData = { logo: File } & Pick<
 	Category,
 	"name" | "description"
 >;

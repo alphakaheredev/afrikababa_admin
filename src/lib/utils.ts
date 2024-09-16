@@ -39,6 +39,11 @@ export function getUserAvatarUrl(avatar_url: string) {
 	return "/images/avatar-default.png";
 }
 
+export function getCategoryIconUrl(icon: string) {
+	if (icon) return icon;
+	return "/images/diamond.png";
+}
+
 export function cleannerError(
 	errors: any,
 	cleanner: any,
