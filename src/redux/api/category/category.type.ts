@@ -6,7 +6,8 @@ export type Category = {
 	created_at: string;
 };
 
-export type CategoryFormData = { logo: File } & Pick<
-	Category,
-	"name" | "description"
->;
+export type CategoryFormData = {
+	name: string;
+	description?: string;
+	logo?: File;
+};

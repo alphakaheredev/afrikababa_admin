@@ -1,0 +1,8 @@
+node_modules
+.yarn
+yarn.lock
+package-lock.json
+.dockerignore
+.yarnrc.yml
+Dockerfile
+docker-compose.dev.yml

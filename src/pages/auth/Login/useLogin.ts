@@ -60,9 +60,17 @@ export const useLoginForm = () => {
 		} else if ("error" in res) {
 			const error = res.error as QueryError;
 			const errorMessage = error.data.error;
-			console.log(res.error);
 			if (errorMessage === "email or password is incorrect") {
 				const message = "Vos identifiants sont incorrects";
+				return setError("email", { message: message });
+			}
+			if (
+				errorMessage?.includes(
+					"Please verify your email before logging in"
+				)
+			) {
+				const message =
+					"Veuillez vérifier votre email avant de vous connecter";
 				return setError("email", { message: message });
 			}
 			setError("email", {

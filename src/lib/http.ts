@@ -6,9 +6,9 @@ const env: ENV = currentEnv;
 
 export const Env = env;
 
-const API_DEV_URL = "http://127.0.0.1:8000";
-const API_DEMO_URL = "http://127.0.0.1:8000";
-const API_PROD_URL = "http://127.0.0.1:8000";
+const API_DEV_URL = "https://afrikababaa-571dedf1e98c.herokuapp.com";
+const API_DEMO_URL = "https://afrikababaa-571dedf1e98c.herokuapp.com";
+const API_PROD_URL = "https://afrikababaa-571dedf1e98c.herokuapp.com";
 
 export const APP_URL = "http://localhost:5173";
 
