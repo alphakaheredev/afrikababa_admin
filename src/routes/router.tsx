@@ -40,136 +40,141 @@ import SupplierLayout from "@/pages/supplier/Layout/Layout";
 import SupplierDashboard from "@/pages/supplier/Dashboard/SupplierDashboard";
 import SettingsSupplier from "@/pages/supplier/Settings/SettingsSupplier";
 import { ProtectedRoute, RedirectAuthRoute } from "./routerUtils";
+import Profil from "@/pages/admin/Profil/Profil";
 
 export const adminRoutes = [
-  {
-    path: "/admin",
-    element: <Navigate to={adminPaths.dashboard} />,
-  },
-  {
-    path: adminPaths.dashboard,
-    element: <Dashboard />,
-  },
-  {
-    path: adminPaths.boutique,
-    element: <Shops />,
-  },
-  {
-    path: adminPaths.createBoutique,
-    element: <CreateShop />,
-  },
-  {
-    path: adminPaths.store,
-    element: <Stores />,
-  },
-  {
-    path: adminPaths.products,
-    element: <Products />,
-  },
-  {
-    path: adminPaths.addProduct,
-    element: <AddProduct />,
-  },
-  {
-    path: adminPaths.productOutOfStock,
-    element: <ProductOutOfStock />,
-  },
-  {
-    path: adminPaths.inventory,
-    element: <Inventory />,
-  },
-  {
-    path: adminPaths.categories,
-    element: <Categories />,
-  },
-  {
-    path: adminPaths.addCategory,
-    element: <AddCategory />,
-  },
-  {
-    path: adminPaths.editCategory,
-    element: <EditCategory />,
-  },
-  {
-    path: adminPaths.manufacturers,
-    element: <Manufacturers />,
-  },
-  {
-    path: adminPaths.addManufacturer,
-    element: <AddManufacturer />,
-  },
-  {
-    path: adminPaths.editManufacturer,
-    element: <EditManufacturer />,
-  },
-  {
-    path: adminPaths.shipping,
-    element: <Shippings />,
-  },
-  {
-    path: adminPaths.addShippingPrice,
-    element: <AddShippingPrice />,
-  },
-  {
-    path: adminPaths.refunds,
-    element: <Refunds />,
-  },
-  {
-    path: adminPaths.addRefund,
-    element: <AddNewRefundReason />,
-  },
-  {
-    path: adminPaths.orders,
-    element: <Orders />,
-  },
-  {
-    path: adminPaths.detailOrder,
-    element: <DetailOrder />,
-  },
-  {
-    path: adminPaths.transactions,
-    element: <Transactions />,
-  },
-  {
-    path: adminPaths.admins,
-    element: <AdminsList />,
-  },
-  {
-    path: adminPaths.customers,
-    element: <Customers />,
-  },
-  {
-    path: adminPaths.group,
-    element: <ViewTemplate />,
-  },
-  {
-    path: adminPaths.faq,
-    element: <Faq />,
-  },
-  {
-    path: adminPaths.conditions,
-    element: <Terme />,
-  },
-  {
-    path: adminPaths.discounts,
-    element: <Discounts />,
-  },
-  {
-    path: adminPaths.addDiscount,
-    element: <AddDiscountCoupon />,
-  },
-  {
-    path: adminPaths.chat,
-    element: <Chat />,
-  },
-  {
-    path: adminPaths.reviews,
-    element: <Reviews />,
-  },
-  {
-    path: adminPaths.settings,
-    element: <Settings />,
-  },
+	{
+		path: "/admin",
+		element: <Navigate to={adminPaths.dashboard} />,
+	},
+	{
+		path: adminPaths.dashboard,
+		element: <Dashboard />,
+	},
+	{
+		path: adminPaths.boutique,
+		element: <Shops />,
+	},
+	{
+		path: adminPaths.createBoutique,
+		element: <CreateShop />,
+	},
+	{
+		path: adminPaths.store,
+		element: <Stores />,
+	},
+	{
+		path: adminPaths.products,
+		element: <Products />,
+	},
+	{
+		path: adminPaths.addProduct,
+		element: <AddProduct />,
+	},
+	{
+		path: adminPaths.productOutOfStock,
+		element: <ProductOutOfStock />,
+	},
+	{
+		path: adminPaths.inventory,
+		element: <Inventory />,
+	},
+	{
+		path: adminPaths.categories,
+		element: <Categories />,
+	},
+	{
+		path: adminPaths.addCategory,
+		element: <AddCategory />,
+	},
+	{
+		path: adminPaths.editCategory,
+		element: <EditCategory />,
+	},
+	{
+		path: adminPaths.manufacturers,
+		element: <Manufacturers />,
+	},
+	{
+		path: adminPaths.addManufacturer,
+		element: <AddManufacturer />,
+	},
+	{
+		path: adminPaths.editManufacturer,
+		element: <EditManufacturer />,
+	},
+	{
+		path: adminPaths.shipping,
+		element: <Shippings />,
+	},
+	{
+		path: adminPaths.addShippingPrice,
+		element: <AddShippingPrice />,
+	},
+	{
+		path: adminPaths.refunds,
+		element: <Refunds />,
+	},
+	{
+		path: adminPaths.addRefund,
+		element: <AddNewRefundReason />,
+	},
+	{
+		path: adminPaths.orders,
+		element: <Orders />,
+	},
+	{
+		path: adminPaths.detailOrder,
+		element: <DetailOrder />,
+	},
+	{
+		path: adminPaths.transactions,
+		element: <Transactions />,
+	},
+	{
+		path: adminPaths.admins,
+		element: <AdminsList />,
+	},
+	{
+		path: adminPaths.customers,
+		element: <Customers />,
+	},
+	{
+		path: adminPaths.group,
+		element: <ViewTemplate />,
+	},
+	{
+		path: adminPaths.faq,
+		element: <Faq />,
+	},
+	{
+		path: adminPaths.conditions,
+		element: <Terme />,
+	},
+	{
+		path: adminPaths.discounts,
+		element: <Discounts />,
+	},
+	{
+		path: adminPaths.addDiscount,
+		element: <AddDiscountCoupon />,
+	},
+	{
+		path: adminPaths.chat,
+		element: <Chat />,
+	},
+	{
+		path: adminPaths.reviews,
+		element: <Reviews />,
+	},
+	{
+		path: adminPaths.settings,
+		element: <Settings />,
+	},
+	{
+		path: adminPaths.profil,
+		element: <Profil />,
+	},
 ];
 
 export const supplierRoutes = [

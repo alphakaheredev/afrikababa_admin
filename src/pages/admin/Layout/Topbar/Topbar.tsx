@@ -14,6 +14,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { isSupplier } from "@/routes/routerUtils";
 import { User } from "@/redux/api/user/user.type";
 import { onlogout } from "@/redux/features/user.slice";
+import { getUserAvatarUrl } from "@/lib/utils";
 
 const Topbar = ({ open }: { open: () => void }) => {
 	const scrollPosition = useScrollPosition();
@@ -69,11 +70,18 @@ const Topbar = ({ open }: { open: () => void }) => {
 							<HoverCardTrigger asChild>
 								<Avatar className="cursor-pointer w-12 h-12">
 									<AvatarImage
-										src={avatar}
+										src={getUserAvatarUrl(
+											user?.avatar_url as string
+										)}
 										alt="user avatar"
 									/>
 									<AvatarFallback>
-										AK
+										{user?.firstname?.charAt(
+											0
+										)}
+										{user?.lastname?.charAt(
+											0
+										)}
 									</AvatarFallback>
 								</Avatar>
 							</HoverCardTrigger>

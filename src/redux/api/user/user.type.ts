@@ -18,12 +18,13 @@ export type User = {
 	avatar_url: string;
 	created_at: string;
 	status: number;
+	address?: string;
 };
 
 export type UserFormData = Pick<
 	User,
-	"firstname" | "lastname" | "email" | "phone_number" | "role"
->;
+	"firstname" | "lastname" | "email" | "phone_number" | "role" | "address"
+> & { avatar_url?: File };
 
 export interface AuthState {
 	user: User | null;
