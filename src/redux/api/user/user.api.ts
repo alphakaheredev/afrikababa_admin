@@ -13,6 +13,7 @@ export const prepareHeaders = (
 		(getState() as RootState).user.token ??
 		AppStorage.getItem<AuthState>("user")?.token;
 	headers.set("accept", "application/json");
+	headers.set("Access-Control-Allow-Origin", "*");
 	if (token) {
 		headers.set("authorization", `Bearer ${token}`);
 	}
@@ -29,7 +30,7 @@ export const UserApi = createApi({
 	endpoints: (build) => ({
 		getUsersList: build.query<PaginationResults<User>, TypeQuery>({
 			query: (query) => ({
-				url: `users/`,
+				url: `users`,
 				method: "GET",
 				params: { ...query },
 			}),
@@ -46,14 +47,14 @@ export const UserApi = createApi({
 			query: ({ id, data }) => {
 				if (id) {
 					return {
-						url: `users/${id}/`,
+						url: `users/${id}`,
 
 						method: "PUT",
 						body: data,
 					};
 				}
 				return {
-					url: `users/`,
+					url: `users`,
 					method: "POST",
 					body: data,
 				};
@@ -63,8 +64,20 @@ export const UserApi = createApi({
 
 		deleteUser: build.mutation<User, number>({
 			query: (slug) => ({
-				url: `users/${slug}/`,
+				url: `users/${slug}`,
 				method: "DELETE",
+			}),
+			invalidatesTags: ["users"],
+		}),
+		//patch user status
+		updateUserStatus: build.mutation<
+			User,
+			{ id: number; status: number }
+		>({
+			query: ({ id, status }) => ({
+				url: `users/${id}/status`,
+				method: "PATCH",
+				body: { status },
 			}),
 			invalidatesTags: ["users"],
 		}),
@@ -75,4 +88,5 @@ export const {
 	useCreateOrUpdateUserMutation,
 	useGetUsersListQuery,
 	useDeleteUserMutation,
+	useUpdateUserStatusMutation,
 } = UserApi;

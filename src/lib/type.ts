@@ -1,3 +1,5 @@
+import { ROLE } from "@/redux/api/user/user.type";
+
 export interface QueryError {
 	status: number;
 	data: {
@@ -11,8 +13,6 @@ export interface ModalProps<T> {
 	close: () => void;
 }
 
-
-
 export type PaginationResults<T> = {
 	meta: {
 		total: number;
@@ -25,4 +25,5 @@ export type TypeQuery = Partial<{
 	limit?: number;
 	q?: string;
 	slug?: string;
+	role?: ROLE;
 }>;

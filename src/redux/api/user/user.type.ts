@@ -2,6 +2,7 @@ export enum ROLE {
 	admin = "ADMIN",
 	supplier = "SUPPLIER",
 	customer = "CUSTOMER",
+	forwarder = "FORWARDER",
 }
 
 export type User = {
@@ -16,6 +17,7 @@ export type User = {
 	password: string;
 	avatar_url: string;
 	created_at: string;
+	status: number;
 };
 
 export type UserFormData = Pick<

@@ -14,7 +14,7 @@ export const FaqApi = createApi({
 	endpoints: (build) => ({
 		getFaqsList: build.query<PaginationResults<Faq>, TypeQuery>({
 			query: (query) => ({
-				url: `faqs/`,
+				url: `faqs`,
 				method: "GET",
 				params: { ...query },
 			}),
@@ -31,7 +31,7 @@ export const FaqApi = createApi({
 			query: ({ id, data }) => {
 				if (id) {
 					return {
-						url: `faqs/${id}/`,
+						url: `faqs/${id}`,
 
 						method: "PUT",
 						body: data,
@@ -48,7 +48,7 @@ export const FaqApi = createApi({
 
 		deleteFaq: build.mutation<Faq, number>({
 			query: (id) => ({
-				url: `faqs/${id}/`,
+				url: `faqs/${id}`,
 				method: "DELETE",
 			}),
 			invalidatesTags: ["faq"],

@@ -14,7 +14,7 @@ export function Delete({ item }: { item: Shop }) {
 	const [deleteItem, { isSuccess, isError, error }] =
 		useDeleteShopMutation();
 	const onDelete = useDelete<Shop>({
-		item,
+		item,	
 		deleteItem,
 		isSuccess,
 		isError,
@@ -54,7 +54,7 @@ const ShopsTable = ({ q }: { q?: string }) => {
 				<div className="bg-dark w-10 h-10 rounded-full flex justify-center items-center p-2">
 					<img src={getLogoUrl(row?.logo_url)} alt="icon" />
 				</div>
-				<p>{cell}</p>
+				<span className="capitalize">{cell}</span>
 			</div>
 		);
 	};
@@ -83,7 +83,9 @@ const ShopsTable = ({ q }: { q?: string }) => {
 		{
 			header: "Nom du propriétaire",
 			name: "user",
-			formatter: (cell: User) => getUserName(cell),
+			formatter: (cell: User) => (
+				<span className="capitalize">{getUserName(cell)}</span>
+			),
 		},
 		{
 			header: "Statut",

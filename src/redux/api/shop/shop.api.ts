@@ -14,7 +14,7 @@ export const ShopApi = createApi({
 	endpoints: (build) => ({
 		getShopsList: build.query<PaginationResults<Shop>, TypeQuery>({
 			query: (query) => ({
-				url: `shops/`,
+				url: `shops`,
 				method: "GET",
 				params: { ...query },
 			}),
@@ -23,7 +23,7 @@ export const ShopApi = createApi({
 
 		deleteShop: build.mutation<Shop, number>({
 			query: (slug) => ({
-				url: `shops/${slug}/`,
+				url: `shops/${slug}`,
 				method: "DELETE",
 			}),
 			invalidatesTags: ["shops"],
@@ -31,7 +31,7 @@ export const ShopApi = createApi({
 		getProductsList: build.query<PaginationResults<Product>, TypeQuery>(
 			{
 				query: (query) => ({
-					url: `products/`,
+					url: `products`,
 					method: "GET",
 					params: { ...query },
 				}),
@@ -41,7 +41,7 @@ export const ShopApi = createApi({
 
 		deleteProduct: build.mutation<Product, number>({
 			query: (slug) => ({
-				url: `products/${slug}/`,
+				url: `products/${slug}`,
 				method: "DELETE",
 			}),
 			invalidatesTags: ["products"],

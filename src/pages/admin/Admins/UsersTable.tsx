@@ -1,14 +1,18 @@
 import Table, { Column } from "@/components/ui/Table";
-import { ButtonDelete, ButtonEdit } from "@/components/ui/button";
-import { useModal } from "@/hooks/hooks";
+import { ButtonAdd, ButtonDelete, ButtonEdit } from "@/components/ui/button";
+import { useModal, useSearch } from "@/hooks/hooks";
 import { useDelete } from "@/hooks/useDelete";
 import { formatRole, getUserAvatarUrl, getUserName } from "@/lib/utils";
 import {
 	useDeleteUserMutation,
 	useGetUsersListQuery,
+	useUpdateUserStatusMutation,
 } from "@/redux/api/user/user.api";
 import { ROLE, User } from "@/redux/api/user/user.type";
 import UserModal from "./UserModal";
+import { InputSearch } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
+import { toast } from "react-toastify";
 
 const rolesFormatter = (role: ROLE) => (
 	<span className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-xs">
@@ -30,9 +34,17 @@ export function Delete({ item }: { item: User }) {
 	return <ButtonDelete onClick={onDelete} />;
 }
 
-const UsersTable = () => {
-	const { data: result, isLoading } = useGetUsersListQuery({});
-	const { isOpen, item, closeModal, openEditModal } = useModal<User>();
+const UsersTable = ({ role }: { role: ROLE }) => {
+	const { search, handleSearch } = useSearch();
+	const { isOpen, item, closeModal, openEditModal, openModal } =
+		useModal<User>();
+
+	const { data: result, isLoading } = useGetUsersListQuery({
+		role,
+		q: search,
+	});
+	const [updateUserStatus] = useUpdateUserStatusMutation();
+
 	// console.log(result);
 
 	const actionFormatter = (_cell: string, row: User) => (
@@ -42,12 +54,27 @@ const UsersTable = () => {
 		</div>
 	);
 
-	// const statusFormatter = (status: string) => {
-	// 	const statusClass =
-	// 		status === "Actif" ? "bg-green-500" : "bg-red-500";
-	// 	return <Badge className={statusClass}>{status}</Badge>;
-	// };
+	const statusFormatter = (status: number, row: User) => {
+		const handleStatusChange = async (checked: boolean) => {
+			const res = await updateUserStatus({
+				id: row.id,
+				status: checked ? 1 : 0,
+			});
+			if ("data" in res) {
+				toast.success("Statut de l'utilisateur modifié");
+			} else {
+				toast.error("Une erreur est survenue");
+			}
+		};
+		return (
+			<Switch
+				checked={status === 1}
+				onCheckedChange={handleStatusChange}
+			/>
+		);
+	};
 
+	// @ts-ignore
 	const columns: Column<User>[] = [
 		{
 			header: "Identifiant",
@@ -75,17 +102,36 @@ const UsersTable = () => {
 			header: "Téléphone",
 			name: "phone_number",
 		},
+		// role === ROLE.supplier && {
+		// 	header: "Boutique",
+		// 	name: "shop_name",
+		// },
 		{
 			header: "Type",
 			name: "role",
 			formatter: rolesFormatter,
 		},
-		// { header: "Statut", name: "status", formatter: statusFormatter },
+		{ header: "Statut", name: "status", formatter: statusFormatter },
 		{ header: "Action", name: "id", formatter: actionFormatter },
-	];
-
+	].filter(Boolean);
 	return (
 		<>
+			<div className="flex items-center justify-between mb-8">
+				<h3 className="text-dark font-semibold">
+					{formatRole(role)}s
+				</h3>
+				<div className="flex items-center justify-end gap-3 lg:w-2/3">
+					<InputSearch
+						placeholder="Recherchez par nom ou email"
+						onChange={handleSearch}
+					/>
+					{role === ROLE.admin && (
+						<ButtonAdd onClick={openModal}>
+							Ajoutez un administrateur
+						</ButtonAdd>
+					)}
+				</div>
+			</div>
 			<Table<User>
 				data={result?.data}
 				columns={columns}

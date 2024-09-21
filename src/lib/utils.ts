@@ -25,6 +25,7 @@ export function formatRole(role: ROLE) {
 	if (role === ROLE.admin) return "Administrateur";
 	if (role === ROLE.supplier) return "Fabricant";
 	if (role === ROLE.customer) return "Client";
+	if (role === ROLE.forwarder) return "Transitaire";
 	return role;
 }
 

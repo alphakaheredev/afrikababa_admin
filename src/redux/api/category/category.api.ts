@@ -17,7 +17,7 @@ export const CategoryApi = createApi({
 			TypeQuery
 		>({
 			query: (query) => ({
-				url: `categories/`,
+				url: `categories`,
 				method: "GET",
 				params: { ...query },
 			}),
@@ -34,14 +34,14 @@ export const CategoryApi = createApi({
 			query: ({ id, data }) => {
 				if (id) {
 					return {
-						url: `categories/${id}/`,
+						url: `categories/${id}`,
 
 						method: "PUT",
 						body: data,
 					};
 				}
 				return {
-					url: `categories/`,
+					url: `categories`,
 					method: "POST",
 					body: data,
 				};
@@ -51,7 +51,7 @@ export const CategoryApi = createApi({
 
 		deleteCategory: build.mutation<Category, number>({
 			query: (slug) => ({
-				url: `categories/${slug}/`,
+				url: `categories/${slug}`,
 				method: "DELETE",
 			}),
 			invalidatesTags: ["categories"],
