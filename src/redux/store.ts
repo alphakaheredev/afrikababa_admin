@@ -6,6 +6,8 @@ import { currentEnv, Env } from "@/lib/http";
 import { CategoryApi } from "./api/category/category.api";
 import { FaqApi } from "./api/faq/faq.api";
 import { ShopApi } from "./api/shop/shop.api";
+import { ProductApi } from "./api/product/product.api";
+import { OrderApi } from "./api/order/order.api";
 
 export const store = configureStore({
 	reducer: {
@@ -16,6 +18,8 @@ export const store = configureStore({
 		[CategoryApi.reducerPath]: CategoryApi.reducer,
 		[FaqApi.reducerPath]: FaqApi.reducer,
 		[ShopApi.reducerPath]: ShopApi.reducer,
+		[ProductApi.reducerPath]: ProductApi.reducer,
+		[OrderApi.reducerPath]: OrderApi.reducer,
 	},
 	devTools: Env === currentEnv,
 	// @ts-ignore
@@ -26,6 +30,8 @@ export const store = configureStore({
 		CategoryApi.middleware,
 		FaqApi.middleware,
 		ShopApi.middleware,
+		ProductApi.middleware,
+		OrderApi.middleware,
 	],
 });
 

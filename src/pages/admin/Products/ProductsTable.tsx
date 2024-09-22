@@ -1,16 +1,19 @@
-import { Badge } from "@/components/ui/badge";
 import Table, { Column } from "@/components/ui/Table";
-import productImg from "@/assets/images/admin/computer.png";
-import { ButtonDelete, ButtonEdit } from "@/components/ui/button";
+import { ButtonDelete } from "@/components/ui/button";
 import {
 	useDeleteProductMutation,
 	useGetProductsListQuery,
-} from "@/redux/api/shop/shop.api";
+	useUpdateProductStatusMutation,
+} from "@/redux/api/product/product.api";
 import { useDelete } from "@/hooks/useDelete";
-import { Product, Shop } from "@/redux/api/shop/shop.type";
+import { Product, ProductQuery } from "@/redux/api/product/product.type";
 import { Category } from "@/redux/api/category/category.type";
+import { getImageUrl } from "@/lib/utils";
+import { toast } from "react-toastify";
+import { Switch } from "@/components/ui/switch";
+import { Shop } from "@/redux/api/shop/shop.type";
 
-export function Delete({ item }: { item: Product }) {
+function Delete({ item }: { item: Product }) {
 	const [deleteItem, { isSuccess, isError, error }] =
 		useDeleteProductMutation();
 	const onDelete = useDelete<Product>({
@@ -24,34 +27,58 @@ export function Delete({ item }: { item: Product }) {
 	return <ButtonDelete onClick={onDelete} />;
 }
 
-const ProductsTable = ({ q }: { q?: string }) => {
-	const { data: result, isLoading } = useGetProductsListQuery({ q });
+const ProductsTable = ({ q, shop_id, category_id }: ProductQuery) => {
+	const { data: result, isLoading } = useGetProductsListQuery({
+		q,
+		shop_id,
+		category_id,
+	});
+	const [updateProductStatus] = useUpdateProductStatusMutation();
 
-	const stockStatusFormatter = (cell: string) => {
-		let colorClass = "";
+	// const stockStatusFormatter = (cell: string) => {
+	// 	let colorClass = "";
 
-		switch (cell) {
-			case "In Stock":
-				colorClass = "bg-th-primary";
-				break;
-			case "Out of Stock":
-				colorClass = "bg-red-500";
-				break;
-			case "Low Stock":
-				colorClass = "bg-[#FB8885]";
-				break;
-			default:
-				colorClass = "bg-dark";
-		}
+	// 	switch (cell) {
+	// 		case "In Stock":
+	// 			colorClass = "bg-th-primary";
+	// 			break;
+	// 		case "Out of Stock":
+	// 			colorClass = "bg-red-500";
+	// 			break;
+	// 		case "Low Stock":
+	// 			colorClass = "bg-[#FB8885]";
+	// 			break;
+	// 		default:
+	// 			colorClass = "bg-dark";
+	// 	}
 
-		return <Badge className={colorClass}>{cell}</Badge>;
+	// 	return <Badge className={colorClass}>{cell}</Badge>;
+	// };
+
+	const statusFormatter = (status: string, row: Product) => {
+		const handleStatusChange = async (checked: boolean) => {
+			const res = await updateProductStatus({
+				id: row.id,
+				status: checked ? "active" : "inactive",
+			});
+			if ("data" in res) {
+				toast.success("Statut du produit modifié");
+			} else {
+				toast.error("Une erreur est survenue");
+			}
+		};
+		return (
+			<Switch
+				checked={status === "active"}
+				onCheckedChange={handleStatusChange}
+			/>
+		);
 	};
-
-	const nameProductFormatter = (cell: string) => {
+	const nameProductFormatter = (cell: string, row: Product) => {
 		return (
 			<div className="flex items-center gap-2">
 				<img
-					src={productImg}
+					src={getImageUrl(row?.main_image_url)}
 					alt={cell}
 					className="w-10 object-contain"
 				/>
@@ -60,10 +87,9 @@ const ProductsTable = ({ q }: { q?: string }) => {
 		);
 	};
 
-	const actionFormatter = () => (
+	const actionFormatter = (_cell: string, row: Product) => (
 		<div className="flex items-center gap-2">
-			<ButtonEdit />
-			<ButtonDelete />
+			<Delete item={row} />
 		</div>
 	);
 
@@ -84,6 +110,8 @@ const ProductsTable = ({ q }: { q?: string }) => {
 			name: "shop",
 			formatter: (cell: Shop) => cell?.company_name,
 		},
+		{ header: "Statut", name: "status", formatter: statusFormatter },
+
 		// { header: "Type de produits", name: "type" },
 		{ header: "Prix unitaire", name: "price" },
 		// {

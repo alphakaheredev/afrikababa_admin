@@ -50,6 +50,11 @@ export function getLogoUrl(icon: string) {
 	return "/images/diamond.png";
 }
 
+export function getImageUrl(image_url: string) {
+	if (image_url) return image_url;
+	return "/images/product-default.png";
+}
+
 export function cleannerError(
 	errors: any,
 	cleanner: any,

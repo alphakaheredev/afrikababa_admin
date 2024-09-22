@@ -1,58 +1,53 @@
 import { FilterSelect } from "@/components/ui/Select";
+import { useGetCategorysListQuery } from "@/redux/api/category/category.api";
+import { useGetShopsListQuery } from "@/redux/api/shop/shop.api";
 
-const groupOptions = [
-  { label: "Groupe 1", value: "group1" },
-  { label: "Groupe 2", value: "group2" },
-];
+interface Props {
+	handleFilter: (
+		e: React.ChangeEvent<HTMLSelectElement>,
+		type: "category" | "shop"
+	) => void;
+}
 
-const productOptions = [
-  { label: "Audi", value: "audi" },
-  { label: "Mercedes", value: "mercedes" },
-  { label: "Hyundai", value: "hyundai" },
-  { label: "Moto électrique", value: "electric_bike" },
-  { label: "Moto", value: "motorbike" },
-  { label: "Roger Rover", value: "roger_rover" },
-  { label: "Nissan", value: "nissan" },
-  { label: "Camion benne", value: "dump_truck" },
-  { label: "BMW", value: "bmw" },
-  { label: "Tricycle", value: "tricycle" },
-  { label: "Moto Honda", value: "honda_bike" },
-  { label: "Suzuki", value: "suzuki" },
-];
+const FilterProductSection: React.FC<Props> = ({ handleFilter }) => {
+	const { data: shops } = useGetShopsListQuery({});
+	const { data: categories } = useGetCategorysListQuery({});
 
-const categoryOptions = [
-  { label: "Transport", value: "transport" },
-  { label: "Électronique", value: "electronics" },
-  { label: "Santé et beauté", value: "health_beauty" },
-  { label: "Maison et bureau", value: "home_office" },
-  { label: "Mode", value: "fashion" },
-  { label: "Sports", value: "sports" },
-  { label: "Alimentation", value: "food" },
-  { label: "Autres", value: "others" },
-];
-
-const FilterProductSection = () => {
-  return (
-    <div className="p-4 bg-white rounded shadow-md mb-12 mx-1">
-      <div className="flex flex-col lg:flex-row gap-4 py-3 px-3">
-        <FilterSelect
-          id="group"
-          label="Filtre par groupe"
-          options={groupOptions}
-        />
-        <FilterSelect
-          id="group"
-          label="Filtre par catégories"
-          options={categoryOptions}
-        />
-        <FilterSelect
+	return (
+		<div className="p-4 bg-white rounded shadow-md mb-12 mx-1">
+			<div className="flex flex-col lg:flex-row gap-4 py-3 px-3">
+				<FilterSelect
+					id="group"
+					label="Filtre par boutique"
+					options={[
+						{ label: "Toutes", value: undefined },
+						...(shops?.data?.map((shop) => ({
+							label: shop.company_name,
+							value: shop.id.toString(),
+						})) || []),
+					]}
+					onChange={(e) => handleFilter(e, "shop")}
+				/>
+				<FilterSelect
+					id="group"
+					label="Filtre par catégorie"
+					options={[
+						{ label: "Toutes", value: undefined },
+						...(categories?.data.map((category) => ({
+							label: category.name,
+							value: category.id.toString(),
+						})) || []),
+					]}
+					onChange={(e) => handleFilter(e, "category")}
+				/>
+				{/* <FilterSelect
           id="group"
           label="Filtre par produits"
           options={productOptions}
-        />
-      </div>
-    </div>
-  );
+        /> */}
+			</div>
+		</div>
+	);
 };
 
-export default FilterProductSection;
+export default FilterProductSection;  
