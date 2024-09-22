@@ -8,7 +8,6 @@ import {
 import useScrollPosition from "@/hooks/useScrollPosition";
 import { IconBurger } from "@/components/common/Icons";
 import { adminPaths } from "@/routes/paths";
-import avatar from "@/assets/images/avatar.png";
 import { CiSearch } from "react-icons/ci";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { isSupplier } from "@/routes/routerUtils";

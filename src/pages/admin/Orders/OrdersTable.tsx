@@ -1,75 +1,98 @@
 import Table, { Column } from "@/components/ui/Table";
-import { orders } from "./data";
-import { ButtonDelete } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { getInitialsOfName } from "@/lib/utils";
+import { formatAmount, formatDate, getInitialsOfName } from "@/lib/utils";
 import { Link } from "react-router-dom";
-
-interface Order {
-  trackingNumber: string;
-  client: string;
-  email: string;
-  products: number;
-  orderDate: string;
-  total: string;
-  status: string;
-}
+import { useGetOrdersListQuery } from "@/redux/api/order/order.api";
+import { Order, OrderItem } from "@/redux/api/order/order.type";
+import { User } from "@/redux/api/user/user.type";
 
 const OrdersTable = () => {
-  const statusFormatter = (cell: string) => {
-    switch (cell) {
-      case "Annulé":
-        return <Badge className="bg-red-500">{cell}</Badge>;
-      case "En cours":
-        return <Badge className="bg-teal-500">{cell}</Badge>;
-      case "Livré":
-        return <Badge className="bg-th-primary">{cell}</Badge>;
-      default:
-        return <Badge>{cell}</Badge>;
-    }
-  };
+	const { data: orders, isLoading } = useGetOrdersListQuery({});
+	console.log(orders);
 
-  const clientFormatter = (cell: string, row: Order) => {
-    return (
-      <div className="flex items-center gap-3">
-        <span className="w-7 h-7 rounded-full flex items-center justify-center bg-[#C3FF97] text-[#306708] font-medium text-sm">
-          {getInitialsOfName(cell)}
-        </span>
-        <div>
-          <h5 className="text-dark font-semibold">{cell}</h5>
-          <p>{row.email}</p>
-        </div>
-      </div>
-    );
-  };
+	const statusFormatter = (cell: string) => {
+		switch (cell) {
+			case "Annulé":
+				return <Badge className="bg-red-500">{cell}</Badge>;
+			case "En cours":
+				return <Badge className="bg-teal-500">{cell}</Badge>;
+			case "Livré":
+				return <Badge className="bg-th-primary">{cell}</Badge>;
+			default:
+				return <Badge>{cell}</Badge>;
+		}
+	};
 
-  const redirectFormatter = (cell: string) => {
-    return <Link to={`detail/${cell}`}>{cell}</Link>;
-  };
+	const clientFormatter = (cell: User) => {
+		return (
+			<div className="flex items-center gap-3">
+				<span className="min-w-8 min-h-8 p-1 rounded-full flex items-center justify-center bg-[#C3FF97] text-[#306708] font-medium text-sm">
+					{getInitialsOfName(
+						cell?.firstname + " " + cell?.lastname
+					)}
+				</span>
+				<div>
+					<h5 className="text-dark font-semibold">
+						{cell?.firstname} {cell?.lastname}
+					</h5>
+					<p>{cell?.email}</p>
+				</div>
+			</div>
+		);
+	};
 
-  const columns: Column<Order>[] = [
-    {
-      header: "Numéro de suivi",
-      name: "trackingNumber",
-      formatter: redirectFormatter,
-    },
-    { header: "Client", name: "client", formatter: clientFormatter },
-    { header: "Produits", name: "products" },
-    { header: "Date de commande", name: "orderDate" },
-    { header: "Total", name: "total" },
-    {
-      header: "Statut",
-      name: "status",
-      formatter: statusFormatter,
-    },
-    {
-      header: "Action",
-      name: "actions",
-      formatter: () => <ButtonDelete />,
-    },
-  ];
+	const orderItemsFormatter = (cell: OrderItem[]) => {
+		return (
+			<div>
+				{cell.map((item) => item?.product?.name).join(", ")}
+			</div>
+		);
+	};
 
-  return <Table<Order> data={orders} columns={columns} />;
+	const redirectFormatter = (cell: string) => {
+		return <Link to={`detail/${cell}`}>{cell}</Link>;
+	};
+
+	const columns: Column<Order>[] = [
+		{
+			header: "Numéro de suivi",
+			name: "order_number",
+			formatter: redirectFormatter,
+		},
+		{ header: "Client", name: "user", formatter: clientFormatter },
+		{
+			header: "Produits",
+			name: "order_items",
+			formatter: orderItemsFormatter,
+		},
+		{
+			header: "Date de commande",
+			name: "created_at",
+			formatter: (cell) => formatDate(cell),
+		},
+		{
+			header: "Total",
+			name: "total_price",
+			formatter: (cell) => formatAmount(cell),
+		},
+		{
+			header: "Statut",
+			name: "status",
+			formatter: statusFormatter,
+		},
+		{
+			header: "Action",
+			name: "actions",
+		},
+	];
+
+	return (
+		<Table<Order>
+			data={orders?.data}
+			columns={columns}
+			isLoading={isLoading}
+		/>
+	);
 };
 
 export default OrdersTable;

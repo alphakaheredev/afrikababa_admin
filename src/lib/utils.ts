@@ -70,3 +70,18 @@ export function cleannerError(
 		);
 	}
 }
+
+
+// format date to "Il y a 10 jours"
+export function formatDate(date: string) {
+	const now = new Date();
+	const createdAt = new Date(date);
+	const diffTime = Math.abs(now.getTime() - createdAt.getTime());
+	const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+	return `Il y a ${diffDays} jours`;
+}
+
+// format amount to "100.000F"
+export function formatAmount(amount: number) {
+	return `${amount.toLocaleString("fr-FR")}F`;
+}

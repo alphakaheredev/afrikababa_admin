@@ -1,14 +1,22 @@
 import { User } from "../user/user.type";
-import { Shop } from "../shop/shop.type";
+import { Product, Shop } from "../shop/shop.type";
 
-export type OrderStatus = "pending" | "accepted" | "rejected" | "delivered";
+export type OrderStatus = "PENDING" | "ACCEPTED" | "REJECTED" | "DELIVERED";
 
 export type Order = {
 	id: number;
-	user_id: number;
+	order_number: string;
 	user: User;
-	shop_id: number;
 	shop: Shop;
-	order_status: OrderStatus;
+	order_items: OrderItem[];
+	status: OrderStatus;
+	total_price: number;
 	created_at: string;
+};
+
+export type OrderItem = {
+	id: number;
+	product: Product;
+	quantity: number;
+	price: number;
 };
