@@ -47,7 +47,7 @@ export const OrderApi = createApi({
 		>({
 			query: ({ id, status }) => ({
 				url: `orders/${id}/status`,
-				method: "GET",
+				method: "POST",
 				body: { status },
 			}),
 			invalidatesTags: ["orders"],

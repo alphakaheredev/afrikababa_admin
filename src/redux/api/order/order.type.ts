@@ -1,5 +1,6 @@
 import { User } from "../user/user.type";
-import { Product, Shop } from "../shop/shop.type";
+import { Shop } from "../shop/shop.type";
+import { Product } from "../product/product.type";
 
 export enum OrderStatus {
 	PENDING = "PENDING",

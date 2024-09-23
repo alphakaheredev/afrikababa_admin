@@ -8,6 +8,7 @@ import { FaqApi } from "./api/faq/faq.api";
 import { ShopApi } from "./api/shop/shop.api";
 import { ProductApi } from "./api/product/product.api";
 import { OrderApi } from "./api/order/order.api";
+import { PaymentApi } from "./api/payment/payment.api";
 
 export const store = configureStore({
 	reducer: {
@@ -20,6 +21,7 @@ export const store = configureStore({
 		[ShopApi.reducerPath]: ShopApi.reducer,
 		[ProductApi.reducerPath]: ProductApi.reducer,
 		[OrderApi.reducerPath]: OrderApi.reducer,
+		[PaymentApi.reducerPath]: PaymentApi.reducer,
 	},
 	devTools: Env === currentEnv,
 	// @ts-ignore
@@ -32,6 +34,7 @@ export const store = configureStore({
 		ShopApi.middleware,
 		ProductApi.middleware,
 		OrderApi.middleware,
+		PaymentApi.middleware,
 	],
 });
 
