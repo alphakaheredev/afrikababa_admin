@@ -24,6 +24,7 @@ export type Shop = {
 	total_product: number;
 	total_order: number;
 	user: User;
+	is_active: boolean;
 	created_at: string;
 };
 

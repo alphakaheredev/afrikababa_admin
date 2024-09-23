@@ -1,7 +1,16 @@
 import { User } from "../user/user.type";
 import { Product, Shop } from "../shop/shop.type";
 
-export type OrderStatus = "PENDING" | "ACCEPTED" | "REJECTED" | "DELIVERED";
+export enum OrderStatus {
+	PENDING = "PENDING",
+	ACCEPTED = "ACCEPTED",
+	REJECTED = "REJECTED",
+	DELIVERED = "DELIVERED",
+	SHIPPED = "SHIPPED",
+	CANCELLED = "CANCELLED",
+	DELIVERED_FOR_TRANSIT = "DELIVERED_FOR_TRANSIT",
+	IN_PROGRESS = "IN_PROGRESS",
+}
 
 export type Order = {
 	id: number;

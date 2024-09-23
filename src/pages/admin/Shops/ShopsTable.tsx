@@ -1,20 +1,22 @@
-import { Badge } from "@/components/ui/badge";
 import { ButtonDelete } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
 import Table, { Column } from "@/components/ui/Table";
 import { useDelete } from "@/hooks/useDelete";
 import { getLogoUrl, getUserName } from "@/lib/utils";
 import {
 	useDeleteShopMutation,
 	useGetShopsListQuery,
+	useToggleShopStatusMutation,
 } from "@/redux/api/shop/shop.api";
 import { Shop } from "@/redux/api/shop/shop.type";
 import { User } from "@/redux/api/user/user.type";
+import { toast } from "react-toastify";
 
 export function Delete({ item }: { item: Shop }) {
 	const [deleteItem, { isSuccess, isError, error }] =
 		useDeleteShopMutation();
 	const onDelete = useDelete<Shop>({
-		item,	
+		item,
 		deleteItem,
 		isSuccess,
 		isError,
@@ -26,22 +28,28 @@ export function Delete({ item }: { item: Shop }) {
 
 const ShopsTable = ({ q }: { q?: string }) => {
 	const { data: result, isLoading } = useGetShopsListQuery({ q });
+	console.log(result);
 
-	const statusFormatter = (cell: string = "actif") => {
-		let colorClass = "";
+	const [toggleShopStatus] = useToggleShopStatusMutation();
 
-		switch (cell) {
-			case "Actif":
-				colorClass = "bg-green-500 text-white";
-				break;
-			case "Inactif":
-				colorClass = "bg-orange-500 text-white";
-				break;
-			default:
-				colorClass = "bg-gray-500 text-white";
-		}
+	const statusFormatter = (cell: string, row: Shop) => {
+		const handleStatusChange = async () => {
+			console.log(cell);
 
-		return <Badge className={`${colorClass}`}>{cell}</Badge>;
+			const res = await toggleShopStatus(row.id);
+			if ("data" in res) {
+				toast.success("Statut de la boutique modifié");
+			} else {
+				toast.error("Une erreur est survenue");
+			}
+		};
+
+		return (
+			<Switch
+				checked={!!cell}
+				onCheckedChange={handleStatusChange}
+			/>
+		);
 	};
 
 	const actionFormatter = (_cell: string, row: Shop) => {
@@ -89,7 +97,7 @@ const ShopsTable = ({ q }: { q?: string }) => {
 		},
 		{
 			header: "Statut",
-			name: "verified_at",
+			name: "is_active",
 			formatter: statusFormatter,
 		},
 		{ header: "Action", name: "id", formatter: actionFormatter },

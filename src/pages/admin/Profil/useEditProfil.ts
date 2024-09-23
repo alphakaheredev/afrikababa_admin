@@ -27,6 +27,7 @@ const profileValidationSchema = yup.object().shape({
 
 export const useEditProfil = () => {
 	const { user } = useAppSelector((state) => state.user);
+	console.log(user);
 	const dispatch = useAppDispatch();
 	const [avatar, setAvatar] = useState<string | null>(null);
 	const {
@@ -91,7 +92,8 @@ export const useEditProfil = () => {
 		});
 
 		if ("data" in res) {
-			dispatch(onSetUser(res.data as User));
+			// @ts-ignore
+			dispatch(onSetUser(res.data.data as User));
 			toast.success("Profil mis à jour avec succès");
 		} else if ("error" in res) {
 			const error = res.error as QueryError;

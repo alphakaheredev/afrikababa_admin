@@ -1,26 +1,39 @@
 import Table, { Column } from "@/components/ui/Table";
 import { Badge } from "@/components/ui/badge";
-import { formatAmount, formatDate, getInitialsOfName } from "@/lib/utils";
+import {
+	cn,
+	formatAmount,
+	formatDate,
+	formatOrderStatus,
+	formatOrderStatusToBadge,
+	getInitialsOfName,
+} from "@/lib/utils";
 import { Link } from "react-router-dom";
-import { useGetOrdersListQuery } from "@/redux/api/order/order.api";
-import { Order, OrderItem } from "@/redux/api/order/order.type";
+import {
+	useGetOrdersListQuery,
+	useChangeOrderStatusMutation,
+} from "@/redux/api/order/order.api";
+import { Order, OrderItem, OrderStatus } from "@/redux/api/order/order.type";
 import { User } from "@/redux/api/user/user.type";
+import {
+	DropdownMenu,
+	DropdownMenuTrigger,
+	DropdownMenuContent,
+	DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
+import { ChevronDownIcon } from "lucide-react";
+import { toast } from "react-toastify";
 
 const OrdersTable = () => {
 	const { data: orders, isLoading } = useGetOrdersListQuery({});
-	console.log(orders);
+	const [changeOrderStatus] = useChangeOrderStatusMutation();
 
-	const statusFormatter = (cell: string) => {
-		switch (cell) {
-			case "Annulé":
-				return <Badge className="bg-red-500">{cell}</Badge>;
-			case "En cours":
-				return <Badge className="bg-teal-500">{cell}</Badge>;
-			case "Livré":
-				return <Badge className="bg-th-primary">{cell}</Badge>;
-			default:
-				return <Badge>{cell}</Badge>;
-		}
+	const statusFormatter = (cell: OrderStatus) => {
+		return (
+			<Badge className={cn(formatOrderStatusToBadge(cell))}>
+				{formatOrderStatus(cell)}
+			</Badge>
+		);
 	};
 
 	const clientFormatter = (cell: User) => {
@@ -53,6 +66,44 @@ const OrdersTable = () => {
 		return <Link to={`detail/${cell}`}>{cell}</Link>;
 	};
 
+	const changeStatus = async (status: OrderStatus, row: Order) => {
+		const res = await changeOrderStatus({ id: row.id, status });
+		if ("data" in res) {
+			console.log(res.data);
+			toast.success("Statut de commande modifié");
+		}
+		if (res.error) {
+			console.log(res.error);
+		}
+	};
+
+	const actionFormatter = (_cell: string, row: Order) => {
+		return (
+			<DropdownMenu>
+				<DropdownMenuTrigger asChild>
+					<button className="flex items-center gap-2 bg-dark text-white px-3 py-2">
+						<span>Changer le statut</span>
+						<ChevronDownIcon className="w-4 h-4" />
+					</button>
+				</DropdownMenuTrigger>
+				<DropdownMenuContent>
+					{Object.values(OrderStatus).map((status) => (
+						<DropdownMenuItem
+							key={status}
+							onClick={() =>
+								changeStatus(status, row)
+							}
+						>
+							<span>
+								{formatOrderStatus(status)}
+							</span>
+						</DropdownMenuItem>
+					))}
+				</DropdownMenuContent>
+			</DropdownMenu>
+		);
+	};
+
 	const columns: Column<Order>[] = [
 		{
 			header: "Numéro de suivi",
@@ -83,6 +134,7 @@ const OrdersTable = () => {
 		{
 			header: "Action",
 			name: "actions",
+			formatter: actionFormatter,
 		},
 	];
 

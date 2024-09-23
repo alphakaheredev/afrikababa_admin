@@ -28,7 +28,19 @@ export const ShopApi = createApi({
 			}),
 			invalidatesTags: ["shops"],
 		}),
+
+		toggleShopStatus: build.mutation<Shop, number>({
+			query: (id) => ({
+				url: `shops/${id}/toggle-status`,
+				method: "GET",
+			}),
+			invalidatesTags: ["shops"],
+		}),
 	}),
 });
 
-export const { useGetShopsListQuery, useDeleteShopMutation } = ShopApi;
+export const {
+	useGetShopsListQuery,
+	useDeleteShopMutation,
+	useToggleShopStatusMutation,
+} = ShopApi;

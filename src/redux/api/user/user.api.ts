@@ -47,9 +47,9 @@ export const UserApi = createApi({
 			query: ({ id, data }) => {
 				if (id) {
 					return {
-						url: `users/${id}`,
+						url: `users/update/${id}`,
 
-						method: "PUT",
+						method: "POST",
 						body: data,
 					};
 				}

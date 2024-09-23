@@ -40,6 +40,18 @@ export const OrderApi = createApi({
 			}),
 			invalidatesTags: ["orders"],
 		}),
+
+		changeOrderStatus: build.mutation<
+			Order,
+			{ id: number; status: OrderStatus }
+		>({
+			query: ({ id, status }) => ({
+				url: `orders/${id}/status`,
+				method: "GET",
+				body: { status },
+			}),
+			invalidatesTags: ["orders"],
+		}),
 	}),
 });
 
@@ -47,4 +59,5 @@ export const {
 	useGetOrdersListQuery,
 	useDeleteOrderMutation,
 	useUpdateOrderStatusMutation,
+	useChangeOrderStatusMutation,
 } = OrderApi;

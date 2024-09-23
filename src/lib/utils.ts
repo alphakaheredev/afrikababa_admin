@@ -1,3 +1,4 @@
+import { OrderStatus } from "@/redux/api/order/order.type";
 import { ROLE, User } from "@/redux/api/user/user.type";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
@@ -71,7 +72,6 @@ export function cleannerError(
 	}
 }
 
-
 // format date to "Il y a 10 jours"
 export function formatDate(date: string) {
 	const now = new Date();
@@ -84,4 +84,31 @@ export function formatDate(date: string) {
 // format amount to "100.000F"
 export function formatAmount(amount: number) {
 	return `${amount.toLocaleString("fr-FR")}F`;
+}
+
+// format order status
+export function formatOrderStatus(status: OrderStatus) {
+	if (status === OrderStatus.PENDING) return "En attente";
+	if (status === OrderStatus.ACCEPTED) return "Accepté";
+	if (status === OrderStatus.REJECTED) return "Rejeté";
+	if (status === OrderStatus.DELIVERED) return "Livré";
+	if (status === OrderStatus.SHIPPED) return "Expédié";
+	if (status === OrderStatus.CANCELLED) return "Annulé";
+	if (status === OrderStatus.DELIVERED_FOR_TRANSIT)
+		return "Livré pour transit";
+	if (status === OrderStatus.IN_PROGRESS) return "En cours";
+	return status;
+}
+
+// format order status to badge
+export function formatOrderStatusToBadge(status: OrderStatus) {
+	if (status === OrderStatus.PENDING) return "bg-gray-900";
+	if (status === OrderStatus.ACCEPTED) return "bg-green-500";
+	if (status === OrderStatus.REJECTED) return "bg-red-500";
+	if (status === OrderStatus.DELIVERED) return "bg-green-500";
+	if (status === OrderStatus.SHIPPED) return "bg-purple-500";
+	if (status === OrderStatus.CANCELLED) return "bg-red-500";
+	if (status === OrderStatus.DELIVERED_FOR_TRANSIT) return "bg-orange-500";
+	if (status === OrderStatus.IN_PROGRESS) return "bg-gray-300";
+	return "bg-gray-500";
 }
