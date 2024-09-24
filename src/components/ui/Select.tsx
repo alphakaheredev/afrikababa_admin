@@ -1,4 +1,6 @@
 import React from "react";
+import { Error } from "../common/Error";
+import { FieldError } from "react-hook-form";
 
 interface Option {
 	label: string;
@@ -6,13 +8,14 @@ interface Option {
 }
 
 interface Props extends React.InputHTMLAttributes<HTMLSelectElement> {
-  label?: string;
-  variant?: "primary" | "secondary" | "auth";
-  options: Option[];
+	label?: string;
+	variant?: "primary" | "secondary" | "auth";
+	options: Option[];
+	error?: string | FieldError;
 }
 
 const Select = React.forwardRef<HTMLSelectElement, Props>(
-	({ id, label, placeholder, options, ...rest }, ref) => {
+	({ id, label, placeholder, options, error, ...rest }, ref) => {
 		return (
 			<div className="flex-1">
 				{label && (
@@ -26,7 +29,7 @@ const Select = React.forwardRef<HTMLSelectElement, Props>(
 				<select
 					id={id}
 					ref={ref}
-					className="mt-1 block w-full py-3 px-2 border border-th-gray-c9 text-th-gray-c9 text-sm outline-none"
+					className="mt-1 block w-full py-3 px-2 border border-th-gray-c9 placeholder:text-th-gray-c9 text-gray-800 text-sm outline-none bg-white"
 					{...rest}
 				>
 					{placeholder && (
@@ -41,6 +44,7 @@ const Select = React.forwardRef<HTMLSelectElement, Props>(
 						</option>
 					))}
 				</select>
+				<Error error={error} />
 			</div>
 		);
 	}

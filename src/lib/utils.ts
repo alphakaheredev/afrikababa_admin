@@ -1,3 +1,4 @@
+import { ConditionType } from "@/redux/api/condition/condition.type";
 import { OrderStatus } from "@/redux/api/order/order.type";
 import { ROLE, User } from "@/redux/api/user/user.type";
 import { type ClassValue, clsx } from "clsx";
@@ -111,4 +112,21 @@ export function formatOrderStatusToBadge(status: OrderStatus) {
 	if (status === OrderStatus.DELIVERED_FOR_TRANSIT) return "bg-orange-500";
 	if (status === OrderStatus.IN_PROGRESS) return "bg-gray-300";
 	return "bg-gray-500";
+}
+
+// format condition type
+export function formatConditionType(type: ConditionType) {
+	if (type === ConditionType.terms) return "Termes et conditions";
+	if (type === ConditionType.legal) return "Mentions légales";
+	if (type === ConditionType.refundPolicy)
+		return "Conditions de remboursement";
+	if (type === ConditionType.privacy) return "Politique de confidentialité";
+	return type;
+}
+
+// format condition target
+export function formatConditionTarget(target: "supplier" | "customer") {
+	if (target === "supplier") return "Fabricant";
+	if (target === "customer") return "Client";
+	return target;
 }

@@ -7,13 +7,13 @@ import {
 import { ButtonAdd, ButtonDelete, ButtonEdit } from "@/components/ui/button";
 import { useModal } from "@/hooks/hooks";
 import { Faq } from "@/redux/api/faq/faq.type";
-import FaqModal from "./FaqModal";
 import {
 	useDeleteFaqMutation,
 	useGetFaqsListQuery,
 } from "@/redux/api/faq/faq.api";
 import Alert from "@/components/common/Alert";
 import { useDelete } from "@/hooks/useDelete";
+import FaqModal from "./FaqModal";
 
 export function Delete({ item }: { item: Faq }) {
 	const [deleteItem, { isSuccess, isError, error }] =
@@ -33,7 +33,6 @@ const TabFaq = () => {
 	const { data: result, isLoading } = useGetFaqsListQuery({});
 	const { isOpen, item, closeModal, openEditModal, openModal } =
 		useModal<Faq>();
-	console.log(result);
 
 	return (
 		<div>
