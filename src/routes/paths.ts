@@ -23,6 +23,7 @@ export const adminPaths = {
 	shipping: "expeditions",
 	shippingCosts: "expeditions/frais-expedition",
 	addShippingCost: "expeditions/frais-expedition/ajouter",
+	editShippingCost: "expeditions/frais-expedition/modifier/:id",
 	refunds: "remboursements",
 	addRefund: "remboursements/ajouter",
 	orders: "commandes",

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -12,19 +12,26 @@ import { useCreateOrUpdateShippingCostMutation } from "@/redux/api/shipping/ship
 import { cleannerError } from "@/lib/utils";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useLocationState } from "@/hooks/hooks";
 
 // Set the locale for Yup validation messages to French
 setLocale(fr);
 
 // Define the validation schema for the shipping cost form
 const schema = yup.object().shape({
-	weight_range: yup.string().required("Le poids minimum est obligatoire"),
-	cost_sea: yup.number().required("Le coût maritime est obligatoire"),
-	cost_air: yup.number().required("Le coût aérien est obligatoire"),
+	// weight_range: yup.string().required("Le poids minimum est obligatoire"),
+	cost_sea: yup
+		.number()
+		.required("Le coût maritime est obligatoire")
+		.typeError("Le coût maritime doit être un nombre"),
+	cost_air: yup
+		.number()
+		.required("Le coût aérien est obligatoire")
+		.typeError("Le coût aérien doit être un nombre"),
 });
 
 // Custom hook for handling shipping cost CRUD operations
-export const useCrudShippingCost = (item?: ShippingCost) => {
+export const useCrudShippingCost = () => {
 	// Initialize form handling with react-hook-form and yup validation
 	const {
 		register,
@@ -38,6 +45,7 @@ export const useCrudShippingCost = (item?: ShippingCost) => {
 	});
 
 	const navigate = useNavigate();
+	const item: ShippingCost = useLocationState(undefined);
 
 	// Use the mutation hook for creating or updating a shipping cost
 	const [createOrUpdate, { isLoading }] =
@@ -53,7 +61,7 @@ export const useCrudShippingCost = (item?: ShippingCost) => {
 	// Populate form fields if editing an existing shipping cost
 	useEffect(() => {
 		if (item) {
-			setValue("weight_range", item.weight_range);
+			console.log(item);
 			setValue("cost_sea", item.cost_sea);
 			setValue("cost_air", item.cost_air);
 		} else {
@@ -95,5 +103,6 @@ export const useCrudShippingCost = (item?: ShippingCost) => {
 		errors,
 		onSubmit: handleSubmit(onSubmit),
 		isLoading,
+		item,
 	};
 };

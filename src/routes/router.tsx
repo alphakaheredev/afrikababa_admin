@@ -117,6 +117,10 @@ export const adminRoutes = [
 		element: <AddShippingPrice />,
 	},
 	{
+		path: adminPaths.editShippingCost,
+		element: <AddShippingPrice />,
+	},
+	{
 		path: adminPaths.refunds,
 		element: <Refunds />,
 	},

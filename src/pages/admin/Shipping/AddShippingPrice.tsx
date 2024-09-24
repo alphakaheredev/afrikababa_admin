@@ -7,62 +7,79 @@ import {
 } from "@/components/form";
 import Divider from "@/components/common/Divider";
 import Input from "@/components/ui/input";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import Label from "@/components/ui/label";
 import ButtonSubmit from "@/components/ui/buttonSubmit";
+import { useCrudShippingCost } from "./useCrudShippingCost";
 
 const AddShippingPrice = () => {
-  return (
-    <React.Fragment>
-      <h1 className="text-dark font-semibold text-xl">
-        Créer une nouvelle expédition
-      </h1>
-      <Divider margin="my-5" />
-      <form>
-        <FormRow>
-          <FormLeftCol>
-            <LabelWithDescription
-              label="Description"
-              description="Modifiez la description de votre produit et les informations nécessaires à partir d'ici"
-            />
-          </FormLeftCol>
-          <FormRightCol>
-            <div className="space-y-5">
-              <Input label="Nom" id="nom" type="text" required />
-              <RadioGroup>
-                <Label>Statut</Label>
-                <div className="space-x-2">
-                  <RadioGroupItem id={`free`} value={`free`} className="my-0" />
-                  <label
-                    htmlFor={`free`}
-                    className="text-th-gray text-sm cursor-pointer"
-                  >
-                    Gratuit
-                  </label>
-                </div>
-                <div className="space-x-2">
-                  <RadioGroupItem id={`paid`} value={`pais`} className="my-0" />
-                  <label
-                    htmlFor="paid"
-                    className="text-th-gray text-sm cursor-pointer"
-                  >
-                    Payant
-                  </label>
-                </div>
-              </RadioGroup>
-              <Input label="Montant" id="amount" type="number" required />
-            </div>
-          </FormRightCol>
-        </FormRow>
-        <div className="flex justify-end pt-10">
-          <ButtonSubmit
-            className="ml-auto w-min"
-            label="Ajoutez l’expédition"
-          />
-        </div>
-      </form>
-    </React.Fragment>
-  );
+	const { onSubmit, register, errors, isLoading, item } =
+		useCrudShippingCost();
+
+	return (
+		<React.Fragment>
+			<h1 className="text-dark font-semibold text-xl">
+				{item ? "Modifier" : "Ajouter"} un nouveau tarif
+				d’expédition
+			</h1>
+			<Divider margin="my-5" />
+			<form onSubmit={onSubmit}>
+				<FormRow>
+					<FormLeftCol>
+						<LabelWithDescription
+							label="Description"
+							description={
+								item
+									? "Modifier le tarif d’expédition de votre choix et les informations nécessaires à partir d'ici"
+									: "Ajoutez le tarif d’expédition de votre choix et les informations nécessaires à partir d'ici"
+							}
+						/>
+					</FormLeftCol>
+					<FormRightCol>
+						<div className="space-y-5">
+							{/* <Input
+								label="Intervalle de poids(kg)"
+								id="weight"
+								type="text"
+								required
+								placeholder="Exemple: 0-1000"
+								{...register("weight_range")}
+								error={
+									errors.weight_range
+										?.message
+								}
+							/> */}
+							<Input
+								label="Coût de livraison par bateau le kg"
+								id="cost_sea"
+								type="number"
+								required
+								{...register("cost_sea")}
+								error={errors.cost_sea?.message}
+							/>
+							<Input
+								label="Coût de livraison par avion le kg"
+								id="cost_air"
+								type="number"
+								required
+								{...register("cost_air")}
+								error={errors.cost_air?.message}
+							/>
+						</div>
+					</FormRightCol>
+				</FormRow>
+				<div className="flex justify-end pt-10">
+					<ButtonSubmit
+						className="ml-auto w-min"
+						label={
+							item
+								? "Modifier l’expédition"
+								: "Ajoutez l’expédition"
+						}
+						isLoading={isLoading}
+					/>
+				</div>
+			</form>
+		</React.Fragment>
+	);
 };
 
 export default AddShippingPrice;

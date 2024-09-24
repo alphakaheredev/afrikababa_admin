@@ -29,7 +29,6 @@ export type ShippingCost = {
 };
 
 export type ShippingCostData = {
-	weight_range: string;
 	cost_sea: number;
 	cost_air: number;
 };

@@ -6,7 +6,7 @@ import { prepareHeaders } from "../user/user.api";
 
 export const ShippingApi = createApi({
 	reducerPath: "shippingApi",
-	tagTypes: ["shippings", "ordersByShipping"],
+	tagTypes: ["shippings", "ordersByShipping", "deliveryCosts"],
 	baseQuery: fetchBaseQuery({
 		baseUrl: `${ApiBaseUrl}/api/`,
 		prepareHeaders,
@@ -49,6 +49,7 @@ export const ShippingApi = createApi({
 				method: "GET",
 				params: { ...query },
 			}),
+			providesTags: ["deliveryCosts"],
 		}),
 
 		createOrUpdateShippingCost: build.mutation<
@@ -69,6 +70,15 @@ export const ShippingApi = createApi({
 					body: data,
 				};
 			},
+			invalidatesTags: ["deliveryCosts"],
+		}),
+
+		deleteShippingCost: build.mutation<ShippingCost, number>({
+			query: (id) => ({
+				url: `delivery_costs/${id}`,
+				method: "DELETE",
+			}),
+			invalidatesTags: ["deliveryCosts"],
 		}),
 	}),
 });
@@ -79,4 +89,5 @@ export const {
 	useGetOrdersByShippingQuery,
 	useGetShippingCostsListQuery,
 	useCreateOrUpdateShippingCostMutation,
+	useDeleteShippingCostMutation,
 } = ShippingApi;
