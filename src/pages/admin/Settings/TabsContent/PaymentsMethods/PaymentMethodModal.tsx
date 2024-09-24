@@ -8,59 +8,48 @@ import {
 } from "@/components/ui/dialog";
 import Input from "@/components/ui/input";
 import { ModalProps } from "@/lib/type";
-import { useCrudFaq } from "../hooks/useCrudFaq";
-import { Faq } from "@/redux/api/faq/faq.type";
-import Textarea from "@/components/ui/textarea";
+import { PaymentMethod } from "@/redux/api/payment/payment.type";
+import { useCrudPaymentMethod } from "./useCrudPaymentMethod";
 
-// const roles = [
-// 	{
-// 		label: "Administrateur",
-// 		value: ROLE.admin,
-// 	},
-// 	{
-// 		label: "Client",
-// 		value: ROLE.customer,
-// 	},
-// 	{
-// 		label: "Fabricant",
-// 		value: ROLE.supplier,
-// 	},
-// ];
-
-const FaqModal: React.FC<ModalProps<Faq>> = (props) => {
+const PaymentMethodModal: React.FC<ModalProps<PaymentMethod>> = (props) => {
 	const { isOpen, close, item } = props;
-	const { register, onSubmit, errors, isLoading } = useCrudFaq(close, item);
+	const { register, onSubmit, errors, isLoading, handleChangeLogo } =
+		useCrudPaymentMethod(close, item);
 	return (
 		<Dialog open={isOpen} onOpenChange={close}>
 			<DialogContent className="max-w-3xl">
 				<DialogHeader className="mb-5">
 					<DialogTitle>
 						{!item ? "Ajouter un " : "Modifier le"}
-						faq
+						moyen de paiement
 					</DialogTitle>
 				</DialogHeader>
 				<form onSubmit={onSubmit} className="space-y-5">
 					<Input
-						label="Question"
+						label="Nom"
 						type="text"
-						id="question"
-						placeholder="Question"
+						id="method_name"
+						placeholder="Nom"
 						required
-						{...register("question")}
-						error={errors?.question}
-						defaultValue={item?.question}
+						{...register("method_name")}
+						error={errors?.method_name}
+						defaultValue={item?.method_name}
 					/>
-					<Textarea
-						label="Réponse"
-						id="lastname"
-						placeholder="Réponse"
+					<Input
+						type="file"
+						label="Logo"
+						id="logo"
+						placeholder="Logo"
 						required
-						{...register("answer")}
-						error={errors?.answer}
-						defaultValue={item?.answer}
+						defaultValue={item?.logo}
 						className="min-h-48"
+						onChange={handleChangeLogo}
 					/>
-
+					{errors?.logo && (
+						<span className="text-red-500 text-sm">
+							{errors?.logo?.message}
+						</span>
+					)}
 					<DialogFooter className="pt-5">
 						<ButtonSubmit
 							label={item ? "Modifier" : "Ajouter"}
@@ -74,4 +63,4 @@ const FaqModal: React.FC<ModalProps<Faq>> = (props) => {
 	);
 };
 
-export default FaqModal;
+export default PaymentMethodModal;

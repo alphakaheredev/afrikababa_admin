@@ -1,12 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Payment } from "./payment.type";
+import { Payment, PaymentMethod } from "./payment.type";
 import { ApiBaseUrl } from "@/lib/http";
 import { PaginationResults, TypeQuery } from "@/lib/type";
 import { prepareHeaders } from "../user/user.api";
 
 export const PaymentApi = createApi({
 	reducerPath: "paymentApi",
-	tagTypes: ["payments"],
+	tagTypes: ["payments", "payment_methods"],
 	baseQuery: fetchBaseQuery({
 		baseUrl: `${ApiBaseUrl}/api/`,
 		prepareHeaders,
@@ -30,7 +30,47 @@ export const PaymentApi = createApi({
 			}),
 			invalidatesTags: ["payments"],
 		}),
+
+		//get payment method
+		getPaymentMethod: build.query<
+			PaginationResults<PaymentMethod>,
+			TypeQuery
+		>({
+			query: (query) => ({
+				url: `payment_methods`,
+				method: "GET",
+				params: { ...query },
+			}),
+			providesTags: ["payment_methods"],
+		}),
+
+		// create or update payment method
+		createOrUpdatePaymentMethod: build.mutation<
+			PaymentMethod,
+			{ id?: number; data: PaymentMethodData | FormData }
+		>({
+			query: ({ id, data }) => ({
+				url: `payment_methods${id ? `/${id}` : ""}`,
+				method: id ? "PUT" : "POST",
+				body: data,
+			}),
+			invalidatesTags: ["payment_methods"],
+		}),
+
+		deletePaymentMethod: build.mutation<PaymentMethod, number>({
+			query: (id) => ({
+				url: `payment_methods/${id}`,
+				method: "DELETE",
+			}),
+			invalidatesTags: ["payment_methods"],
+		}),
 	}),
 });
 
-export const { useGetPaymentsListQuery, useDeletePaymentMutation } = PaymentApi;
+export const {
+	useGetPaymentsListQuery,
+	useDeletePaymentMutation,
+	useGetPaymentMethodQuery,
+	useCreateOrUpdatePaymentMethodMutation,
+	useDeletePaymentMethodMutation,
+} = PaymentApi;

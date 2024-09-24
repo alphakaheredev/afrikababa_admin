@@ -1,5 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import TabFaq from "./TabsContent/Faq";
+import PaymentMethodTable from "./TabsContent/PaymentsMethods/PaymentMethodTable";
+import TabFaq from "./TabsContent/Faq/Faq";
 
 const Settings = () => {
 	return (
@@ -10,10 +11,9 @@ const Settings = () => {
 				<TabsTrigger value="condition">
 					Termes et conditions
 				</TabsTrigger>
-				<TabsTrigger value="account">
+				<TabsTrigger value="payment_method">
 					Moyens de paiements
 				</TabsTrigger>
-				<TabsTrigger value="password">Condition</TabsTrigger>
 			</TabsList>
 
 			{/* Tabs Content */}
@@ -23,11 +23,8 @@ const Settings = () => {
 			<TabsContent value="conditon">
 				Make changes to your account here.
 			</TabsContent>
-			<TabsContent value="account">
-				Make changes to your account here.
-			</TabsContent>
-			<TabsContent value="password">
-				Change your password here.
+			<TabsContent value="payment_method">
+				<PaymentMethodTable />
 			</TabsContent>
 		</Tabs>
 	);
