@@ -1,13 +1,9 @@
-import { Order } from "../order/order.type";
-
 export type Shipping = {
 	id: number;
-	order: Order;
-	payment_method: ShippingMethod;
-	payment_amount: number;
-	payment_status: string;
+	delivery_method: ShippingMethod;
+	status: string;
+	batch_number: string;
 	created_at: string;
-	tracking_number: string;
 };
 
 export interface ShippingMethod {
@@ -22,4 +18,18 @@ export type ShippingMethodData = {
 	method_name: string;
 	description: string;
 	logo: string;
+};
+
+export type ShippingCost = {
+	id: number;
+	weight_range: string;
+	cost_sea: number;
+	cost_air: number;
+	created_at: string;
+};
+
+export type ShippingCostData = {
+	weight_range: string;
+	cost_sea: number;
+	cost_air: number;
 };

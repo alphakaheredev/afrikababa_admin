@@ -2,27 +2,29 @@ import { ButtonAddLink } from "@/components/ui/button";
 import { InputSearch } from "@/components/ui/input";
 import { addAdminPrefix } from "@/lib/utils";
 import { adminPaths } from "@/routes/paths";
-import ShippingTable from "./ShippingTable";
+import ShippingCostTable from "./ShippingCostTable";
 
-const Shippings = () => {
-  return (
+const ShippingCosts = () => {
+	return (
 		<>
 			<div className="flex items-center justify-between mb-8">
-				<h3 className="text-dark font-semibold">Expéditions</h3>
+				<h3 className="text-dark font-semibold">
+					Frais d’expédition
+				</h3>
 				<div className="flex items-center justify-end gap-3 lg:w-2/3">
 					<InputSearch placeholder="Recherchez par nom" />
 					<ButtonAddLink
 						to={addAdminPrefix(
-							adminPaths.shippingCosts
+							adminPaths.addShippingCost
 						)}
 					>
-						Frais d’expéditions
+						Ajouter les Frais d’expédition
 					</ButtonAddLink>
 				</div>
 			</div>
-			<ShippingTable />
+			<ShippingCostTable />
 		</>
-  );
+	);
 };
 
-export default Shippings;
+export default ShippingCosts;

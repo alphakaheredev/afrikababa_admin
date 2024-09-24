@@ -41,6 +41,7 @@ import SupplierDashboard from "@/pages/supplier/Dashboard/SupplierDashboard";
 import SettingsSupplier from "@/pages/supplier/Settings/SettingsSupplier";
 import { ProtectedRoute, RedirectAuthRoute } from "./routerUtils";
 import Profil from "@/pages/admin/Profil/Profil";
+import ShippingCosts from "@/pages/admin/Shipping/ShippingCosts";
 
 export const adminRoutes = [
 	{
@@ -108,7 +109,11 @@ export const adminRoutes = [
 		element: <Shippings />,
 	},
 	{
-		path: adminPaths.addShippingPrice,
+		path: adminPaths.shippingCosts,
+		element: <ShippingCosts />,
+	},
+	{
+		path: adminPaths.addShippingCost,
 		element: <AddShippingPrice />,
 	},
 	{

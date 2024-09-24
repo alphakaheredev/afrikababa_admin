@@ -1,48 +1,37 @@
 import { ButtonDelete, ButtonEdit } from "@/components/ui/button";
 import Table, { Column } from "@/components/ui/Table";
-
-interface ShippingMethod {
-  id: string;
-  name: string;
-  price: string;
-  global: boolean;
-  priceType: string;
-}
-
-const shippingData: ShippingMethod[] = [
-  {
-    id: "01",
-    name: "Happy livraison",
-    price: "150.000F",
-    global: true,
-    priceType: "Fixe",
-  },
-];
+import { useGetShippingsListQuery } from "@/redux/api/shipping/shipping.api";
+import { Shipping } from "@/redux/api/shipping/shipping.type";
 
 const ShippingTable = () => {
-  const globalFormatter = (global: boolean) => (global ? "Oui" : "Non");
+	const { data: result, isLoading } = useGetShippingsListQuery({});
 
-  const actionFormatter = () => (
-    <div className="flex space-x-2">
-      <ButtonEdit />
-      <ButtonDelete />
-    </div>
-  );
+	const actionFormatter = () => (
+		<div className="flex space-x-2">
+			<ButtonEdit />
+			<ButtonDelete />
+		</div>
+	);
 
-  const columns: Column<ShippingMethod>[] = [
-    {
-      header: "Identifiant",
-      name: "id",
-      formatter: (value: string) => `#ID: ${value}`,
-    },
-    { header: "Nom", name: "name" },
-    { header: "Prix", name: "price" },
-    { header: "Mondial", name: "global", formatter: globalFormatter },
-    { header: "Type de prix", name: "priceType" },
-    { header: "Action", name: "id", formatter: actionFormatter },
-  ];
+	const columns: Column<Shipping>[] = [
+		{
+			header: "Identifiant",
+			name: "id",
+			formatter: (value: string) => `#ID: ${value}`,
+		},
+		{ header: "Numéro de lot", name: "batch_number" },
+		{ header: "Méthode de livraison", name: "delivery_method" },
+		{ header: "Statut", name: "status" },
+		{ header: "Action", name: "id", formatter: actionFormatter },
+	];
 
-  return <Table<ShippingMethod> data={shippingData} columns={columns} />;
+	return (
+		<Table<Shipping>
+			data={result?.data}
+			columns={columns}
+			isLoading={isLoading}
+		/>
+	);
 };
 
 export default ShippingTable;
