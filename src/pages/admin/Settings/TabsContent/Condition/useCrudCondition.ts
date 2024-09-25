@@ -11,6 +11,8 @@ import {
 	ConditionFormData,
 } from "@/redux/api/condition/condition.type";
 import { useCreateOrUpdateConditionMutation } from "@/redux/api/condition/condition.api";
+import { useLocationState } from "@/hooks/hooks";
+import { useNavigate } from "react-router-dom";
 
 // Set the locale for Yup validation messages to French
 setLocale(fr);
@@ -23,7 +25,7 @@ const schema = yup.object().shape({
 });
 
 // Custom hook for handling payment method CRUD operations
-export const useCrudCondition = (item?: Condition) => {
+export const useCrudCondition = () => {
 	// Initialize form handling with react-hook-form and yup validation
 	const {
 		register,
@@ -38,6 +40,8 @@ export const useCrudCondition = (item?: Condition) => {
 	});
 
 	const [content, setContent] = useState<string>("");
+	const item = useLocationState<Condition>(undefined);
+	const navigate = useNavigate();
 
 	// Use the mutation hook for creating or updating a payment method
 	const [createOrUpdate, { isLoading }] =
@@ -53,10 +57,10 @@ export const useCrudCondition = (item?: Condition) => {
 	// Populate form fields if editing an existing payment method
 	useEffect(() => {
 		if (item) {
-			console.log(item);
 			setValue("target", item.target);
 			setValue("type", item.type);
 			setValue("content", item.content);
+			setContent(item.content);
 		} else {
 			reset();
 		}
@@ -84,6 +88,7 @@ export const useCrudCondition = (item?: Condition) => {
 				} avec succès`
 			);
 			reset();
+			navigate(-1);
 		} else if ("error" in res) {
 			// Error case
 			const error = res.error as any;

@@ -130,3 +130,5 @@ export function formatConditionTarget(target: "supplier" | "customer") {
 	if (target === "customer") return "Client";
 	return target;
 }
+
+// create markup

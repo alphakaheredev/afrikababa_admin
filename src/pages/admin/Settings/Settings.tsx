@@ -1,7 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import PaymentMethodTable from "./TabsContent/PaymentsMethods/PaymentMethodTable";
 import TabFaq from "./TabsContent/Faq/Faq";
-import ConditionForm from "./TabsContent/Condition/ConditionForm";
+import ConditionTable from "./TabsContent/Condition/ConditionTable";
 
 const Settings = () => {
 	return (
@@ -22,7 +22,7 @@ const Settings = () => {
 				<TabFaq />
 			</TabsContent>
 			<TabsContent value="conditionTab">
-				<ConditionForm />
+				<ConditionTable />
 			</TabsContent>
 			<TabsContent value="payment_method">
 				<PaymentMethodTable />

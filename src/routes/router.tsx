@@ -42,6 +42,7 @@ import SettingsSupplier from "@/pages/supplier/Settings/SettingsSupplier";
 import { ProtectedRoute, RedirectAuthRoute } from "./routerUtils";
 import Profil from "@/pages/admin/Profil/Profil";
 import ShippingCosts from "@/pages/admin/Shipping/ShippingCosts";
+import ConditionForm from "@/pages/admin/Settings/TabsContent/Condition/ConditionForm";
 
 export const adminRoutes = [
 	{
@@ -183,6 +184,14 @@ export const adminRoutes = [
 	{
 		path: adminPaths.profil,
 		element: <Profil />,
+	},
+	{
+		path: adminPaths.addCondition,
+		element: <ConditionForm />,
+	},
+	{
+		path: adminPaths.editCondition,
+		element: <ConditionForm />,
 	},
 ];
 

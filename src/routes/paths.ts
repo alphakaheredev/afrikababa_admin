@@ -42,6 +42,8 @@ export const adminPaths = {
 	reviews: "avis",
 	settings: "parametres",
 	profil: "profil",
+	addCondition: "parametres/conditions-et-termes/ajouter",
+	editCondition: "parametres/conditions-et-termes/modifier/:id",
 };
 
 export const supplierPaths = {

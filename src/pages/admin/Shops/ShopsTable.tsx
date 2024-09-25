@@ -28,7 +28,7 @@ export function Delete({ item }: { item: Shop }) {
 
 const ShopsTable = ({ q }: { q?: string }) => {
 	const { data: result, isLoading } = useGetShopsListQuery({ q });
-	console.log(result);
+	// console.log(result);
 
 	const [toggleShopStatus] = useToggleShopStatusMutation();
 

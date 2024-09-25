@@ -10,9 +10,9 @@ import {
 	IconHandHolding,
 	IconProduct,
 } from "@/components/common/Icons";
-import { FiGift, FiSettings, FiTruck, FiUser, FiUsers } from "react-icons/fi";
-import { FaRegEnvelope } from "react-icons/fa6";
-import { HiOutlineStar } from "react-icons/hi";
+import { FiSettings, FiTruck, FiUser, FiUsers } from "react-icons/fi";
+// import { FaRegEnvelope } from "react-icons/fa6";
+// import { HiOutlineStar } from "react-icons/hi";
 // import { IoDocumentTextOutline } from "react-icons/io5";
 
 export const routes = [
@@ -126,31 +126,31 @@ export const routes = [
 	// 		},
 	// 	],
 	// },
-	{
-		category: "GESTION PROMOTIONNELLE",
-		items: [
-			{
-				label: "Bons de réduction",
-				icon: <FiGift fontSize={22} />,
-				path: adminPaths.discounts,
-			},
-		],
-	},
-	{
-		category: "GESTION DES FONCTIONNALITÉS",
-		items: [
-			{
-				label: "Messages",
-				icon: <FaRegEnvelope fontSize={22} />,
-				path: adminPaths.chat,
-			},
-			{
-				label: "Avis de magasin",
-				icon: <HiOutlineStar fontSize={24} />,
-				path: adminPaths.reviews,
-			},
-		],
-	},
+	// {
+	// 	category: "GESTION PROMOTIONNELLE",
+	// 	items: [
+	// 		{
+	// 			label: "Bons de réduction",
+	// 			icon: <FiGift fontSize={22} />,
+	// 			path: adminPaths.discounts,
+	// 		},
+	// 	],
+	// },
+	// {
+	// 	category: "GESTION DES FONCTIONNALITÉS",
+	// 	items: [
+	// 		{
+	// 			label: "Messages",
+	// 			icon: <FaRegEnvelope fontSize={22} />,
+	// 			path: adminPaths.chat,
+	// 		},
+	// 		{
+	// 			label: "Avis de magasin",
+	// 			icon: <HiOutlineStar fontSize={24} />,
+	// 			path: adminPaths.reviews,
+	// 		},
+	// 	],
+	// },
 	{
 		category: "ADMINISTRATION DU SITE",
 		items: [
