@@ -34,9 +34,9 @@ export const CategoryApi = createApi({
 			query: ({ id, data }) => {
 				if (id) {
 					return {
-						url: `categories/${id}`,
+						url: `categories/update/${id}`,
 
-						method: "PUT",
+						method: "POST",
 						body: data,
 					};
 				}

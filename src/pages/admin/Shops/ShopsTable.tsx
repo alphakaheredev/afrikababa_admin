@@ -28,7 +28,7 @@ export function Delete({ item }: { item: Shop }) {
 
 const ShopsTable = ({ q }: { q?: string }) => {
 	const { data: result, isLoading } = useGetShopsListQuery({ q });
-	// console.log(result);
+	console.log(result);
 
 	const [toggleShopStatus] = useToggleShopStatusMutation();
 
@@ -80,12 +80,12 @@ const ShopsTable = ({ q }: { q?: string }) => {
 		},
 		{
 			header: "Produits",
-			name: "total_product",
+			name: "products_count",
 			formatter: (value: number) => value ?? 0,
 		},
 		{
 			header: "Commande",
-			name: "total_order",
+			name: "orderitems_count",
 			formatter: (value: number) => value ?? 0,
 		},
 		{

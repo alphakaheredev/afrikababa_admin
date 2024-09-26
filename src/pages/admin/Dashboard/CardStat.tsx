@@ -2,9 +2,9 @@ import { cn } from "@/lib/utils";
 import React from "react";
 
 interface Props {
-  borderColor: string;
-  title: string;
-  value: string;
+	borderColor: string;
+	title: string;
+	value: number | string;
 }
 
 const CardStat: React.FC<Props> = ({ borderColor, title, value }) => {

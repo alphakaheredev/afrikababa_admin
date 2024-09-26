@@ -90,27 +90,30 @@ export function formatAmount(amount: number) {
 // format order status
 export function formatOrderStatus(status: OrderStatus) {
 	if (status === OrderStatus.PENDING) return "En attente";
-	if (status === OrderStatus.ACCEPTED) return "Accepté";
+	if (status === OrderStatus.CONFIRMED) return "Confirmé";
 	if (status === OrderStatus.REJECTED) return "Rejeté";
 	if (status === OrderStatus.DELIVERED) return "Livré";
 	if (status === OrderStatus.SHIPPED) return "Expédié";
 	if (status === OrderStatus.CANCELLED) return "Annulé";
-	if (status === OrderStatus.DELIVERED_FOR_TRANSIT)
-		return "Livré pour transit";
+	if (status === OrderStatus.IN_SHIPMENT) return "En transit";
 	if (status === OrderStatus.IN_PROGRESS) return "En cours";
+	if (status === OrderStatus.REFUNDED) return "Remboursé";
+	if (status === OrderStatus.READY) return "Prêt à expédier";
 	return status;
 }
 
 // format order status to badge
 export function formatOrderStatusToBadge(status: OrderStatus) {
 	if (status === OrderStatus.PENDING) return "bg-gray-900";
-	if (status === OrderStatus.ACCEPTED) return "bg-green-500";
+	if (status === OrderStatus.CONFIRMED) return "bg-green-500";
 	if (status === OrderStatus.REJECTED) return "bg-red-500";
-	if (status === OrderStatus.DELIVERED) return "bg-green-500";
+	if (status === OrderStatus.DELIVERED) return "bg-green-600";
 	if (status === OrderStatus.SHIPPED) return "bg-purple-500";
 	if (status === OrderStatus.CANCELLED) return "bg-red-500";
-	if (status === OrderStatus.DELIVERED_FOR_TRANSIT) return "bg-orange-500";
-	if (status === OrderStatus.IN_PROGRESS) return "bg-gray-300";
+	if (status === OrderStatus.IN_SHIPMENT) return "bg-orange-500";
+	if (status === OrderStatus.IN_PROGRESS) return "bg-gray-500";
+	if (status === OrderStatus.REFUNDED) return "bg-teal-500";
+	if (status === OrderStatus.READY) return "bg-blue-500";
 	return "bg-gray-500";
 }
 

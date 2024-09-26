@@ -19,8 +19,8 @@ export type Shop = {
 	paypal_details: string;
 	western_union_details: string;
 	verified_at: string;
-	total_product: number;
-	total_order: number;
+	products_count: number;
+	orderitems_count: number;
 	user: User;
 	is_active: boolean;
 	created_at: string;

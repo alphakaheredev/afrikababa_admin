@@ -23,9 +23,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ChevronDownIcon } from "lucide-react";
 import { toast } from "react-toastify";
+import { TypeQuery } from "@/lib/type";
 
-const OrdersTable = () => {
-	const { data: orders, isLoading } = useGetOrdersListQuery({});
+const OrdersTable = ({ limit }: TypeQuery) => {
+	const { data: orders, isLoading } = useGetOrdersListQuery({ limit });
 	const [changeOrderStatus] = useChangeOrderStatusMutation();
 
 	const statusFormatter = (cell: OrderStatus) => {

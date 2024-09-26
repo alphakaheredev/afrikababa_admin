@@ -68,7 +68,7 @@ export const useCrudCategory = (item?: Category) => {
 		// Prepare form data for submission
 		const fd = new FormData();
 		fd.append("name", data.name);
-		fd.append("description", data?.description ?? "");
+		fd.append("description", data?.description as string);
 		data.logo && fd.append("logo", data?.logo);
 
 		// Send create/update request
