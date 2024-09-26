@@ -15,6 +15,7 @@ const PaymentMethodModal: React.FC<ModalProps<PaymentMethod>> = (props) => {
 	const { isOpen, close, item } = props;
 	const { register, onSubmit, errors, isLoading, handleChangeLogo } =
 		useCrudPaymentMethod(close, item);
+
 	return (
 		<Dialog open={isOpen} onOpenChange={close}>
 			<DialogContent className="max-w-3xl">
@@ -42,7 +43,7 @@ const PaymentMethodModal: React.FC<ModalProps<PaymentMethod>> = (props) => {
 						placeholder="Logo"
 						required
 						defaultValue={item?.logo}
-						className="min-h-48"
+						className="border border-th-gray-e6 p-1"
 						onChange={handleChangeLogo}
 					/>
 					{errors?.logo && (

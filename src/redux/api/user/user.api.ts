@@ -48,7 +48,6 @@ export const UserApi = createApi({
 				if (id) {
 					return {
 						url: `users/update/${id}`,
-
 						method: "POST",
 						body: data,
 					};

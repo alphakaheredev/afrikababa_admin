@@ -13,7 +13,7 @@ import {
 	useGetOrdersListQuery,
 	useChangeOrderStatusMutation,
 } from "@/redux/api/order/order.api";
-import { Order, OrderItem, OrderStatus } from "@/redux/api/order/order.type";
+import { Order, OrderStatus } from "@/redux/api/order/order.type";
 import { User } from "@/redux/api/user/user.type";
 import {
 	DropdownMenu,
@@ -55,10 +55,12 @@ const OrdersTable = ({ limit }: TypeQuery) => {
 		);
 	};
 
-	const orderItemsFormatter = (cell: OrderItem[]) => {
+	const orderItemsFormatter = (_cell: string, row: Order) => {
 		return (
 			<div>
-				{cell.map((item) => item?.product?.name).join(", ")}
+				{row?.order_items
+					.map((item) => item?.product?.name)
+					.join(", ")}
 			</div>
 		);
 	};

@@ -50,8 +50,8 @@ export const PaymentApi = createApi({
 			{ id?: number; data: PaymentMethodData | FormData }
 		>({
 			query: ({ id, data }) => ({
-				url: `payment_methods${id ? `/${id}` : ""}`,
-				method: id ? "PUT" : "POST",
+				url: `payment_methods${id ? `/update/${id}` : ""}`,
+				method: "POST",
 				body: data,
 			}),
 			invalidatesTags: ["payment_methods"],

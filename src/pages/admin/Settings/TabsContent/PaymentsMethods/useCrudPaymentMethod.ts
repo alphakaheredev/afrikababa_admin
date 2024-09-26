@@ -20,7 +20,7 @@ const schema = yup.object().shape({
 	method_name: yup
 		.string()
 		.required("Le nom de la méthode de paiement est obligatoire"),
-	logo: yup.mixed().required("Le logo est obligatoire"),
+	logo: yup.mixed(),
 });
 
 // Custom hook for handling payment method CRUD operations
@@ -38,7 +38,9 @@ export const useCrudPaymentMethod = (
 		setValue,
 	} = useForm<PaymentMethodData>({
 		// @ts-ignore
-		resolver: yupResolver(schema),
+		resolver: yupResolver(schema, {
+			context: { required: true },
+		}),
 	});
 
 	// Use the mutation hook for creating or updating a payment method
@@ -73,7 +75,9 @@ export const useCrudPaymentMethod = (
 	const onSubmit = async (data: PaymentMethodData) => {
 		const fd = new FormData();
 		fd.append("method_name", data.method_name);
-		fd.append("logo", data.logo);
+		if (data.logo) {
+			fd.append("logo", data.logo);
+		}
 
 		// Send create/update request
 		const res = await createOrUpdate({

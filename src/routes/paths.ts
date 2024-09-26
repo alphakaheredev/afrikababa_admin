@@ -11,6 +11,7 @@ export const adminPaths = {
 	editBoutique: "boutiques/modifier/:id",
 	store: "magasins",
 	products: "produits",
+	productDetail: "produits/:id",
 	addProduct: "produits/creer",
 	productOutOfStock: "produits/en-rupture-stock",
 	inventory: "inventaires",

@@ -1,5 +1,5 @@
 import Table, { Column } from "@/components/ui/Table";
-import { ButtonDelete } from "@/components/ui/button";
+import { ButtonDelete, ButtonViewLink } from "@/components/ui/button";
 import {
 	useDeleteProductMutation,
 	useGetProductsListQuery,
@@ -89,6 +89,10 @@ const ProductsTable = ({ q, shop_id, category_id }: ProductQuery) => {
 
 	const actionFormatter = (_cell: string, row: Product) => (
 		<div className="flex items-center gap-2">
+			<ButtonViewLink
+				to={`/admin/produits/${row.id}`}
+				state={row}
+			/>
 			<Delete item={row} />
 		</div>
 	);

@@ -1,6 +1,7 @@
 import { TypeQuery } from "@/lib/type";
 import { Category } from "../category/category.type";
 import { Shop } from "../shop/shop.type";
+import { User } from "../user/user.type";
 
 export type Product = {
 	id: number;
@@ -9,7 +10,7 @@ export type Product = {
 	shop_id: number;
 	shop: Shop;
 	description: string;
-	price: string;
+	price: number;
 	quantity: number;
 	sku: string;
 	category_id: number;
@@ -22,9 +23,27 @@ export type Product = {
 	created_at: string;
 	main_image_url: string;
 	updated_at: string;
+	product_dimensions: {
+		length: number;
+		height: number;
+		width: number;
+		weight: number;
+	};
+	reviews: Review[];
 };
 
 export type ProductQuery = TypeQuery & {
 	shop_id?: number;
 	category_id?: number;
+};
+
+export type Review = {
+	id: number;
+	review: string;
+	rating: number;
+	comment: string;
+	user_id: number;
+	user: User;
+	product_id: number;
+	product: Product;
 };
