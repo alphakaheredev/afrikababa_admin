@@ -6,7 +6,7 @@ export type Shop = {
 	sales_manager_name: string;
 	company_registration: string;
 	company_address: string;
-	company_phonephone_number: string;
+	phone_number: string;
 	email_address: string;
 	company_website: string;
 	logo_url: string;

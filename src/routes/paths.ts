@@ -9,6 +9,7 @@ export const adminPaths = {
 	boutique: "boutiques",
 	createBoutique: "boutiques/creer",
 	editBoutique: "boutiques/modifier/:id",
+	shopDetail: "boutiques/:id",
 	store: "magasins",
 	products: "produits",
 	productDetail: "produits/:id",

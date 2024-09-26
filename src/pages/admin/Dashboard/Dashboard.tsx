@@ -25,8 +25,8 @@ const cardClass = "bg-white my-2 mx-1 shadow-gray-100 drop-shadow-xl p-3";
 
 const Dashboard = () => {
 	const { data } = useGetAdminDashboardDataQuery();
-	const { data: historyOrders } = useGetHistoryOrdersStatisticsQuery();
-  console.log(historyOrders)
+	const year = new Date().getFullYear();
+	const { data: historyOrders } = useGetHistoryOrdersStatisticsQuery(year);
 
   return (
 		<div>

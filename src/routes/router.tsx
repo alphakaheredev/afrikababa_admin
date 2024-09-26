@@ -44,6 +44,7 @@ import Profil from "@/pages/admin/Profil/Profil";
 import ShippingCosts from "@/pages/admin/Shipping/ShippingCosts";
 import ConditionForm from "@/pages/admin/Settings/TabsContent/Condition/ConditionForm";
 import DetailProduct from "@/pages/admin/Products/DetailProduct";
+import ShopDetail from "@/pages/admin/Shops/ShopDetail";
 
 export const adminRoutes = [
 	{
@@ -197,6 +198,10 @@ export const adminRoutes = [
 	{
 		path: adminPaths.productDetail,
 		element: <DetailProduct />,
+	},
+	{
+		path: adminPaths.shopDetail,
+		element: <ShopDetail />,
 	},
 ];
 

@@ -1,6 +1,7 @@
 import { User } from "../user/user.type";
 import { Shop } from "../shop/shop.type";
 import { Product } from "../product/product.type";
+import { TypeQuery } from "@/lib/type";
 
 export enum OrderStatus {
 	PENDING = "PENDING",
@@ -31,4 +32,8 @@ export type OrderItem = {
 	product: Product;
 	quantity: number;
 	price: number;
+};
+
+export type OrderQuery = TypeQuery & {
+	shop_id?: number;
 };

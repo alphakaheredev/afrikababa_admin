@@ -1,4 +1,4 @@
-import { ButtonDelete } from "@/components/ui/button";
+import { ButtonDelete, ButtonViewLink } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import Table, { Column } from "@/components/ui/Table";
 import { useDelete } from "@/hooks/useDelete";
@@ -28,7 +28,6 @@ export function Delete({ item }: { item: Shop }) {
 
 const ShopsTable = ({ q }: { q?: string }) => {
 	const { data: result, isLoading } = useGetShopsListQuery({ q });
-	console.log(result);
 
 	const [toggleShopStatus] = useToggleShopStatusMutation();
 
@@ -53,7 +52,15 @@ const ShopsTable = ({ q }: { q?: string }) => {
 	};
 
 	const actionFormatter = (_cell: string, row: Shop) => {
-		return <Delete item={row} />;
+		return (
+			<div className="flex items-center gap-2">
+				<ButtonViewLink
+					to={`/admin/boutiques/${row.id}`}
+					state={row}
+				/>
+				<Delete item={row} />
+			</div>
+		);
 	};
 
 	const nameBoutiqueFormatter = (cell: string, row: Shop) => {

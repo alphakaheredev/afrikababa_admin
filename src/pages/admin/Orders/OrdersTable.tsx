@@ -13,7 +13,7 @@ import {
 	useGetOrdersListQuery,
 	useChangeOrderStatusMutation,
 } from "@/redux/api/order/order.api";
-import { Order, OrderStatus } from "@/redux/api/order/order.type";
+import { Order, OrderQuery, OrderStatus } from "@/redux/api/order/order.type";
 import { User } from "@/redux/api/user/user.type";
 import {
 	DropdownMenu,
@@ -23,10 +23,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ChevronDownIcon } from "lucide-react";
 import { toast } from "react-toastify";
-import { TypeQuery } from "@/lib/type";
 
-const OrdersTable = ({ limit }: TypeQuery) => {
-	const { data: orders, isLoading } = useGetOrdersListQuery({ limit });
+const OrdersTable = ({ limit, shop_id }: OrderQuery) => {
+	const { data: orders, isLoading } = useGetOrdersListQuery({
+		limit,
+		shop_id,
+	});
 	const [changeOrderStatus] = useChangeOrderStatusMutation();
 
 	const statusFormatter = (cell: OrderStatus) => {

@@ -21,9 +21,9 @@ export const ConfigApi = createApi({
 				statistics: AdminDashboardData;
 			}) => res.statistics,
 		}),
-		getHistoryOrdersStatistics: build.query<any, void>({
-			query: () => ({
-				url: `orders/monthly-order-counts-for-current-year`,
+		getHistoryOrdersStatistics: build.query<any, number>({
+			query: (year) => ({
+				url: `stat/monthly-order-counts-for-year/${year}`,
 				method: "GET",
 			}),
 			providesTags: ["config"],
