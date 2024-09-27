@@ -43,6 +43,14 @@ export const ProductApi = createApi({
 			}),
 			invalidatesTags: ["products"],
 		}),
+
+		// get top selling products
+		getTopSellingProducts: build.query<{ data: Product[] }, void>({
+			query: () => ({
+				url: `product/top-selling`,
+				method: "GET",
+			}),
+		}),
 	}),
 });
 
@@ -50,4 +58,5 @@ export const {
 	useGetProductsListQuery,
 	useDeleteProductMutation,
 	useUpdateProductStatusMutation,
+	useGetTopSellingProductsQuery,
 } = ProductApi;

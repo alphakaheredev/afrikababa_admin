@@ -15,16 +15,22 @@ const Products = () => {
 		e: React.ChangeEvent<HTMLSelectElement>,
 		type: "category" | "shop"
 	) => {
-		console.log("change");
+		console.log("change", e.currentTarget.value);
 		if (type === "category") {
 			setFilter({
 				...filter,
-				category: parseInt(e.currentTarget.value),
+				category:
+					e.currentTarget.value !== "Toutes"
+						? parseInt(e.currentTarget.value)
+						: undefined,
 			});
 		} else {
 			setFilter({
 				...filter,
-				shop: parseInt(e.currentTarget.value),
+				shop:
+					e.currentTarget.value !== "Toutes"
+						? parseInt(e.currentTarget.value)
+						: undefined,
 			});
 		}
 	};

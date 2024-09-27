@@ -36,4 +36,5 @@ export type OrderItem = {
 
 export type OrderQuery = TypeQuery & {
 	shop_id?: number;
+	order_number?: string;
 };

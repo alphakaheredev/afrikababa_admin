@@ -5,6 +5,8 @@ import SalesBarChart from "./SalesBarChart";
 import { cn, formatAmount } from "@/lib/utils";
 import CartItem from "./CartItem";
 import { useGetAdminDashboardDataQuery, useGetHistoryOrdersStatisticsQuery } from "@/redux/api/config/config.api";
+import { useGetTopSellingProductsQuery } from "@/redux/api/product/product.api";
+import { useSearch } from "@/hooks/hooks";
 
 export const books = [
 	{
@@ -27,8 +29,11 @@ const Dashboard = () => {
 	const { data } = useGetAdminDashboardDataQuery();
 	const year = new Date().getFullYear();
 	const { data: historyOrders } = useGetHistoryOrdersStatisticsQuery(year);
+	const { data: topSellingProducts } = useGetTopSellingProductsQuery();
+	const { search, handleSearch } = useSearch();
+	console.log(topSellingProducts);
 
-  return (
+	return (
 		<div>
 			<div className={cn(cardClass, "mb-12")}>
 				<h1 className="text-dark font-medium mb-2">Résumé</h1>
@@ -86,9 +91,12 @@ const Dashboard = () => {
 					<h3 className="text-dark font-semibold">
 						Les dernières commandes
 					</h3>
-					<InputSearch placeholder="Recherchez par nom" />
+					<InputSearch
+						placeholder="Recherchez par numéro de suivi"
+						onChange={handleSearch}
+					/>
 				</div>
-				<OrdersTable limit={10} />
+				<OrdersTable limit={10} order_number={search} />
 			</section>
 
 			{/* Historique de ventes */}
@@ -104,9 +112,14 @@ const Dashboard = () => {
 						Produits populaires
 					</h3>
 					<div className="grid grid-cols space-y-4">
-						{books.map((item, index) => (
-							<CartItem key={index} item={item} />
-						))}
+						{topSellingProducts?.data
+							?.slice(0, 2)
+							.map((item, index) => (
+								<CartItem
+									key={index}
+									item={item}
+								/>
+							))}
 					</div>
 				</div>
 			</section>
