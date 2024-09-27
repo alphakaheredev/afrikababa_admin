@@ -40,11 +40,6 @@ const FilterProductSection: React.FC<Props> = ({ handleFilter }) => {
 					]}
 					onChange={(e) => handleFilter(e, "category")}
 				/>
-				{/* <FilterSelect
-          id="group"
-          label="Filtre par produits"
-          options={productOptions}
-        /> */}
 			</div>
 		</div>
 	);

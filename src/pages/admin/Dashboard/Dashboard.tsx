@@ -31,7 +31,7 @@ const Dashboard = () => {
 	const { data: historyOrders } = useGetHistoryOrdersStatisticsQuery(year);
 	const { data: topSellingProducts } = useGetTopSellingProductsQuery();
 	const { search, handleSearch } = useSearch();
-	console.log(topSellingProducts);
+	console.log(historyOrders);
 
 	return (
 		<div>

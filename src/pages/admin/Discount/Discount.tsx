@@ -52,11 +52,11 @@ const statusFormatter = (status: string) => {
   return <span className={statusClass}>{status}</span>;
 };
 
-const actionFormatter = (_cell: null, row: Coupon) => (
-  <div className="flex space-x-2">
-    <ButtonEdit />
-    <ButtonDelete />
-  </div>
+const actionFormatter = (_cell: null) => (
+	<div className="flex space-x-2">
+		<ButtonEdit />
+		<ButtonDelete />
+	</div>
 );
 
 const Discounts = () => {
