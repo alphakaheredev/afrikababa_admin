@@ -7,6 +7,7 @@ import CartItem from "./CartItem";
 import { useGetAdminDashboardDataQuery, useGetHistoryOrdersStatisticsQuery } from "@/redux/api/config/config.api";
 import { useGetTopSellingProductsQuery } from "@/redux/api/product/product.api";
 import { useSearch } from "@/hooks/hooks";
+import { MonthlyOrderData } from "@/redux/api/config/config.type";
 
 export const books = [
 	{
@@ -23,6 +24,14 @@ export const books = [
 	},
 ];
 
+const convertMonthlyDataToArray = (data?: MonthlyOrderData) => {
+	if (!data) return [];
+	return Object.entries(data).map(([month, value]) => ({
+		label: month,
+		value: value,
+	}));
+};
+
 const cardClass = "bg-white my-2 mx-1 shadow-gray-100 drop-shadow-xl p-3";
 
 const Dashboard = () => {
@@ -31,7 +40,6 @@ const Dashboard = () => {
 	const { data: historyOrders } = useGetHistoryOrdersStatisticsQuery(year);
 	const { data: topSellingProducts } = useGetTopSellingProductsQuery();
 	const { search, handleSearch } = useSearch();
-	console.log(historyOrders);
 
 	return (
 		<div>
@@ -105,7 +113,11 @@ const Dashboard = () => {
 					<h3 className="text-dark font-semibold">
 						Historique de ventes
 					</h3>
-					<SalesBarChart />
+					<SalesBarChart
+						data={convertMonthlyDataToArray(
+							historyOrders
+						)}
+					/>
 				</div>
 				<div className={cn(cardClass)}>
 					<h3 className="text-dark font-semibold mb-5">

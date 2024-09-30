@@ -39,7 +39,7 @@ const ProductsTable = ({ q, shop_id, category_id }: ProductQuery) => {
 	// 	let colorClass = "";
 
 	// 	switch (cell) {
-	// 		case "In Stock":
+	// 		case "In Stock":  
 	// 			colorClass = "bg-th-primary";
 	// 			break;
 	// 		case "Out of Stock":

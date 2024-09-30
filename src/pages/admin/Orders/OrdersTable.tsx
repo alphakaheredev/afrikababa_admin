@@ -24,11 +24,11 @@ import {
 import { ChevronDownIcon } from "lucide-react";
 import { toast } from "react-toastify";
 
-const OrdersTable = ({ limit, shop_id, order_number }: OrderQuery) => {
+const OrdersTable = ({ limit, order_number }: OrderQuery) => {
 	const { data: orders, isLoading } = useGetOrdersListQuery({
 		limit,
-		shop_id,
-		order_number,
+		shop_id: 20,
+		q: order_number,
 	});
 	const [changeOrderStatus] = useChangeOrderStatusMutation();
 

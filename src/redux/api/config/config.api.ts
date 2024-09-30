@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { ApiBaseUrl } from "@/lib/http";
 import { prepareHeaders } from "../user/user.api";
-import { AdminDashboardData } from "./config.type";
+import { AdminDashboardData, MonthlyOrderData } from "./config.type";
 
 export const ConfigApi = createApi({
 	reducerPath: "configApi",
@@ -21,7 +21,7 @@ export const ConfigApi = createApi({
 				statistics: AdminDashboardData;
 			}) => res.statistics,
 		}),
-		getHistoryOrdersStatistics: build.query<any, number>({
+		getHistoryOrdersStatistics: build.query<MonthlyOrderData, number>({
 			query: (year) => ({
 				url: `stat/monthly-order-counts-for-year/${year}`,
 				method: "GET",

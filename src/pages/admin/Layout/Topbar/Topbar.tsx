@@ -8,7 +8,6 @@ import {
 import useScrollPosition from "@/hooks/useScrollPosition";
 import { IconBurger } from "@/components/common/Icons";
 import { adminPaths } from "@/routes/paths";
-import { CiSearch } from "react-icons/ci";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { isSupplier } from "@/routes/routerUtils";
 import { User } from "@/redux/api/user/user.type";
@@ -42,7 +41,7 @@ const Topbar = ({ open }: { open: () => void }) => {
 							</button>
 						)}
 
-						<div className="relative">
+						{/* <div className="relative">
 							<CiSearch
 								className="text font-bold absolute top-2 left-2"
 								fontSize={24}
@@ -51,7 +50,7 @@ const Topbar = ({ open }: { open: () => void }) => {
 								className="px-3 py-2 border border-th-gray-c9 text-dark min-w-80 font-light pl-8 text-sm"
 								placeholder="Recherchez votre itinéraire..."
 							/>
-						</div>
+						</div> */}
 					</div>
 					<div className="flex justify-center lg:justify-end items-center gap-8">
 						{isSupplier(user as User) && (

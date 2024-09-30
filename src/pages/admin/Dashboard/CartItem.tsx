@@ -1,9 +1,16 @@
 import { Product } from "@/redux/api/product/product.type";
 import { formatAmount, getImageUrl } from "@/lib/utils";
+import { Link } from "react-router-dom";
 
 const CartItem = ({ item }: { item: Product }) => {
+	console.log(item);
+
 	return (
-		<div className="flex items-start space-x-4">
+		<Link
+			to={`/admin/produits/${item?.id}`}
+			className="flex items-start space-x-4"
+			state={item}
+		>
 			<img
 				src={getImageUrl(item?.main_image_url)}
 				alt={item?.name}
@@ -34,7 +41,7 @@ const CartItem = ({ item }: { item: Product }) => {
 					className="text-th-gray"
 				/>
 			</button> */}
-		</div>
+		</Link>
 	);
 };
 
