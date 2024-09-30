@@ -1,20 +1,19 @@
-import { Order } from "../order/order.type";
+import { Shop } from "../shop/shop.type";
 import { User } from "../user/user.type";
 
 export type WindrawRequest = {
 	id: number;
 	user: User;
-	order: Order;
+	shop: Shop;
 	amount: number;
-	reason: string;
-	status: "pending" | "traited" | "rejected";
+	payment_methode: string;
+	status: "PENDING" | "TRAITED" | "REJECTED";
 	created_at: string;
 };
 
 export type WindrawRequestFormData = Pick<
 	WindrawRequest,
-	"amount" | "reason" | "status"
+	"amount" | "payment_methode"
 > & {
-	order_id: number;
-	user_id: number;
+	shop_id: number;
 };

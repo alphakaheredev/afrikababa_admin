@@ -15,12 +15,14 @@ const WindrawRequestTable = () => {
 			formatter: (value: string) => `#ID: ${value}`,
 		},
 		{
-			header: "Nom",
-			name: "user",
-			formatter: (cell) => getUserName(cell),
+			header: "Fournisseur",
+			name: "shop",
+			formatter: (_cell: string, row: WindrawRequest) =>
+				getUserName(row.shop.user),
 		},
-		{ header: "Motifs", name: "reason" },
 		{ header: "Montant", name: "amount" },
+		{ header: "Méthode de paiement", name: "payment_methode" },
+		{ header: "Statut", name: "status" },
 		{ header: "Action", name: "id", formatter: actionFormatter },
 	];
 
