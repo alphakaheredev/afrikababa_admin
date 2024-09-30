@@ -95,7 +95,7 @@ const Dashboard = () => {
 
 			{/* Dernières commandes */}
 			<section className={cn(cardClass, "mb-12")}>
-				<div className="flex items-center justify-between mb-8">
+				<div className="flex flex-col md:flex-row md:items-center gap-2 justify-between mb-8">
 					<h3 className="text-dark font-semibold">
 						Les dernières commandes
 					</h3>

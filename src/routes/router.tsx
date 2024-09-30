@@ -45,6 +45,7 @@ import ShippingCosts from "@/pages/admin/Shipping/ShippingCosts";
 import ConditionForm from "@/pages/admin/Settings/TabsContent/Condition/ConditionForm";
 import DetailProduct from "@/pages/admin/Products/DetailProduct";
 import ShopDetail from "@/pages/admin/Shops/ShopDetail";
+import WindrawRequest from "@/pages/admin/Windraw/WindrawRequest";
 
 export const adminRoutes = [
 	{
@@ -202,6 +203,10 @@ export const adminRoutes = [
 	{
 		path: adminPaths.shopDetail,
 		element: <ShopDetail />,
+	},
+	{
+		path: adminPaths.withdrawRequests,
+		element: <WindrawRequest />,
 	},
 ];
 

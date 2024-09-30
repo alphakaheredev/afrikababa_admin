@@ -23,16 +23,19 @@ const DesktopSidebar = () => {
 
 export const MobileSidebar = ({ close }: { close: () => void }) => {
   return (
-    <nav className="fixed inset-0 bg-dark bg-opacity-50 z-50 transition-all ease-out duration-200 overflow-y-auto">
-      <div className="bg-dark w-[250px] h-full shadow-lg overflow-hidden px-4 py-5 transition-all ease-out duration-300">
-        <div className="flex items-start justify-between mb-10">
-          <button className="text-white pt-3" onClick={close}>
-            <IoMdClose fontSize={30} />
-          </button>
-        </div>
-        <SidebarMenu />
-      </div>
-    </nav>
+		<nav className="fixed inset-0 bg-dark bg-opacity-50 z-50 transition-all ease-out duration-200 overflow-y-auto">
+			<div className="bg-dark w-[250px] h-full overflow-y-auto shadow-lg px-4 py-5 transition-all ease-out duration-300">
+				<div className="flex items-start justify-between mb-10">
+					<button
+						className="text-white pt-3"
+						onClick={close}
+					>
+						<IoMdClose fontSize={30} />
+					</button>
+				</div>
+				<SidebarMenu close={close} />
+			</div>
+		</nav>
   );
 };
 

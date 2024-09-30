@@ -11,6 +11,7 @@ import {
 	IconProduct,
 } from "@/components/common/Icons";
 import { FiSettings, FiTruck, FiUser, FiUsers } from "react-icons/fi";
+import { FaHandHoldingUsd } from "react-icons/fa";
 // import { FaRegEnvelope } from "react-icons/fa6";
 // import { HiOutlineStar } from "react-icons/hi";
 // import { IoDocumentTextOutline } from "react-icons/io5";
@@ -83,6 +84,11 @@ export const routes = [
 				label: "Transactions",
 				icon: <IconExchange />,
 				path: adminPaths.transactions,
+			},
+			{
+				label: "Demandes de retrait",
+				icon: <FaHandHoldingUsd fontSize={22} />,
+				path: adminPaths.withdrawRequests,
 			},
 		],
 	},

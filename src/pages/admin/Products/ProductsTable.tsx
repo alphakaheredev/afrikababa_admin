@@ -118,11 +118,6 @@ const ProductsTable = ({ q, shop_id, category_id }: ProductQuery) => {
 
 		// { header: "Type de produits", name: "type" },
 		{ header: "Prix unitaire", name: "price" },
-		// {
-		// 	header: "Etat de stock",
-		// 	name: "stockStatus",
-		// 	formatter: stockStatusFormatter,
-		// },
 		{ header: "Actions", name: "actions", formatter: actionFormatter },
 	];
 

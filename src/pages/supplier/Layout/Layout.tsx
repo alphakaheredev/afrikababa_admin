@@ -3,7 +3,6 @@ import Topbar from "./Topbar/Topbar";
 import { useToggle } from "@/hooks/hooks";
 import Sidebar from "./Sidebar/Sidebar";
 import ScrollToTop from "@/components/common/ScrollToTop";
-import "./Layout.css";
 
 function SupplierLayout() {
   const { isOpen, open, close } = useToggle();

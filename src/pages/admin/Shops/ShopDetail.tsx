@@ -12,8 +12,8 @@ const ShopDetail = () => {
 				Détails de la boutique
 			</h1>
 			<div>
-				<div className="flex  gap-5">
-					<div className="border-2 border-th-teal p-3 w-20 h-20  rounded-full">
+				<div className="flex flex-col md:flex-row  gap-5">
+					<div className="border-2 border-th-teal p-3 w-20 h-20 mx-auto md:mx-0 rounded-full">
 						<img
 							src={getImageUrl(item.logo_url)}
 							alt="logo"

@@ -4,7 +4,7 @@ import ReviewsTable from "./ReviewsTable";
 const Reviews = () => {
 	return (
 		<>
-			<div className="flex items-center justify-between mb-8">
+			<div className="flex flex-col md:flex-row md:items-center gap-2 justify-between mb-8">
 				<h3 className="text-dark font-semibold">
 					Avis de magasin
 				</h3>
