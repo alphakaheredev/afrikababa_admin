@@ -1,5 +1,6 @@
 import { ConditionType } from "@/redux/api/condition/condition.type";
 import { OrderStatus } from "@/redux/api/order/order.type";
+import { RefundStatus } from "@/redux/api/refund/refund.type";
 import { ROLE, User } from "@/redux/api/user/user.type";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
@@ -134,4 +135,18 @@ export function formatConditionTarget(target: "supplier" | "customer") {
 	return target;
 }
 
-// create markup
+// format refund status
+export function formatRefundStatus(status: RefundStatus) {
+	if (status === RefundStatus.PENDING) return "En attente";
+	if (status === RefundStatus.TRAITED) return "Traité";
+	if (status === RefundStatus.IN_PROGRESS) return "En cours";
+	return status;
+}
+
+export function formatRefundStatusToBadge(status: RefundStatus) {
+	if (status === RefundStatus.PENDING) return "bg-gray-200 text-gray-800";
+	if (status === RefundStatus.TRAITED) return "bg-green-600";
+	if (status === RefundStatus.IN_PROGRESS)
+		return "bg-blue-200 text-blue-800";
+	return "bg-gray-500";
+}

@@ -1,15 +1,11 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { ApiBaseUrl } from "@/lib/http";
-import { prepareHeaders } from "../user/user.api";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import { baseQueryWithLogout } from "@/lib/baseQuery";
 import { AdminDashboardData, MonthlyOrderData } from "./config.type";
 
 export const ConfigApi = createApi({
 	reducerPath: "configApi",
 	tagTypes: ["config"],
-	baseQuery: fetchBaseQuery({
-		baseUrl: `${ApiBaseUrl}/api/`,
-		prepareHeaders,
-	}),
+	baseQuery: baseQueryWithLogout,
 	endpoints: (build) => ({
 		getAdminDashboardData: build.query<AdminDashboardData, void>({
 			query: () => ({

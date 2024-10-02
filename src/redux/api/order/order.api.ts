@@ -1,16 +1,12 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
 import { Order, OrderQuery, OrderStatus } from "./order.type";
-import { ApiBaseUrl } from "@/lib/http";
 import { PaginationResults } from "@/lib/type";
-import { prepareHeaders } from "../user/user.api";
+import { baseQueryWithLogout } from "@/lib/baseQuery";
 
 export const OrderApi = createApi({
 	reducerPath: "orderApi",
 	tagTypes: ["orders"],
-	baseQuery: fetchBaseQuery({
-		baseUrl: `${ApiBaseUrl}/api/`,
-		prepareHeaders,
-	}),
+	baseQuery: baseQueryWithLogout,
 	endpoints: (build) => ({
 		getOrdersList: build.query<PaginationResults<Order>, OrderQuery>({
 			query: (query) => ({

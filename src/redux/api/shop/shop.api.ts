@@ -1,16 +1,12 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
 import { Shop } from "./shop.type";
-import { ApiBaseUrl } from "@/lib/http";
 import { PaginationResults, TypeQuery } from "@/lib/type";
-import { prepareHeaders } from "../user/user.api";
+import { baseQueryWithLogout } from "@/lib/baseQuery";
 
 export const ShopApi = createApi({
 	reducerPath: "shopApi",
 	tagTypes: ["shops", "products"],
-	baseQuery: fetchBaseQuery({
-		baseUrl: `${ApiBaseUrl}/api/`,
-		prepareHeaders,
-	}),
+	baseQuery: baseQueryWithLogout,
 	endpoints: (build) => ({
 		getShopsList: build.query<PaginationResults<Shop>, TypeQuery>({
 			query: (query) => ({

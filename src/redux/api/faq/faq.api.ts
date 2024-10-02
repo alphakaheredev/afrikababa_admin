@@ -1,16 +1,12 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
 import { Faq, FaqFormData } from "./faq.type";
-import { ApiBaseUrl } from "@/lib/http";
 import { PaginationResults, TypeQuery } from "@/lib/type";
-import { prepareHeaders } from "../user/user.api";
+import { baseQueryWithLogout } from "@/lib/baseQuery";
 
 export const FaqApi = createApi({
 	reducerPath: "faqApi",
 	tagTypes: ["faq"],
-	baseQuery: fetchBaseQuery({
-		baseUrl: `${ApiBaseUrl}/api/`,
-		prepareHeaders,
-	}),
+	baseQuery: baseQueryWithLogout,
 	endpoints: (build) => ({
 		getFaqsList: build.query<PaginationResults<Faq>, TypeQuery>({
 			query: (query) => ({

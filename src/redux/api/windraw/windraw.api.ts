@@ -1,16 +1,12 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
 import { WindrawRequest, WindrawRequestFormData } from "./windraw.type";
-import { ApiBaseUrl } from "@/lib/http";
 import { PaginationResults, TypeQuery } from "@/lib/type";
-import { prepareHeaders } from "../user/user.api";
+import { baseQueryWithLogout } from "@/lib/baseQuery";
 
 export const WindrawApi = createApi({
 	reducerPath: "windrawApi",
 	tagTypes: ["windraw"],
-	baseQuery: fetchBaseQuery({
-		baseUrl: `${ApiBaseUrl}/api/`,
-		prepareHeaders,
-	}),
+	baseQuery: baseQueryWithLogout,
 	endpoints: (build) => ({
 		getWindrawRequestsList: build.query<
 			PaginationResults<WindrawRequest>,

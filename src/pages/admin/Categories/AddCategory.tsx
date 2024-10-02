@@ -11,6 +11,7 @@ import Input from "@/components/ui/input";
 import Textarea from "@/components/ui/textarea";
 import { useCrudCategory } from "./hooks/useCrudCategory";
 import { Category } from "@/redux/api/category/category.type";
+import { ButtonBack } from "@/components/ui/button";
 
 export function CategoryForm({ item }: { item?: Category }) {
 	const { register, onSubmit, errors, isLoading, handleSelectIcon } =
@@ -74,9 +75,12 @@ export function CategoryForm({ item }: { item?: Category }) {
 const AddCategory = () => {
 	return (
 		<React.Fragment>
-			<h1 className="text-dark font-semibold text-xl">
-				Créez une nouvelle catégorie
-			</h1>
+			<div className="flex items-center gap-2">
+				<ButtonBack />
+				<h1 className="text-dark font-medium text-xl">
+					Créez une nouvelle catégorie
+				</h1>
+			</div>
 			<Divider margin="my-5" />
 			<CategoryForm />
 		</React.Fragment>

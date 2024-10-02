@@ -3,15 +3,19 @@ import { useLocationState } from "@/hooks/hooks";
 import { formatAmount } from "@/lib/utils";
 import { Product } from "@/redux/api/product/product.type";
 import ReviewsTable from "../Reviews/ReviewsTable";
+import { ButtonBack } from "@/components/ui/button";
 
 const DetailProduct = () => {
 	const item = useLocationState<Product>(undefined);
 
 	return (
 		<div>
-			<h3 className="text-xl font-medium mb-16">
-				Détail du produit
-			</h3>
+			<div className="flex items-center gap-2 mb-12">
+				<ButtonBack />
+				<h1 className="text-dark font-medium text-xl">
+					Détail du produit
+				</h1>
+			</div>
 			<div className="grid grid-cols-1 lg:grid-cols-3 px-3 py-2 mb-12">
 				<div className=" overflow-hidden">
 					<ProductCarousel />

@@ -6,6 +6,7 @@ import Label from "@/components/ui/label";
 import ButtonSubmit from "@/components/ui/buttonSubmit";
 import { Error } from "@/components/common/Error";
 import { formatConditionType } from "@/lib/utils";
+import { ButtonBack } from "@/components/ui/button";
 
 const ConditionForm = () => {
 	const {
@@ -20,9 +21,12 @@ const ConditionForm = () => {
 
 	return (
 		<>
-			<h3 className="text-dark text-xl font-medium mb-10">
-				{item ? "Modifier la" : "Ajouter une"} condition
-			</h3>
+			<div className="flex items-center gap-2 mb-8">
+				<ButtonBack />
+				<h1 className="text-dark font-medium text-xl">
+					{item ? "Modifier la" : "Ajouter une"} condition
+				</h1>
+			</div>
 			<form onSubmit={onSubmit} className="space-y-5">
 				<Select
 					label="Target"

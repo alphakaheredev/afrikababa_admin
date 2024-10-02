@@ -1,16 +1,12 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
 import { Payment, PaymentMethod } from "./payment.type";
-import { ApiBaseUrl } from "@/lib/http";
 import { PaginationResults, TypeQuery } from "@/lib/type";
-import { prepareHeaders } from "../user/user.api";
+import { baseQueryWithLogout } from "@/lib/baseQuery";
 
 export const PaymentApi = createApi({
 	reducerPath: "paymentApi",
 	tagTypes: ["payments", "payment_methods"],
-	baseQuery: fetchBaseQuery({
-		baseUrl: `${ApiBaseUrl}/api/`,
-		prepareHeaders,
-	}),
+	baseQuery: baseQueryWithLogout,
 	endpoints: (build) => ({
 		getPaymentsList: build.query<PaginationResults<Payment>, TypeQuery>(
 			{

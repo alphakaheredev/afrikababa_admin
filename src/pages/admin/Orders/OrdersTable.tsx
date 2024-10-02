@@ -24,10 +24,10 @@ import {
 import { ChevronDownIcon } from "lucide-react";
 import { toast } from "react-toastify";
 
-const OrdersTable = ({ limit, order_number }: OrderQuery) => {
+const OrdersTable = ({ limit, order_number, shop_id }: OrderQuery) => {
 	const { data: orders, isLoading } = useGetOrdersListQuery({
 		limit,
-		shop_id: 20,
+		shop_id,
 		q: order_number,
 	});
 	const [changeOrderStatus] = useChangeOrderStatusMutation();
@@ -93,18 +93,27 @@ const OrdersTable = ({ limit, order_number }: OrderQuery) => {
 					</button>
 				</DropdownMenuTrigger>
 				<DropdownMenuContent>
-					{Object.values(OrderStatus).map((status) => (
-						<DropdownMenuItem
-							key={status}
-							onClick={() =>
-								changeStatus(status, row)
-							}
-						>
-							<span>
-								{formatOrderStatus(status)}
-							</span>
-						</DropdownMenuItem>
-					))}
+					{Object.values(OrderStatus)
+						.filter(
+							(status) =>
+								status ===
+									OrderStatus.SHIPPED ||
+								status === OrderStatus.DELIVERED
+						)
+						.map((status) => (
+							<DropdownMenuItem
+								key={status}
+								onClick={() =>
+									changeStatus(status, row)
+								}
+							>
+								<span>
+									{formatOrderStatus(
+										status
+									)}
+								</span>
+							</DropdownMenuItem>
+						))}
 				</DropdownMenuContent>
 			</DropdownMenu>
 		);

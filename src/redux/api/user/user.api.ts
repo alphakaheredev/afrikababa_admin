@@ -1,32 +1,12 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { AuthState, User, UserFormData } from "./user.type";
-import { RootState } from "../../store";
-import { ApiBaseUrl } from "@/lib/http";
-import { AppStorage } from "@/lib/storage";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import { User, UserFormData } from "./user.type";
 import { PaginationResults, TypeQuery } from "@/lib/type";
-
-export const prepareHeaders = (
-	headers: Headers,
-	{ getState }: { getState: any }
-) => {
-	const token =
-		(getState() as RootState).user.token ??
-		AppStorage.getItem<AuthState>("user")?.token;
-	headers.set("accept", "application/json");
-	headers.set("Access-Control-Allow-Origin", "*");
-	if (token) {
-		headers.set("authorization", `Bearer ${token}`);
-	}
-	return headers;
-};
+import { baseQueryWithLogout } from "@/lib/baseQuery";
 
 export const UserApi = createApi({
 	reducerPath: "userApi",
 	tagTypes: ["users"],
-	baseQuery: fetchBaseQuery({
-		baseUrl: `${ApiBaseUrl}/api/`,
-		prepareHeaders,
-	}),
+	baseQuery: baseQueryWithLogout,
 	endpoints: (build) => ({
 		getUsersList: build.query<PaginationResults<User>, TypeQuery>({
 			query: (query) => ({

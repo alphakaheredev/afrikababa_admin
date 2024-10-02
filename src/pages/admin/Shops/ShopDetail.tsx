@@ -3,14 +3,18 @@ import { getImageUrl } from "@/lib/utils";
 import { Shop } from "@/redux/api/shop/shop.type";
 import { useLocation } from "react-router-dom";
 import OrdersTable from "../Orders/OrdersTable";
+import { ButtonBack } from "@/components/ui/button";
 
 const ShopDetail = () => {
 	const item = useLocation().state as Shop;
 	return (
 		<>
-			<h1 className="text-dark font-medium text-xl mb-12">
-				Détails de la boutique
-			</h1>
+			<div className="flex items-center gap-2 mb-12">
+				<ButtonBack />
+				<h1 className="text-dark font-medium text-xl">
+					Détails de la boutique
+				</h1>
+			</div>
 			<div>
 				<div className="flex flex-col md:flex-row  gap-5">
 					<div className="border-2 border-th-teal p-3 w-20 h-20 mx-auto md:mx-0 rounded-full">

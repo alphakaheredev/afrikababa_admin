@@ -1,13 +1,19 @@
 import { Order } from "../order/order.type";
 import { User } from "../user/user.type";
 
+export enum RefundStatus {
+	PENDING = "PENDING",
+	TRAITED = "TRAITED",
+	IN_PROGRESS = "IN_PROGRESS",
+}
+
 export type Refund = {
 	id: number;
 	user: User;
 	order: Order;
 	amount: number;
 	reason: string;
-	status: "pending" | "traited" | "rejected";
+	status: RefundStatus;
 	created_at: string;
 };
 

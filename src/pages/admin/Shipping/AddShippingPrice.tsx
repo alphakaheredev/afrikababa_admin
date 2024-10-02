@@ -9,6 +9,7 @@ import Divider from "@/components/common/Divider";
 import Input from "@/components/ui/input";
 import ButtonSubmit from "@/components/ui/buttonSubmit";
 import { useCrudShippingCost } from "./useCrudShippingCost";
+import { ButtonBack } from "@/components/ui/button";
 
 const AddShippingPrice = () => {
 	const { onSubmit, register, errors, isLoading, item } =
@@ -16,10 +17,13 @@ const AddShippingPrice = () => {
 
 	return (
 		<React.Fragment>
-			<h1 className="text-dark font-semibold text-xl">
-				{item ? "Modifier" : "Ajouter"} un nouveau tarif
-				d’expédition
-			</h1>
+			<div className="flex items-center gap-2">
+				<ButtonBack />
+				<h1 className="text-dark font-medium text-xl">
+					{item ? "Modifier" : "Ajouter"} un nouveau tarif
+					d’expédition
+				</h1>
+			</div>
 			<Divider margin="my-5" />
 			<form onSubmit={onSubmit}>
 				<FormRow>

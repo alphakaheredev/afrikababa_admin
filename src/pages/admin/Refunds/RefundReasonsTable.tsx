@@ -1,12 +1,74 @@
 import Table, { Column } from "@/components/ui/Table";
-import { ButtonDelete } from "@/components/ui/button";
-import { getUserName } from "@/lib/utils";
-import { useGetRefundsListQuery } from "@/redux/api/refund/refund.api";
-import { Refund } from "@/redux/api/refund/refund.type";
+import { Badge } from "@/components/ui/badge";
+import {
+	cn,
+	formatAmount,
+	formatRefundStatus,
+	formatRefundStatusToBadge,
+	getUserName,
+} from "@/lib/utils";
+import {
+	useChangeRefundStatusMutation,
+	useGetRefundsListQuery,
+} from "@/redux/api/refund/refund.api";
+import { Refund, RefundStatus } from "@/redux/api/refund/refund.type";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { ChevronDownIcon } from "lucide-react";
+import { toast } from "react-toastify";
 
 const RefundReasonsTable = () => {
 	const { data: result, isLoading } = useGetRefundsListQuery({});
-	const actionFormatter = () => <ButtonDelete />;
+	const [changeRefundStatus] = useChangeRefundStatusMutation();
+	console.log({ result });
+
+	const changeStatus = async (status: RefundStatus, row: Refund) => {
+		const res = await changeRefundStatus({ id: row.id, status });
+		if ("data" in res) {
+			console.log(res.data);
+			toast.success("Statut de commande modifié");
+		}
+		if (res.error) {
+			toast.error("Une erreur est survenue");
+		}
+	};
+	const actionFormatter = (_cell: string, row: Refund) => {
+		return (
+			<DropdownMenu>
+				<DropdownMenuTrigger asChild>
+					<button className="flex items-center gap-2 bg-dark text-white px-3 py-2">
+						<span>Changer le statut</span>
+						<ChevronDownIcon className="w-4 h-4" />
+					</button>
+				</DropdownMenuTrigger>
+				<DropdownMenuContent>
+					{Object.values(RefundStatus).map((status) => (
+						<DropdownMenuItem
+							key={status}
+							onClick={() =>
+								changeStatus(status, row)
+							}
+						>
+							<span>
+								{formatRefundStatus(status)}
+							</span>
+						</DropdownMenuItem>
+					))}
+				</DropdownMenuContent>
+			</DropdownMenu>
+		);
+	};
+	const statusFormatter = (cell: RefundStatus) => {
+		return (
+			<Badge className={cn(formatRefundStatusToBadge(cell))}>
+				{formatRefundStatus(cell)}
+			</Badge>
+		);
+	};
 
 	const columns: Column<Refund>[] = [
 		{
@@ -15,12 +77,32 @@ const RefundReasonsTable = () => {
 			formatter: (value: string) => `#ID: ${value}`,
 		},
 		{
-			header: "Nom",
+			header: "Client",
 			name: "user",
 			formatter: (cell) => getUserName(cell),
 		},
-		{ header: "Motifs", name: "reason" },
-		{ header: "Montant", name: "amount" },
+		{ header: "Motif", name: "reason" },
+		{
+			header: "Montant",
+			name: "amount",
+			formatter: (cell) => formatAmount(cell),
+		},
+		{
+			header: "Date de demande",
+			name: "created_at",
+			formatter: (cell) =>
+				new Date(cell).toLocaleDateString("fr-FR"),
+		},
+		{
+			header: "Commande",
+			name: "order",
+			formatter: (cell) => cell?.order_number,
+		},
+		{
+			header: "Statut",
+			name: "status",
+			formatter: (cell) => statusFormatter(cell),
+		},
 		{ header: "Action", name: "id", formatter: actionFormatter },
 	];
 

@@ -1,8 +1,8 @@
 import React from "react";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { IconEdit } from "../common/Icons";
-import { Link, LinkProps } from "react-router-dom";
-import { BsEye } from "react-icons/bs";
+import { Link, LinkProps, useNavigate } from "react-router-dom";
+import { BsArrowLeft, BsEye } from "react-icons/bs";
 
 type Props = React.ButtonHTMLAttributes<HTMLButtonElement>;
 
@@ -57,5 +57,14 @@ export const ButtonViewLink: React.FC<LinkProps> = ({ ...props }) => {
 		<Link {...props}>
 			<BsEye fontSize={20} className="text-teal-700" />
 		</Link>
+	);
+};
+
+export const ButtonBack: React.FC<Props> = ({ ...props }) => {
+	const navigate = useNavigate();
+	return (
+		<button {...props} onClick={() => navigate(-1)}>
+			<BsArrowLeft fontSize={20} className="text-dark" />
+		</button>
 	);
 };

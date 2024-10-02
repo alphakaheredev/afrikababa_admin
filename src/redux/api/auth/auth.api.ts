@@ -1,4 +1,4 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
 import {
 	LoginFormData,
 	LoginResult,
@@ -6,16 +6,12 @@ import {
 	RegisterFormData,
 } from "./auth.type";
 import { User } from "../user/user.type";
-import { prepareHeaders } from "../user/user.api";
-import { ApiBaseUrl } from "@/lib/http";
+import { baseQueryWithLogout } from "@/lib/baseQuery";
 
 export const AuthApi = createApi({
 	reducerPath: "auth",
 	tagTypes: ["auth"],
-	baseQuery: fetchBaseQuery({
-		baseUrl: `${ApiBaseUrl}/api/`,
-		prepareHeaders,
-	}),
+	baseQuery: baseQueryWithLogout,
 	endpoints: (build) => ({
 		// register user mutation
 		registerUser: build.mutation<LoginResult, RegisterFormData>({
