@@ -20,11 +20,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ChevronDownIcon } from "lucide-react";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
+import { Order } from "@/redux/api/order/order.type";
 
 const RefundReasonsTable = () => {
 	const { data: result, isLoading } = useGetRefundsListQuery({});
 	const [changeRefundStatus] = useChangeRefundStatusMutation();
-	console.log({ result });
 
 	const changeStatus = async (status: RefundStatus, row: Refund) => {
 		const res = await changeRefundStatus({ id: row.id, status });
@@ -36,6 +37,19 @@ const RefundReasonsTable = () => {
 			toast.error("Une erreur est survenue");
 		}
 	};
+
+	const orderNumberFormatter = (cell: Order) => {
+		return (
+			<Link
+				to={`/admin/commandes/${cell?.order_number}`}
+				state={cell}
+				className="hover:underline cursor-pointer"
+			>
+				{cell?.order_number}
+			</Link>
+		);
+	};
+
 	const actionFormatter = (_cell: string, row: Refund) => {
 		return (
 			<DropdownMenu>
@@ -96,7 +110,7 @@ const RefundReasonsTable = () => {
 		{
 			header: "Commande",
 			name: "order",
-			formatter: (cell) => cell?.order_number,
+			formatter: orderNumberFormatter,
 		},
 		{
 			header: "Statut",

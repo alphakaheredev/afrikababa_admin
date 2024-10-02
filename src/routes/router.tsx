@@ -24,7 +24,6 @@ import AddShippingPrice from "@/pages/admin/Shipping/AddShippingPrice";
 import Refunds from "@/pages/admin/Refunds/Refunds";
 import AddNewRefundReason from "@/pages/admin/Refunds/AddNewRefundReason";
 import Orders from "@/pages/admin/Orders/Orders";
-import DetailOrder from "@/pages/admin/Orders/DetailOrder";
 import Transactions from "@/pages/admin/Transactions/Transactions";
 import AdminsList from "@/pages/admin/Admins/AdminsList";
 import Customers from "@/pages/admin/Customers/Customers";
@@ -46,6 +45,8 @@ import ConditionForm from "@/pages/admin/Settings/TabsContent/Condition/Conditio
 import DetailProduct from "@/pages/admin/Products/DetailProduct";
 import ShopDetail from "@/pages/admin/Shops/ShopDetail";
 import WindrawRequest from "@/pages/admin/Windraw/WindrawRequest";
+import OrderDetail from "@/pages/admin/Orders/OrderDetail";
+import DetailOrder from "@/pages/admin/Orders/DetailOrder";
 
 export const adminRoutes = [
 	{
@@ -138,7 +139,7 @@ export const adminRoutes = [
 	},
 	{
 		path: adminPaths.detailOrder,
-		element: <DetailOrder />,
+		element: <OrderDetail />,
 	},
 	{
 		path: adminPaths.transactions,
@@ -205,84 +206,88 @@ export const adminRoutes = [
 		element: <ShopDetail />,
 	},
 	{
+		path: adminPaths.detailOrder,
+		element: <OrderDetail />,
+	},
+	{
 		path: adminPaths.withdrawRequests,
 		element: <WindrawRequest />,
 	},
 ];
 
 export const supplierRoutes = [
-  {
-    path: "/fournisseur",
-    element: <Navigate to={supplierPaths.dashboard} />,
-  },
-  {
-    path: supplierPaths.dashboard,
-    element: <SupplierDashboard />,
-  },
-  {
-    path: supplierPaths.products,
-    element: <Products />,
-  },
-  {
-    path: supplierPaths.addProduct,
-    element: <AddProduct />,
-  },
-  {
-    path: supplierPaths.productOutOfStock,
-    element: <ProductOutOfStock />,
-  },
-  {
-    path: supplierPaths.categories,
-    element: <Categories />,
-  },
-  {
-    path: supplierPaths.addCategory,
-    element: <AddCategory />,
-  },
-  {
-    path: supplierPaths.editCategory,
-    element: <EditCategory />,
-  },
-  {
-    path: supplierPaths.refunds,
-    element: <Refunds />,
-  },
-  {
-    path: supplierPaths.orders,
-    element: <Orders />,
-  },
-  {
-    path: supplierPaths.detailOrder,
-    element: <DetailOrder />,
-  },
-  {
-    path: supplierPaths.transactions,
-    element: <Transactions />,
-  },
-  {
-    path: supplierPaths.customers,
-    element: <Customers />,
-  },
-  {
-    path: supplierPaths.discounts,
-    element: <Discounts />,
-  },
-  {
-    path: supplierPaths.addDiscount,
-    element: <AddDiscountCoupon />,
-  },
-  {
-    path: supplierPaths.chat,
-    element: <Chat />,
-  },
-  {
-    path: supplierPaths.reviews,
-    element: <Reviews />,
-  },
-  {
-    path: supplierPaths.settings,
-    element: <SettingsSupplier />,
-  },
+	{
+		path: "/fournisseur",
+		element: <Navigate to={supplierPaths.dashboard} />,
+	},
+	{
+		path: supplierPaths.dashboard,
+		element: <SupplierDashboard />,
+	},
+	{
+		path: supplierPaths.products,
+		element: <Products />,
+	},
+	{
+		path: supplierPaths.addProduct,
+		element: <AddProduct />,
+	},
+	{
+		path: supplierPaths.productOutOfStock,
+		element: <ProductOutOfStock />,
+	},
+	{
+		path: supplierPaths.categories,
+		element: <Categories />,
+	},
+	{
+		path: supplierPaths.addCategory,
+		element: <AddCategory />,
+	},
+	{
+		path: supplierPaths.editCategory,
+		element: <EditCategory />,
+	},
+	{
+		path: supplierPaths.refunds,
+		element: <Refunds />,
+	},
+	{
+		path: supplierPaths.orders,
+		element: <Orders />,
+	},
+	{
+		path: supplierPaths.detailOrder,
+		element: <DetailOrder />,
+	},
+	{
+		path: supplierPaths.transactions,
+		element: <Transactions />,
+	},
+	{
+		path: supplierPaths.customers,
+		element: <Customers />,
+	},
+	{
+		path: supplierPaths.discounts,
+		element: <Discounts />,
+	},
+	{
+		path: supplierPaths.addDiscount,
+		element: <AddDiscountCoupon />,
+	},
+	{
+		path: supplierPaths.chat,
+		element: <Chat />,
+	},
+	{
+		path: supplierPaths.reviews,
+		element: <Reviews />,
+	},
+	{
+		path: supplierPaths.settings,
+		element: <SettingsSupplier />,
+	},
 ];
 
 export const router = createBrowserRouter([

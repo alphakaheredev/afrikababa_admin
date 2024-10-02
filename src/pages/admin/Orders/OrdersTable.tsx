@@ -68,8 +68,12 @@ const OrdersTable = ({ limit, order_number, shop_id }: OrderQuery) => {
 		);
 	};
 
-	const redirectFormatter = (cell: string) => {
-		return <Link to={`detail/${cell}`}>{cell}</Link>;
+	const redirectFormatter = (cell: string, row: Order) => {
+		return (
+			<Link to={`${cell}`} state={row}>
+				{cell}
+			</Link>
+		);
 	};
 
 	const changeStatus = async (status: OrderStatus, row: Order) => {
