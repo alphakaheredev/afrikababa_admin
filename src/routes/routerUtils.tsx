@@ -19,7 +19,7 @@ export const ProtectedRoute = ({ children }: { children: ReactElement }) => {
 		return <Navigate to="/" replace />;
 	}
 
-	if (isAdmin(user) && pathname.includes("/fournisseur")) {
+	if (isAdmin(user) && pathname.includes("/fournisseur/")) {
 		return <Navigate to={"/admin"} replace />;
 	}
 

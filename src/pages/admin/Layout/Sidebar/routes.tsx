@@ -101,7 +101,7 @@ export const routes = [
 				path: adminPaths.admins,
 			},
 			{
-				label: "Fabricants",
+				label: "Fournisseurs",
 				icon: <IconBuilding />,
 				path: adminPaths.manufacturers,
 			},
