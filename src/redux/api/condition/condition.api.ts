@@ -5,7 +5,7 @@ import { baseQueryWithLogout } from "@/lib/baseQuery";
 
 export const ConditionApi = createApi({
 	reducerPath: "conditionApi",
-	tagTypes: ["condition"],
+	tagTypes: ["term"],
 	baseQuery: baseQueryWithLogout,
 	endpoints: (build) => ({
 		getConditionsList: build.query<
@@ -13,11 +13,11 @@ export const ConditionApi = createApi({
 			TypeQuery
 		>({
 			query: (query) => ({
-				url: `conditions`,
+				url: `terms`,
 				method: "GET",
 				params: { ...query },
 			}),
-			providesTags: ["condition"],
+			providesTags: ["term"],
 		}),
 
 		createOrUpdateCondition: build.mutation<
@@ -30,27 +30,26 @@ export const ConditionApi = createApi({
 			query: ({ id, data }) => {
 				if (id) {
 					return {
-						url: `conditions/${id}`,
-
-						method: "PUT",
+						url: `terms/${id}`,
+						method: "PATCH",
 						body: data,
 					};
 				}
 				return {
-					url: `conditions`,
+					url: `terms`,
 					method: "POST",
 					body: data,
 				};
 			},
-			invalidatesTags: ["condition"],
+			invalidatesTags: ["term"],
 		}),
 
 		deleteCondition: build.mutation<Condition, number>({
 			query: (id) => ({
-				url: `conditions/${id}`,
+				url: `terms/${id}`,
 				method: "DELETE",
 			}),
-			invalidatesTags: ["condition"],
+			invalidatesTags: ["term"],
 		}),
 	}),
 });

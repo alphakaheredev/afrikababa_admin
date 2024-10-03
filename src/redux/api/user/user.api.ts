@@ -33,7 +33,7 @@ export const UserApi = createApi({
 					};
 				}
 				return {
-					url: `users`,
+					url: `auth/admin/register`,
 					method: "POST",
 					body: data,
 				};

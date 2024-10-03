@@ -37,7 +37,7 @@ const ConditionTable = () => {
 	const actionFormatter = (_cell: string, row: Condition) => (
 		<div className="flex space-x-2">
 			<ButtonEditLink
-				to={addAdminPrefix(adminPaths.editCondition)}
+				to={`conditions-et-termes/modifier/${row.id}`}
 				state={row}
 			/>
 			<Delete item={row} />
