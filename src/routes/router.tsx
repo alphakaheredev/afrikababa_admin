@@ -17,7 +17,6 @@ import Inventory from "@/pages/admin/Inventory/Inventory";
 import Manufacturers from "@/pages/admin/Manufacturers/Manufacturers";
 import AddManufacturer from "@/pages/admin/Manufacturers/AddManufacturer";
 import EditManufacturer from "@/pages/admin/Manufacturers/EditManufacturer";
-import CreateShop from "@/pages/admin/Shops/CreateShop";
 import AddProduct from "@/pages/admin/Products/AddProduct";
 import Shippings from "@/pages/admin/Shipping/Shippings";
 import AddShippingPrice from "@/pages/admin/Shipping/AddShippingPrice";
@@ -47,6 +46,7 @@ import ShopDetail from "@/pages/admin/Shops/ShopDetail";
 import WindrawRequest from "@/pages/admin/Windraw/WindrawRequest";
 import OrderDetail from "@/pages/admin/Orders/OrderDetail";
 import DetailOrder from "@/pages/admin/Orders/DetailOrder";
+import CreateShop from "@/pages/supplier/shop/CreateShop";
 
 export const adminRoutes = [
 	{
@@ -60,10 +60,6 @@ export const adminRoutes = [
 	{
 		path: adminPaths.boutique,
 		element: <Shops />,
-	},
-	{
-		path: adminPaths.createBoutique,
-		element: <CreateShop />,
 	},
 	{
 		path: adminPaths.store,
@@ -223,6 +219,10 @@ export const supplierRoutes = [
 	{
 		path: supplierPaths.dashboard,
 		element: <SupplierDashboard />,
+	},
+	{
+		path: supplierPaths.createBoutique,
+		element: <CreateShop />,
 	},
 	{
 		path: supplierPaths.products,

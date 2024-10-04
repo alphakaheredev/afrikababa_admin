@@ -1,3 +1,5 @@
+import { Shop } from "../shop/shop.type";
+
 export enum ROLE {
 	admin = "ADMIN",
 	supplier = "SUPPLIER",
@@ -19,6 +21,7 @@ export type User = {
 	created_at: string;
 	status: number;
 	address?: string;
+	shop?: Shop;
 };
 
 export type UserFormData = Pick<
@@ -30,4 +33,3 @@ export interface AuthState {
 	user: User | null;
 	token?: string | null;
 }
-

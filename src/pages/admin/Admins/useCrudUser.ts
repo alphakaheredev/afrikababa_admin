@@ -64,7 +64,7 @@ export const useCrudUser = (closeModal: () => void, item?: User) => {
 		if ("data" in res) {
 			closeModal();
 			toast.success(
-				`Utilisateur ${
+				`Administrateur ${
 					item?.id ? "modifié" : "ajouté"
 				}  avec succès`
 			);
@@ -75,7 +75,7 @@ export const useCrudUser = (closeModal: () => void, item?: User) => {
 			if (
 				errorMessage?.includes(
 					"validation.user.error.email.exists"
-				)
+				)g
 			) {
 				errorMessage =
 					"Un utilisateur avec cet email existe déjà !";

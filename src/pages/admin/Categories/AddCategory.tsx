@@ -50,6 +50,7 @@ export function CategoryForm({ item }: { item?: Category }) {
 							type="file"
 							required
 							onChange={handleSelectIcon}
+							accept="image/*"
 						/>
 						{/* <Input
 							label="Catégorie parentale"

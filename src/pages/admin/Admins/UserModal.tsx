@@ -11,20 +11,6 @@ import { ModalProps } from "@/lib/type";
 import { User } from "@/redux/api/user/user.type";
 import { useCrudUser } from "./useCrudUser";
 
-// const roles = [
-// 	{
-// 		label: "Administrateur",
-// 		value: ROLE.admin,
-// 	},
-// 	{
-// 		label: "Client",
-// 		value: ROLE.customer,
-// 	},
-// 	{
-// 		label: "Fabricant",
-// 		value: ROLE.supplier,
-// 	},
-// ];
 
 const UserModal: React.FC<ModalProps<User>> = (props) => {
 	const { isOpen, close, item } = props;

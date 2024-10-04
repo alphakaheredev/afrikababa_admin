@@ -31,7 +31,7 @@ const ConditionForm = () => {
 				<Select
 					label="Target"
 					options={[
-						{ label: "Fabricant", value: "supplier" },
+						{ label: "Fournisseur", value: "supplier" },
 						{ label: "Client", value: "customer" },
 					]}
 					{...register("target")}

@@ -26,7 +26,7 @@ export function addAdminPrefix(route: string) {
 // function to format role
 export function formatRole(role: ROLE) {
 	if (role === ROLE.admin) return "Administrateur";
-	if (role === ROLE.supplier) return "Fabricant";
+	if (role === ROLE.supplier) return "Fournisseur";
 	if (role === ROLE.customer) return "Client";
 	if (role === ROLE.forwarder) return "Transitaire";
 	return role;
@@ -130,7 +130,7 @@ export function formatConditionType(type: ConditionType) {
 
 // format condition target
 export function formatConditionTarget(target: "supplier" | "customer") {
-	if (target === "supplier") return "Fabricant";
+	if (target === "supplier") return "Fournisseur";
 	if (target === "customer") return "Client";
 	return target;
 }

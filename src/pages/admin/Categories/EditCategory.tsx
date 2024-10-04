@@ -2,15 +2,18 @@ import React from "react";
 import { CategoryForm } from "./AddCategory";
 import Divider from "@/components/common/Divider";
 import { useLocation } from "react-router-dom";
+import { ButtonBack } from "@/components/ui/button";
 
 const EditCategory = () => {
 	const { state } = useLocation();
-	console.log(state);
 	return (
 		<React.Fragment>
-			<h1 className="text-dark font-semibold text-xl">
-				Modifiez la catégorie
-			</h1>
+			<div className="flex items-center gap-2">
+				<ButtonBack />
+				<h1 className="text-dark font-medium text-xl">
+					Modifiez la catégorie
+				</h1>
+			</div>
 			<Divider margin="my-5" />
 			<CategoryForm item={state} />
 		</React.Fragment>

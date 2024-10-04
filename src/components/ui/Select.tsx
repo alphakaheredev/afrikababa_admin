@@ -71,8 +71,8 @@ export const FilterSelect: React.FC<Props> = ({
 				className="mt-1 block w-full py-3 px-2 border border-th-gray-c9 placeholder:text-th-gray-c9 text-gray-600 text-sm outline-none"
 				onChange={onChange}
 			>
-				{options.map((option) => (
-					<option key={option.value} value={option.value}>
+				{options.map((option, index) => (
+					<option key={index} value={option.value}>
 						{option.label}
 					</option>
 				))}
