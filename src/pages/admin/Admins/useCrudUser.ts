@@ -75,7 +75,7 @@ export const useCrudUser = (closeModal: () => void, item?: User) => {
 			if (
 				errorMessage?.includes(
 					"validation.user.error.email.exists"
-				)g
+				)
 			) {
 				errorMessage =
 					"Un utilisateur avec cet email existe déjà !";
