@@ -22,3 +22,13 @@ export type ChangePasswordData = {
 	new_password: string;
 	confirm_new_password: string;
 };
+
+export type ResetPasswordData = {
+	email: string;
+	password: string;
+	password_confirmation: string;
+};
+
+export type ForgotPasswordData = {
+	email: string;
+};

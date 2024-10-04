@@ -49,7 +49,9 @@ const UsersTable = ({ role }: { role: ROLE }) => {
 
 	const actionFormatter = (_cell: string, row: User) => (
 		<div className="flex items-center gap-3">
-			<ButtonEdit onClick={() => openEditModal(row)} />
+			{role === ROLE.admin && (
+				<ButtonEdit onClick={() => openEditModal(row)} />
+			)}
 			<Delete item={row} />
 		</div>
 	);

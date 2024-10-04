@@ -4,6 +4,8 @@ import {
 	LoginResult,
 	ChangePasswordData,
 	RegisterFormData,
+	ResetPasswordData,
+	ForgotPasswordData,
 } from "./auth.type";
 import { User } from "../user/user.type";
 import { baseQueryWithLogout } from "@/lib/baseQuery";
@@ -40,6 +42,24 @@ export const AuthApi = createApi({
 			}),
 			invalidatesTags: ["auth"],
 		}),
+
+		resetPassword: build.mutation<User, ResetPasswordData>({
+			query: (data) => ({
+				url: "auth/password/reset",
+				method: "PUT",
+				body: data,
+			}),
+			invalidatesTags: ["auth"],
+		}),
+
+		forgotPassword: build.mutation<User, ForgotPasswordData>({
+			query: (data) => ({
+				url: "auth/password/email",
+				method: "POST",
+				body: data,
+			}),
+			invalidatesTags: ["auth"],
+		}),
 	}),
 });
 
@@ -47,4 +67,6 @@ export const {
 	useLoginUserMutation,
 	useChangePasswordMutation,
 	useRegisterUserMutation,
+	useResetPasswordMutation,
+	useForgotPasswordMutation,
 } = AuthApi;
