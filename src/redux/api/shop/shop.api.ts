@@ -1,5 +1,5 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { Shop } from "./shop.type";
+import { Shop, ShopFormData } from "./shop.type";
 import { PaginationResults, TypeQuery } from "@/lib/type";
 import { baseQueryWithLogout } from "@/lib/baseQuery";
 
@@ -17,6 +17,14 @@ export const ShopApi = createApi({
 			providesTags: ["shops"],
 		}),
 
+		createShop: build.mutation<Shop, ShopFormData>({
+			query: (data) => ({
+				url: `shops`,
+				method: "POST",
+				body: data,
+			}),
+		}),
+
 		deleteShop: build.mutation<Shop, number>({
 			query: (id) => ({
 				url: `shops/${id}`,
@@ -32,6 +40,13 @@ export const ShopApi = createApi({
 			}),
 			invalidatesTags: ["shops"],
 		}),
+
+		getShopsByUserId: build.query<Shop[], number>({
+			query: (id) => ({
+				url: `users/${id}/shops`,
+				method: "GET",
+			}),
+		}),
 	}),
 });
 
@@ -39,4 +54,6 @@ export const {
 	useGetShopsListQuery,
 	useDeleteShopMutation,
 	useToggleShopStatusMutation,
+	useCreateShopMutation,
+	useGetShopsByUserIdQuery,
 } = ShopApi;

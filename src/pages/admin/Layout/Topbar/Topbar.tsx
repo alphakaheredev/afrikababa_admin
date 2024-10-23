@@ -7,10 +7,7 @@ import {
 } from "@/components/ui/hover-card";
 import useScrollPosition from "@/hooks/useScrollPosition";
 import { IconBurger } from "@/components/common/Icons";
-import { adminPaths } from "@/routes/paths";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { isSupplier } from "@/routes/routerUtils";
-import { User } from "@/redux/api/user/user.type";
 import { onlogout } from "@/redux/features/user.slice";
 import { getUserAvatarUrl } from "@/lib/utils";
 
@@ -53,14 +50,6 @@ const Topbar = ({ open }: { open: () => void }) => {
 						</div> */}
 					</div>
 					<div className="flex justify-center lg:justify-end items-center gap-8">
-						{isSupplier(user as User) && (
-							<Link
-								to={`/admin/${adminPaths.createBoutique}`}
-								className="bg-th-primary border-1 -th-primary px-5 py-2 text-white font-medium text-sm"
-							>
-								Créer une boutique
-							</Link>
-						)}
 						<Link to="https://afrikababba.com/">
 							visitez le site
 						</Link>

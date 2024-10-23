@@ -12,7 +12,11 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 	<React.StrictMode>
 		<Provider store={store}>
 			<RouterProvider router={router} />
-			<ToastContainer hideProgressBar autoClose={2000} />
+			<ToastContainer
+				hideProgressBar
+				autoClose={3000}
+				position="bottom-right"
+			/>
 		</Provider>
 	</React.StrictMode>
 );

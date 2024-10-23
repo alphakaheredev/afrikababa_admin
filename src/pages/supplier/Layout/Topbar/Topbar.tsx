@@ -9,9 +9,16 @@ import useScrollPosition from "@/hooks/useScrollPosition";
 import { IconBurger } from "@/components/common/Icons";
 import { supplierPaths } from "@/routes/paths";
 import avatar from "@/assets/images/avatar.png";
+import { useAppDispatch } from "@/redux/hooks";
+import { onlogout } from "@/redux/features/user.slice";
 
 const Topbar = ({ open }: { open: () => void }) => {
 	const scrollPosition = useScrollPosition();
+	const dispatch = useAppDispatch();
+
+	const onLogout = () => {
+		dispatch(onlogout());
+	};
 
 	return (
 		<div
@@ -71,6 +78,12 @@ const Topbar = ({ open }: { open: () => void }) => {
 								>
 									Mon profil
 								</Link>
+								<button
+									className="border-t border-gray-300 w-full mt-2 pt-2 text-left text-dark text-sm"
+									onClick={onLogout}
+								>
+									Se déconnecter
+								</button>
 							</HoverCardContent>
 						</HoverCard>
 					</div>

@@ -7,6 +7,7 @@ import { ButtonBack } from "@/components/ui/button";
 
 const ShopDetail = () => {
 	const item = useLocation().state as Shop;
+	console.log(item);
 	return (
 		<>
 			<div className="flex items-center gap-2 mb-12">

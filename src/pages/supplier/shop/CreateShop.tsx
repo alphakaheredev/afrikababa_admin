@@ -11,16 +11,25 @@ import Textarea from "@/components/ui/textarea";
 import React from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import hp from "@/assets/images/admin/hp.png";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+// import hp from "@/assets/images/admin/hp.png";
+// import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import Label from "@/components/ui/label";
 import ButtonSubmit from "@/components/ui/buttonSubmit";
 import { useCrudShop } from "./useCrudShop";
 import { Error } from "@/components/common/Error";
 
 const CreateShop = () => {
-	const { register, onSubmit, errors, phone, handlePhoneChange } =
-		useCrudShop();
+	const {
+		register,
+		onSubmit,
+		errors,
+		phone,
+		handlePhoneChange,
+		handleLogoChange,
+		handleCoverChange,
+		logo,
+		cover,
+	} = useCrudShop();
 
 	return (
 		<React.Fragment>
@@ -36,12 +45,26 @@ const CreateShop = () => {
 							description="Téléchargez le logo de votre boutique par ici"
 						/>
 					</FormLeftCol>
-					<FormRightCol className="pb-9">
-						<InputFile
-							label="Téléchargez votre image"
-							id="logo"
-						/>
-						<Error error={errors.logo_url?.message} />
+					<FormRightCol className="">
+						<div>
+							<InputFile
+								label="Téléchargez votre image"
+								id="logo"
+								onChange={handleLogoChange}
+							/>
+							{logo && (
+								<img
+									src={URL.createObjectURL(
+										logo
+									)}
+									alt="logo"
+									className="w-12 h-12 object-contain mt-3"
+								/>
+							)}
+							<Error
+								error={errors.logo_url?.message}
+							/>
+						</div>
 					</FormRightCol>
 				</FormRow>
 				<Divider margin="my-5" />
@@ -52,12 +75,28 @@ const CreateShop = () => {
 							description="Téléchargez l'image de couverture de votre boutique à partir d'ici La dimension de l'image de couverture doit être de 1170 x 435 px"
 						/>
 					</FormLeftCol>
-					<FormRightCol className="pb-9">
-						<InputFile
-							label="Téléchargez votre image"
-							id="cover"
-						/>
-						<Error error={errors.logo_url?.message} />
+					<FormRightCol className="">
+						<div>
+							<InputFile
+								label="Téléchargez votre image"
+								id="cover"
+								onChange={handleCoverChange}
+							/>
+							{cover && (
+								<img
+									src={URL.createObjectURL(
+										cover
+									)}
+									alt="cover"
+									className="w-12 h-12 object-contain mt-3"
+								/>
+							)}
+							<Error
+								error={
+									errors.cover_url?.message
+								}
+							/>
+						</div>
 					</FormRightCol>
 				</FormRow>
 				<Divider margin="my-5" />
@@ -81,6 +120,17 @@ const CreateShop = () => {
 										?.message
 								}
 							/>
+							<Input
+								label="Email de la boutique"
+								id="email_boutique"
+								type="email"
+								required
+								{...register("email_address")}
+								error={
+									errors.email_address
+										?.message
+								}
+							/>
 							<Textarea
 								label="Description"
 								required
@@ -89,6 +139,19 @@ const CreateShop = () => {
 								)}
 								error={
 									errors.company_description
+										?.message
+								}
+							/>
+							<Input
+								label="Numéro d'enregistrement"
+								id="enregistrement_boutique"
+								type="text"
+								{...register(
+									"company_registration"
+								)}
+								error={
+									errors
+										.company_registration
 										?.message
 								}
 							/>
@@ -105,7 +168,7 @@ const CreateShop = () => {
 					</FormLeftCol>
 					<FormRightCol>
 						<div className="space-y-5">
-							<Input
+							{/* <Input
 								label="Pays"
 								id="country"
 								type="text"
@@ -115,7 +178,7 @@ const CreateShop = () => {
 									errors.company_address
 										?.message
 								}
-							/>
+							/> */}
 							<Input
 								label="Ville"
 								id="city"
@@ -128,7 +191,7 @@ const CreateShop = () => {
 								}
 							/>
 							<Input
-								label="Adresse de la rue"
+								label="Adresse"
 								id="address"
 								type="text"
 								required
@@ -142,7 +205,7 @@ const CreateShop = () => {
 					</FormRightCol>
 				</FormRow>
 				<Divider margin="my-5" />
-				<FormRow>
+				{/* <FormRow>
 					<FormLeftCol>
 						<LabelWithDescription
 							label="Mode de paiement accepté"
@@ -174,7 +237,7 @@ const CreateShop = () => {
 						</RadioGroup>
 					</FormRightCol>
 				</FormRow>
-				<Divider margin="my-5" />
+				<Divider margin="my-5" /> */}
 				<FormRow>
 					<FormLeftCol>
 						<LabelWithDescription
@@ -204,6 +267,9 @@ const CreateShop = () => {
 									onChange={
 										handlePhoneChange
 									}
+									masks={{
+										sn: ".. ... .. ..",
+									}}
 								/>
 								<Error
 									error={
