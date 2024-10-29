@@ -6,11 +6,11 @@ import { Fragment } from "react/jsx-runtime";
 import CardStat from "@/pages/admin/Dashboard/CardStat";
 import { useAppSelector } from "@/redux/hooks";
 import { supplierPaths } from "@/routes/paths";
-import { useGetShopsByUserIdQuery } from "@/redux/api/shop/shop.api";
+import { useGetShopsByUserQuery } from "@/redux/api/shop/shop.api";
 
 const SupplierDashboard = () => {
 	const { user } = useAppSelector((state) => state.user);
-	const { data } = useGetShopsByUserIdQuery(user?.id as number);
+	const { data } = useGetShopsByUserQuery();
 	console.log(data);
 	return (
 		<Fragment>

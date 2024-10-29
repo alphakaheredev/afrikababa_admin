@@ -3,8 +3,13 @@ import ProductsTable from "./ProductsTable";
 import FilterProductSection from "@/components/common/FilterProductSection";
 import { useSearch } from "@/hooks/hooks";
 import { useState } from "react";
+import { ButtonAddLink } from "@/components/ui/button";
+import { useAppSelector } from "@/redux/hooks";
+import { isSupplier } from "@/routes/routerUtils";
+import { User } from "@/redux/api/user/user.type";
 
 const Products = () => {
+	const { user } = useAppSelector((state) => state.user);
 	const { search, handleSearch } = useSearch();
 	const [filter, setFilter] = useState<{
 		category?: number;
@@ -34,7 +39,6 @@ const Products = () => {
 			});
 		}
 	};
-	console.log(filter);
 
 	return (
 		<>
@@ -47,6 +51,11 @@ const Products = () => {
 						placeholder="Recherchez par nom"
 						onChange={handleSearch}
 					/>
+					{isSupplier(user as User) && (
+						<ButtonAddLink to="ajouter">
+							Ajouter un produit
+						</ButtonAddLink>
+					)}
 				</div>
 			</div>
 			<FilterProductSection handleFilter={handleFilter} />

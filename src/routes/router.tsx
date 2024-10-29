@@ -17,7 +17,7 @@ import Inventory from "@/pages/admin/Inventory/Inventory";
 import Manufacturers from "@/pages/admin/Manufacturers/Manufacturers";
 import AddManufacturer from "@/pages/admin/Manufacturers/AddManufacturer";
 import EditManufacturer from "@/pages/admin/Manufacturers/EditManufacturer";
-import AddProduct from "@/pages/admin/Products/AddProduct";
+import AddProduct from "@/pages/supplier/Products/AddProduct";
 import Shippings from "@/pages/admin/Shipping/Shippings";
 import AddShippingPrice from "@/pages/admin/Shipping/AddShippingPrice";
 import Refunds from "@/pages/admin/Refunds/Refunds";

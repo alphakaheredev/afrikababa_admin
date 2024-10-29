@@ -41,9 +41,9 @@ export const ShopApi = createApi({
 			invalidatesTags: ["shops"],
 		}),
 
-		getShopsByUserId: build.query<Shop[], number>({
-			query: (id) => ({
-				url: `users/${id}/shops`,
+		getShopsByUser: build.query<Shop[], void>({
+			query: () => ({
+				url: `shops/my-shops`,
 				method: "GET",
 			}),
 		}),
@@ -55,5 +55,5 @@ export const {
 	useDeleteShopMutation,
 	useToggleShopStatusMutation,
 	useCreateShopMutation,
-	useGetShopsByUserIdQuery,
+	useGetShopsByUserQuery,
 } = ShopApi;

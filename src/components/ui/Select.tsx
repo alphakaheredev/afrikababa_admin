@@ -10,7 +10,7 @@ interface Option {
 interface Props extends React.InputHTMLAttributes<HTMLSelectElement> {
 	label?: string;
 	variant?: "primary" | "secondary" | "auth";
-	options: Option[];
+	options?: Option[];
 	error?: string | FieldError;
 }
 
@@ -35,7 +35,7 @@ const Select = React.forwardRef<HTMLSelectElement, Props>(
 					{placeholder && (
 						<option value="">{placeholder}</option>
 					)}
-					{options.map((option) => (
+					{options?.map((option) => (
 						<option
 							key={option.value}
 							value={option.value}
@@ -71,7 +71,7 @@ export const FilterSelect: React.FC<Props> = ({
 				className="mt-1 block w-full py-3 px-2 border border-th-gray-c9 placeholder:text-th-gray-c9 text-gray-600 text-sm outline-none"
 				onChange={onChange}
 			>
-				{options.map((option, index) => (
+				{options?.map((option, index) => (
 					<option key={index} value={option.value}>
 						{option.label}
 					</option>

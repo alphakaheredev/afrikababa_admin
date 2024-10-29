@@ -30,6 +30,22 @@ export type Product = {
 		weight: number;
 	};
 	reviews: Review[];
+	video: string;
+};
+
+export type ProductFormData = Pick<
+	Product,
+	| "name"
+	| "description"
+	| "price"
+	| "quantity"
+	| "shop_id"
+	| "category_id"
+	| "product_dimensions"
+	| "video"
+> & {
+	main_image_url: File;
+	images: File[];
 };
 
 export type ProductQuery = TypeQuery & {

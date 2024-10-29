@@ -1,5 +1,5 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { Product, ProductQuery } from "./product.type";
+import { Product, ProductFormData, ProductQuery } from "./product.type";
 import { PaginationResults } from "@/lib/type";
 import { baseQueryWithLogout } from "@/lib/baseQuery";
 
@@ -18,6 +18,17 @@ export const ProductApi = createApi({
 				params: { ...query },
 			}),
 			providesTags: ["products"],
+		}),
+
+		createOrUpdateProduct: build.mutation<
+			Product,
+			{ id?: number; data: ProductFormData | FormData }
+		>({
+			query: ({ id, data }) => ({
+				url: `products/${id}`,
+				method: id ? "PUT" : "POST",
+				body: data,
+			}),
 		}),
 
 		deleteProduct: build.mutation<Product, number>({
@@ -55,4 +66,5 @@ export const {
 	useDeleteProductMutation,
 	useUpdateProductStatusMutation,
 	useGetTopSellingProductsQuery,
+	useCreateOrUpdateProductMutation,
 } = ProductApi;

@@ -1,11 +1,11 @@
 import Divider from "@/components/common/Divider";
 import {
-  FormLeftCol,
-  FormRightCol,
-  FormRow,
-  InputFile,
-  InputFileVideo,
-  LabelWithDescription,
+	FormLeftCol,
+	FormRightCol,
+	FormRow,
+	InputFile,
+	InputFileVideo,
+	LabelWithDescription,
 } from "@/components/form";
 import ButtonSubmit from "@/components/ui/buttonSubmit";
 import Input from "@/components/ui/input";
@@ -14,26 +14,30 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import React from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { useCrudProduct } from "./useCrudProduct";
+import Select from "@/components/ui/Select";
 
 const AddProduct = () => {
-  return (
+	const { register, errors, onSubmit, isLoading, categories } =
+		useCrudProduct();
+	return (
 		<React.Fragment>
 			<h1 className="text-dark font-semibold text-xl">
 				Ajouter produit
 			</h1>
 			<Divider margin="my-5" />
-			<form>
+			<form onSubmit={onSubmit}>
 				<FormRow>
 					<FormLeftCol>
 						<LabelWithDescription
-							label="L'image sélectionnée"
+							label="Image principale"
 							description="Téléchargez ici l'image vedette de votre produit. La taille de l'image ne doit pas dépasser 2 Mo."
 						/>
 					</FormLeftCol>
 					<FormRightCol>
 						<InputFile
-							label="Téléchargez votre image"
-							id="logo"
+							label="Ajouter une image"
+							id="main_image"
 						/>
 					</FormRightCol>
 				</FormRow>
@@ -42,12 +46,12 @@ const AddProduct = () => {
 					<FormLeftCol>
 						<LabelWithDescription
 							label="Galerie"
-							description="Téléchargez ici l'image vedette de votre produit. La taille de l'image ne doit pas dépasser 2 Mo."
+							description="Téléchargez ici les images supplémentaires de votre produit"
 						/>
 					</FormLeftCol>
 					<FormRightCol>
 						<InputFile
-							label="Téléchargez votre image"
+							label="Ajouter les images"
 							id="cover"
 						/>
 					</FormRightCol>
@@ -56,15 +60,18 @@ const AddProduct = () => {
 				<FormRow>
 					<FormLeftCol>
 						<LabelWithDescription
-							label="Titre de la vidéo"
+							label="Vidéo"
 							description="Ajouter un lien vidéo"
 						/>
 					</FormLeftCol>
 					<FormRightCol>
 						<div className="space-y-5">
-							<InputFileVideo
-								label="Ajouter une vidéo"
+							<Input
+								label="Ajouter un lien vidéo"
 								id="video"
+								type="url"
+								{...register("video")}
+								error={errors.video?.message}
 							/>
 						</div>
 					</FormRightCol>
@@ -73,28 +80,17 @@ const AddProduct = () => {
 				<FormRow>
 					<FormLeftCol>
 						<LabelWithDescription
-							label="Groupes et catégories"
-							description="Sélectionnez le groupe de produits et les catégories à partir d'ici"
+							label="Catégorie"
+							description="Sélectionnez la catégorie du produit"
 						/>
 					</FormLeftCol>
 					<FormRightCol>
 						<div className="space-y-5">
-							<Input
-								label="Groupe"
-								id="groupe"
-								type="text"
-								required
-							/>
-							<Input
+							<Select
 								label="Catégorie"
 								id="category"
-								type="text"
+								options={categories}
 								required
-							/>
-							<Input
-								label="Fournisseurs"
-								id="manufacturer"
-								type="text"
 							/>
 						</div>
 					</FormRightCol>
@@ -114,6 +110,8 @@ const AddProduct = () => {
 								id="nom"
 								type="text"
 								required
+								{...register("name")}
+								error={errors.name?.message}
 							/>
 							<Input
 								label="Unité"
@@ -161,8 +159,8 @@ const AddProduct = () => {
 				<FormRow>
 					<FormLeftCol>
 						<LabelWithDescription
-							label="Informations simples sur le produit"
-							description="Modifiez votre description de produit simple et les informations nécessaires à partir d'ici"
+							label="Informations supplémentaires du produit"
+							description="Modifiez les informations supplémentaires du produit"
 						/>
 					</FormLeftCol>
 					<FormRightCol>
@@ -172,27 +170,52 @@ const AddProduct = () => {
 								id="price"
 								type="text"
 								required
+								{...register("price")}
+								error={errors.price?.message}
 							/>
 							<Input
 								label="Quantité"
 								id="quantity"
 								type="text"
 								required
+								{...register("quantity")}
+								error={errors.quantity?.message}
 							/>
 							<Input
 								label="Largeur"
 								id="largeur"
 								type="text"
+								{...register(
+									"product_dimensions.width"
+								)}
+								error={
+									errors.product_dimensions
+										?.width?.message
+								}
 							/>
 							<Input
 								label="Longueur"
 								id="longueur"
 								type="text"
+								{...register(
+									"product_dimensions.length"
+								)}
+								error={
+									errors.product_dimensions
+										?.length?.message
+								}
 							/>
 							<Input
 								label="Hauteur"
 								id="hauteur"
 								type="text"
+								{...register(
+									"product_dimensions.height"
+								)}
+								error={
+									errors.product_dimensions
+										?.height?.message
+								}
 							/>
 						</div>
 					</FormRightCol>
@@ -201,11 +224,12 @@ const AddProduct = () => {
 					<ButtonSubmit
 						className="ml-auto w-min"
 						label="Mettre à jour le produit"
+						isLoading={isLoading}
 					/>
 				</div>
 			</form>
 		</React.Fragment>
-  );
+	);
 };
 
 export default AddProduct;
