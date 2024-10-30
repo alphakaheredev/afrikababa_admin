@@ -47,6 +47,7 @@ import WindrawRequest from "@/pages/admin/Windraw/WindrawRequest";
 import OrderDetail from "@/pages/admin/Orders/OrderDetail";
 import DetailOrder from "@/pages/admin/Orders/DetailOrder";
 import CreateShop from "@/pages/supplier/shop/CreateShop";
+import EditShop from "@/pages/supplier/shop/EditShop";
 
 export const adminRoutes = [
 	{
@@ -287,6 +288,10 @@ export const supplierRoutes = [
 	{
 		path: supplierPaths.settings,
 		element: <SettingsSupplier />,
+	},
+	{
+		path: supplierPaths.editBoutique,
+		element: <EditShop />,
 	},
 ];
 

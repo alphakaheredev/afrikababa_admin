@@ -50,9 +50,13 @@ const Topbar = ({ open }: { open: () => void }) => {
 						</div> */}
 					</div>
 					<div className="flex justify-center lg:justify-end items-center gap-8">
-						<Link to="https://afrikababba.com/">
+						<a
+							href="https://afrikababba.com/"
+							target="_blank"
+							rel="noreferrer"
+						>
 							visitez le site
-						</Link>
+						</a>
 						<HoverCard>
 							<HoverCardTrigger asChild>
 								<Avatar className="cursor-pointer w-12 h-12">

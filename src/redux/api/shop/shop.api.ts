@@ -43,7 +43,7 @@ export const ShopApi = createApi({
 
 		getShopsByUser: build.query<Shop[], void>({
 			query: () => ({
-				url: `shops/my-shops`,
+				url: `boutique/my`,
 				method: "GET",
 			}),
 		}),
@@ -56,4 +56,5 @@ export const {
 	useToggleShopStatusMutation,
 	useCreateShopMutation,
 	useGetShopsByUserQuery,
+	useLazyGetShopsByUserQuery,
 } = ShopApi;

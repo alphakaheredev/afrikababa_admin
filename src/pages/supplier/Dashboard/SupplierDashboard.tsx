@@ -1,59 +1,55 @@
-import banner from "@/assets/images/shop_banner.png";
-import logo from "@/assets/images/favicon.png";
 import { Link } from "react-router-dom";
 import { BsGlobe } from "react-icons/bs";
 import { Fragment } from "react/jsx-runtime";
 import CardStat from "@/pages/admin/Dashboard/CardStat";
 import { useAppSelector } from "@/redux/hooks";
 import { supplierPaths } from "@/routes/paths";
-import { useGetShopsByUserQuery } from "@/redux/api/shop/shop.api";
+import { formatDateToDayMonthYear, getBannerUrl, getLogo } from "@/lib/utils";
 
 const SupplierDashboard = () => {
-	const { user } = useAppSelector((state) => state.user);
-	const { data } = useGetShopsByUserQuery();
-	console.log(data);
+	const { shop } = useAppSelector((state) => state.user);
 	return (
 		<Fragment>
-			{user?.shop ? (
+			{shop ? (
 				<>
 					<div>
 						<img
-							src={banner}
+							src={getBannerUrl(shop.banner)}
 							alt="banner boutique"
-							className="w-full h-full"
+							className="w-full min-h-[200px]  h-[500px] object-cover"
 						/>
 					</div>
 					<div className="flex items-center justify-between mb-5">
 						<div className="flex items-center space-x-4">
 							<div className="bg-dark w-28 h-28 rounded-full flex justify-center items-center -mt-10">
 								<img
-									src={logo}
+									src={getLogo(shop.logo)}
 									alt="logo"
 									className="w-20 h-20"
 								/>
 							</div>
 							<div>
 								<h1 className="text-dark text-lg font-semibold">
-									Boutique vente meubles{" "}
+									{shop.company_name}
 									<BsGlobe className="inline ms-3" />
 								</h1>
-								<div className="text-th-gray font-normal text-sm space-x-4">
-									<span className="border-r border-th-gray">
-										@meublehome@innovatelq.sn
+								<div className="text-th-gray font-normal text-sm space-x-2">
+									<span className="border-r border-th-gray pr-5">
+										{shop.email_address}
 									</span>
 									<span>
-										Ngor Almadies
-										/Dakar/Sénégal
+										{shop.address}
+										{shop.city}
 									</span>
 									<span>
-										+221 00 000 01 02
+										+{shop.phone_number}
 									</span>
 								</div>
 							</div>
 						</div>
 						<Link
-							to={``}
-							className="bg-[#FB8885] text-white p-3"
+							to={`/fournisseur/${supplierPaths.editBoutique}`}
+							className="bg-[#FB8885] hover:bg-orange-400 text-white p-3 font-normal"
 						>
 							Modifiez la boutique
 						</Link>
@@ -66,7 +62,9 @@ const SupplierDashboard = () => {
 									depuis le
 								</p>
 								<p className="text-dark font-semibold text-base">
-									12 Juillet 2024
+									{formatDateToDayMonthYear(
+										shop.created_at
+									)}
 								</p>
 							</div>
 							<div className="p-3 mb-3">

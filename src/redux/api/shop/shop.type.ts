@@ -9,7 +9,7 @@ export type Shop = {
 	phone_number: string;
 	email_address: string;
 	company_website: string;
-	logo_url: string;
+	logo: string;
 	company_description: string;
 	company_status: string;
 	business_license: string;
@@ -23,8 +23,9 @@ export type Shop = {
 	orderitems_count: number;
 	user: User;
 	is_active: boolean;
-	cover_url: string;
+	banner: string;
 	city: string;
+	address: string;
 	created_at: string;
 };
 

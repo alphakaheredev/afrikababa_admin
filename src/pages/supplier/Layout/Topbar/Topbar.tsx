@@ -9,12 +9,13 @@ import useScrollPosition from "@/hooks/useScrollPosition";
 import { IconBurger } from "@/components/common/Icons";
 import { supplierPaths } from "@/routes/paths";
 import avatar from "@/assets/images/avatar.png";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { onlogout } from "@/redux/features/user.slice";
 
 const Topbar = ({ open }: { open: () => void }) => {
 	const scrollPosition = useScrollPosition();
 	const dispatch = useAppDispatch();
+	const { shop } = useAppSelector((state) => state.user);
 
 	const onLogout = () => {
 		dispatch(onlogout());
@@ -50,15 +51,21 @@ const Topbar = ({ open }: { open: () => void }) => {
 						</div> */}
 					</div>
 					<div className="flex justify-center lg:justify-end items-center gap-8">
-						<Link
-							to={`/fournisseur/${supplierPaths.createBoutique}`}
-							className="bg-th-primary border-1 -th-primary px-5 py-2 text-white font-medium text-sm"
+						{!shop && (
+							<Link
+								to={`/fournisseur/${supplierPaths.createBoutique}`}
+								className="bg-th-primary border-1 -th-primary px-5 py-2 text-white font-medium text-sm"
+							>
+								Créer ma boutique
+							</Link>
+						)}
+						<a
+							href="https://afrikababba.com/"
+							target="_blank"
+							rel="noreferrer"
 						>
-							Créer ma boutique
-						</Link>
-						<Link to="https://afrikababba.com/">
 							visitez le site
-						</Link>
+						</a>
 						<HoverCard>
 							<HoverCardTrigger asChild>
 								<Avatar className="cursor-pointer w-12 h-12">

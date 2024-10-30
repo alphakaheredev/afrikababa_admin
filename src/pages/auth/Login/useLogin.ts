@@ -7,11 +7,12 @@ import { LoginFormData } from "@/redux/api/auth/auth.type";
 import { useLoginUserMutation } from "@/redux/api/auth/auth.api";
 import { useAppDispatch } from "@/redux/hooks";
 import { colors } from "@/constants/Colors";
-import { onSetUserToken } from "@/redux/features/user.slice";
+import { onSetShop, onSetUserToken } from "@/redux/features/user.slice";
 import { QueryError } from "@/lib/type";
 import { User } from "@/redux/api/user/user.type";
 import { fr } from "yup-locales";
 import { setLocale } from "yup";
+import { useLazyGetShopsByUserQuery } from "@/redux/api/shop/shop.api";
 setLocale(fr);
 
 const loginFormSchema = yup.object().shape({
@@ -33,6 +34,7 @@ export const useLoginForm = () => {
 	const [login, { isLoading }] = useLoginUserMutation();
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
+	const [getShopsByUser] = useLazyGetShopsByUserQuery();
 
 	const onSubmit = async (data: LoginFormData) => {
 		const res = await login(data);
@@ -45,7 +47,7 @@ export const useLoginForm = () => {
 				text: "Connexion reussie avec succès !",
 				showConfirmButton: false,
 				timer: 2000,
-			}).then(() => {
+			}).then(async () => {
 				reset();
 				navigate("/admin");
 				if (res.data) {
@@ -55,6 +57,12 @@ export const useLoginForm = () => {
 							token: res.data.access_token,
 						})
 					);
+					if (res.data.user.role === "SUPPLIER") {
+						const shops = await getShopsByUser();
+						if (shops.data) {
+							dispatch(onSetShop(shops.data[0]));
+						}
+					}
 				}
 			});
 		} else if ("error" in res) {

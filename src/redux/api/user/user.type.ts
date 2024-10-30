@@ -31,5 +31,6 @@ export type UserFormData = Pick<
 
 export interface AuthState {
 	user: User | null;
+	shop?: Shop | null;
 	token?: string | null;
 }

@@ -58,6 +58,16 @@ export function getImageUrl(image_url: string) {
 	return "/images/product-default.png";
 }
 
+export function getBannerUrl(banner_url: string) {
+	if (banner_url) return banner_url;
+	return "/images/banner.png";
+}
+
+export function getLogo(logo_url: string) {
+	if (logo_url) return logo_url;
+	return "/images/logo.png";
+}
+
 export function cleannerError(
 	errors: any,
 	cleanner: any,
@@ -149,4 +159,14 @@ export function formatRefundStatusToBadge(status: RefundStatus) {
 	if (status === RefundStatus.IN_PROGRESS)
 		return "bg-blue-200 text-blue-800";
 	return "bg-gray-500";
+}
+
+// format date to "12 Juillet 2024"
+export function formatDateToDayMonthYear(date: string) {
+	const formattedDate = new Date(date);
+	return formattedDate.toLocaleDateString("fr-FR", {
+		day: "2-digit",
+		month: "long",
+		year: "numeric",
+	});
 }
