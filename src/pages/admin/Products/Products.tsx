@@ -9,7 +9,7 @@ import { isSupplier } from "@/routes/routerUtils";
 import { User } from "@/redux/api/user/user.type";
 
 const Products = () => {
-	const { user } = useAppSelector((state) => state.user);
+	const { user, shop } = useAppSelector((state) => state.user);
 	const { search, handleSearch } = useSearch();
 	const [filter, setFilter] = useState<{
 		category?: number;
@@ -58,10 +58,13 @@ const Products = () => {
 					)}
 				</div>
 			</div>
-			<FilterProductSection handleFilter={handleFilter} />
+			<FilterProductSection
+				handleFilter={handleFilter}
+				user={user as User}
+			/>
 			<ProductsTable
 				q={search}
-				shop_id={filter?.shop}
+				shop_id={shop?.id ?? filter?.shop}
 				category_id={filter?.category}
 			/>
 		</>

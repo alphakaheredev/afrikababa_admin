@@ -293,6 +293,10 @@ export const supplierRoutes = [
 		path: supplierPaths.editBoutique,
 		element: <EditShop />,
 	},
+	{
+		path: supplierPaths.profil,
+		element: <Profil />,
+	},
 ];
 
 export const router = createBrowserRouter([

@@ -290,7 +290,7 @@ export function ShopForm({ item }: { item?: Shop }) {
 								Numéro de contact
 							</Label>
 							<PhoneInput
-								country={"sn"}
+								country={"cn"}
 								value={phone}
 								onChange={handlePhoneChange}
 								masks={{

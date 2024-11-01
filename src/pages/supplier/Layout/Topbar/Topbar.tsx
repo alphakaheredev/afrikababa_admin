@@ -80,7 +80,7 @@ const Topbar = ({ open }: { open: () => void }) => {
 							</HoverCardTrigger>
 							<HoverCardContent className="w-40 px-3 py-1">
 								<Link
-									to="/admin/profil"
+									to="/fournisseur/profil"
 									className="text-dark text-sm"
 								>
 									Mon profil

@@ -67,4 +67,5 @@ export const supplierPaths = {
 	chat: "messages",
 	reviews: "avis",
 	settings: "parametres",
+	profil: "profil",
 };
