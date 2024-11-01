@@ -5,9 +5,12 @@ import CardStat from "@/pages/admin/Dashboard/CardStat";
 import { useAppSelector } from "@/redux/hooks";
 import { supplierPaths } from "@/routes/paths";
 import { formatDateToDayMonthYear, getBannerUrl, getLogo } from "@/lib/utils";
+import { useGetShopStatsQuery } from "@/redux/api/shop/shop.api";
 
 const SupplierDashboard = () => {
 	const { shop } = useAppSelector((state) => state.user);
+	const { data } = useGetShopStatsQuery(shop?.id as number);
+	console.log(data);
 	return (
 		<Fragment>
 			{shop ? (
@@ -38,7 +41,7 @@ const SupplierDashboard = () => {
 										{shop.email_address}
 									</span>
 									<span>
-										{shop.address}
+										{shop.address},{" "}
 										{shop.city}
 									</span>
 									<span>
@@ -81,17 +84,19 @@ const SupplierDashboard = () => {
 							<div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
 								<CardStat
 									title="Total de produits"
-									value="100"
+									value={
+										data?.total_products
+									}
 									borderColor="border-b-[#0A4362]"
 								/>
-								<CardStat
+								{/* <CardStat
 									title="Total de ventes"
-									value="0"
+									value={data?.total_orders}
 									borderColor="border-b-th-primary"
-								/>
+								/> */}
 								<CardStat
 									title="Total de commandes"
-									value="50"
+									value={data?.total_orders}
 									borderColor="border-b-th-[#711500]"
 								/>
 							</div>

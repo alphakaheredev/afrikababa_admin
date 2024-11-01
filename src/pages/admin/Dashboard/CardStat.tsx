@@ -4,7 +4,7 @@ import React from "react";
 interface Props {
 	borderColor: string;
 	title: string;
-	value: number | string;
+	value?: number | string;
 }
 
 const CardStat: React.FC<Props> = ({ borderColor, title, value }) => {

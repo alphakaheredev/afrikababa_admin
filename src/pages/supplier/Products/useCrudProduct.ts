@@ -10,6 +10,7 @@ import { appendDataToFormData, cleannerError } from "@/lib/utils";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useGetCategorysListQuery } from "@/redux/api/category/category.api";
+import { useAppSelector } from "@/redux/hooks";
 
 // Set the locale for Yup validation messages to French
 setLocale(fr);
@@ -20,7 +21,8 @@ const schema = yup.object().shape({
 	description: yup.string().label("Description"),
 	price: yup.number().required("Le prix est obligatoire"),
 	quantity: yup.number().required("La quantité est obligatoire"),
-	main_image_url: yup.mixed(),
+	main_image: yup.mixed(),
+	category_id: yup.number().required("La catégorie est obligatoire"),
 });
 
 export const useCrudProduct = (item?: Product) => {
@@ -34,12 +36,16 @@ export const useCrudProduct = (item?: Product) => {
 	} = useForm<ProductFormData>({
 		// @ts-ignore
 		resolver: yupResolver(schema),
+		defaultValues: {
+			status: item?.status ?? "active",
+		},
 	});
 
 	const [images, setImages] = useState<File[]>([]);
 	const [mainImage, setMainImage] = useState<File | null>(null);
 	const [description, setDescription] = useState<string>("");
 	const navigate = useNavigate();
+	const { shop } = useAppSelector((state) => state.user);
 
 	const [createOrUpdate, { isLoading }] =
 		useCreateOrUpdateProductMutation();
@@ -67,7 +73,7 @@ export const useCrudProduct = (item?: Product) => {
 		let file = e.currentTarget.files?.[0];
 		if (file) {
 			setMainImage(file);
-			setValue("main_image_url", file);
+			setValue("main_image", file);
 		}
 	};
 
@@ -76,14 +82,14 @@ export const useCrudProduct = (item?: Product) => {
 		if (files) {
 			const newImages = [...images, ...Array.from(files)];
 			setImages(newImages);
-			setValue("images", newImages);
+			setValue("product_media", newImages);
 		}
 	};
 
 	const removeImage = (index: number) => {
 		const newImages = images.filter((_, i) => i !== index);
 		setImages(newImages);
-		setValue("images", newImages);
+		setValue("product_media", newImages);
 	};
 
 	const handleChangeDescription = (value: string) => {
@@ -92,17 +98,25 @@ export const useCrudProduct = (item?: Product) => {
 	};
 
 	const handleChangeStatus = (value: "active" | "inactive") => {
+		console.log(value);
 		setValue("status", value);
+	};
+
+	const handleChangeCategory = (
+		e: React.ChangeEvent<HTMLSelectElement>
+	) => {
+		setValue("category_id", parseInt(e.currentTarget.value));
 	};
 
 	// Form submission handler
 	const onSubmit = async (data: ProductFormData) => {
 		console.log(data);
-		const { product_dimensions, ...rest } = data;
+		if (shop) {
+			data.shop_id = shop.id;
+		}
 		// Prepare form data for submission
 		const fd = new FormData();
-		appendDataToFormData(fd, rest);
-		fd.append("product_dimensions", JSON.stringify(product_dimensions));
+		appendDataToFormData(fd, data);
 
 		// Send create/update request
 		const res = await createOrUpdate({
@@ -146,5 +160,6 @@ export const useCrudProduct = (item?: Product) => {
 		handleChangeDescription,
 		removeImage,
 		handleChangeStatus,
+		handleChangeCategory,
 	};
 };

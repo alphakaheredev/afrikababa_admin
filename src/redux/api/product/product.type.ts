@@ -41,12 +41,16 @@ export type ProductFormData = Pick<
 	| "quantity"
 	| "shop_id"
 	| "category_id"
-	| "product_dimensions"
 	| "video"
 	| "status"
 > & {
 	main_image_url: File;
-	images: File[];
+	product_weight: number;
+	product_height: number;
+	product_length: number;
+	product_width: number;
+	main_image: File;
+	product_media: File[];
 };
 
 export type ProductQuery = TypeQuery & {

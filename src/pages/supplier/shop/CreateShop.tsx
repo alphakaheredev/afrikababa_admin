@@ -71,7 +71,7 @@ export function ShopForm({ item }: { item?: Shop }) {
 								className="w-12 h-12 object-contain mt-3"
 							/>
 						)}
-						<Error error={errors.logo_url?.message} />
+						<Error error={errors.logo?.message} />
 					</div>
 				</FormRightCol>
 			</FormRow>
@@ -98,7 +98,7 @@ export function ShopForm({ item }: { item?: Shop }) {
 								className="w-12 h-12 object-contain mt-3"
 							/>
 						)}
-						<Error error={errors.cover_url?.message} />
+						<Error error={errors.banner?.message} />
 					</div>
 				</FormRightCol>
 			</FormRow>
@@ -120,24 +120,30 @@ export function ShopForm({ item }: { item?: Shop }) {
 							accept="application/pdf, image/*"
 						/>
 						{businessLicense &&
-						isImage(businessLicense) ? (
-							<img
-								src={URL.createObjectURL(
-									businessLicense
-								)}
-								alt="cover"
-								className="w-12 h-12 object-contain mt-3"
-							/>
-						) : (
-							<p className="flex items-center gap-2 pt-3 text-gray-500">
-								<IoIosDocument
-									fontSize={24}
-									className="text-gray-500"
+						typeof businessLicense !== "string" ? (
+							isImage(businessLicense) ? (
+								<img
+									src={URL.createObjectURL(
+										businessLicense
+									)}
+									alt="cover"
+									className="w-12 h-12 object-contain mt-3"
 								/>
-								{businessLicense?.name}
-							</p>
-						)}
-						<Error error={errors.cover_url?.message} />
+							) : (
+								<p className="flex items-center gap-2 pt-3 text-gray-500">
+									<IoIosDocument
+										fontSize={24}
+										className="text-gray-500"
+									/>
+									{businessLicense?.name}
+								</p>
+							)
+						) : null}
+						<Error
+							error={
+								errors.business_license?.message
+							}
+						/>
 					</div>
 				</FormRightCol>
 			</FormRow>
@@ -170,11 +176,8 @@ export function ShopForm({ item }: { item?: Shop }) {
 						<Textarea
 							label="Description"
 							required
-							{...register("company_description")}
-							error={
-								errors.company_description
-									?.message
-							}
+							{...register("description")}
+							error={errors.description?.message}
 						/>
 						<Input
 							label="Numéro d'enregistrement"
@@ -215,20 +218,16 @@ export function ShopForm({ item }: { item?: Shop }) {
 							id="city"
 							type="text"
 							required
-							{...register("company_address")}
-							error={
-								errors.company_address?.message
-							}
+							{...register("city")}
+							error={errors.city?.message}
 						/>
 						<Input
 							label="Adresse"
 							id="address"
 							type="text"
 							required
-							{...register("company_address")}
-							error={
-								errors.company_address?.message
-							}
+							{...register("address")}
+							error={errors.address?.message}
 						/>
 					</div>
 				</FormRightCol>

@@ -1,7 +1,9 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { Shop, ShopFormData } from "./shop.type";
+import { Shop, ShopFormData, ShopStats } from "./shop.type";
 import { PaginationResults, TypeQuery } from "@/lib/type";
 import { baseQueryWithLogout } from "@/lib/baseQuery";
+import { Payment } from "../payment/payment.type";
+import { Order } from "../order/order.type";
 
 export const ShopApi = createApi({
 	reducerPath: "shopApi",
@@ -27,7 +29,7 @@ export const ShopApi = createApi({
 
 		createOrUpdateShop: build.mutation<
 			{ data: Shop },
-			{ id: number; data: ShopFormData }
+			{ id: number; data: ShopFormData | FormData }
 		>({
 			query: ({ id, data }) => ({
 				url: `shops${id ? `/${id}` : ""}`,
@@ -58,6 +60,32 @@ export const ShopApi = createApi({
 				method: "GET",
 			}),
 		}),
+
+		getShopStats: build.query<ShopStats, number>({
+			query: (shop_id) => ({
+				url: `/boutique/stats/${shop_id}`,
+				method: "GET",
+			}),
+		}),
+
+		getTransactionsByShop: build.query<
+			PaginationResults<Payment>,
+			TypeQuery
+		>({
+			query: (query) => ({
+				url: `/transactions/shop`,
+				method: "GET",
+				params: { ...query },
+			}),
+		}),
+
+		getOrdersByShop: build.query<PaginationResults<Order>, TypeQuery>({
+			query: (query) => ({
+				url: `/order-items/supplier`,
+				method: "GET",
+				params: { ...query },
+			}),
+		}),
 	}),
 });
 
@@ -69,4 +97,5 @@ export const {
 	useGetShopsByUserQuery,
 	useLazyGetShopsByUserQuery,
 	useCreateOrUpdateShopMutation,
+	useGetShopStatsQuery,
 } = ShopApi;

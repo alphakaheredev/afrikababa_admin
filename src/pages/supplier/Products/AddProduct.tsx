@@ -45,6 +45,7 @@ export function ProductForm({ item }: { item?: Product }) {
 		handleChangeDescription,
 		removeImage,
 		handleChangeStatus,
+		handleChangeCategory,
 	} = useCrudProduct(item);
 
 	return (
@@ -139,6 +140,9 @@ export function ProductForm({ item }: { item?: Product }) {
 							id="category"
 							options={categories}
 							required
+							placeholder="Sélectionner une catégorie"
+							onChange={handleChangeCategory}
+							error={errors.category_id?.message}
 						/>
 					</div>
 				</FormRightCol>
@@ -176,18 +180,15 @@ export function ProductForm({ item }: { item?: Product }) {
 								}
 							/>
 						</div>
-						<RadioGroup>
+						<RadioGroup
+							onValueChange={handleChangeStatus}
+						>
 							<Label>Statut</Label>
 							<div className="space-x-2">
 								<RadioGroupItem
 									id="publish"
 									value="active"
 									className="my-0"
-									onChange={() =>
-										handleChangeStatus(
-											"active"
-										)
-									}
 								/>
 								<label
 									htmlFor="publish"
@@ -201,11 +202,6 @@ export function ProductForm({ item }: { item?: Product }) {
 									id="brouillon"
 									value="inactive"
 									className="my-0"
-									onChange={() =>
-										handleChangeStatus(
-											"inactive"
-										)
-									}
 								/>
 								<label
 									htmlFor="brouillon"
@@ -248,37 +244,22 @@ export function ProductForm({ item }: { item?: Product }) {
 							label="Largeur"
 							id="largeur"
 							type="number"
-							{...register(
-								"product_dimensions.width"
-							)}
-							error={
-								errors.product_dimensions?.width
-									?.message
-							}
+							{...register("product_width")}
+							error={errors.product_width?.message}
 						/>
 						<Input
 							label="Longueur"
 							id="longueur"
 							type="number"
-							{...register(
-								"product_dimensions.length"
-							)}
-							error={
-								errors.product_dimensions
-									?.length?.message
-							}
+							{...register("product_length")}
+							error={errors.product_length?.message}
 						/>
 						<Input
 							label="Hauteur"
 							id="hauteur"
 							type="number"
-							{...register(
-								"product_dimensions.height"
-							)}
-							error={
-								errors.product_dimensions
-									?.height?.message
-							}
+							{...register("product_height")}
+							error={errors.product_height?.message}
 						/>
 					</div>
 				</FormRightCol>

@@ -5,7 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { fr } from "yup-locales";
 import { Shop, ShopFormData } from "@/redux/api/shop/shop.type";
 import { useEffect, useState } from "react";
-import { cleannerError, getUserName } from "@/lib/utils";
+import { appendDataToFormData, cleannerError, getUserName } from "@/lib/utils";
 import { useCreateOrUpdateShopMutation } from "@/redux/api/shop/shop.api";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
@@ -23,17 +23,14 @@ const schema = yup.object().shape({
 		.string()
 		.required()
 		.label("Numéro d'enregistrement"),
-	company_address: yup.string().required().label("Adresse de la boutique"),
+	address: yup.string().required().label("Adresse de la boutique"),
 	phone_number: yup.string().required().label("Numéro de contact"),
 	email_address: yup.string().email().required().label("Adresse e-mail"),
 	company_website: yup.string().label("Site web de la boutique"),
-	logo_url: yup.mixed().label("Logo de la boutique"),
-	cover_url: yup.mixed().label("Image de couverture"),
-	company_description: yup
-		.string()
-		.required()
-		.label("Description de la boutique"),
-	business_license: yup.mixed().label("Permis d'exploitation"),
+	logo: yup.mixed().label("Logo de la boutique").nullable(),
+	banner: yup.mixed().label("Image de couverture").nullable(),
+	description: yup.string().required().label("Description de la boutique"),
+	business_license: yup.mixed().label("Permis d'exploitation").nullable(),
 });
 
 export const useCrudShop = (item?: Shop) => {
@@ -81,7 +78,7 @@ export const useCrudShop = (item?: Shop) => {
 		let file = e.target.files?.[0];
 		if (file) {
 			setLogo(file);
-			setValue("logo_url", file);
+			setValue("logo", file);
 		}
 	};
 
@@ -89,7 +86,7 @@ export const useCrudShop = (item?: Shop) => {
 		let file = e.target.files?.[0];
 		if (file) {
 			setCover(file);
-			setValue("cover_url", file);
+			setValue("banner", file);
 		}
 	};
 
@@ -108,9 +105,12 @@ export const useCrudShop = (item?: Shop) => {
 			data.user_id = user.id;
 			data.sales_manager_name = getUserName(user);
 		}
+		const formData = new FormData();
+		appendDataToFormData(formData, data);
+
 		const res = await createShop({
 			id: item?.id as number,
-			data,
+			data: formData,
 		});
 
 		if ("data" in res) {
