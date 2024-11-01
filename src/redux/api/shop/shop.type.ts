@@ -26,6 +26,7 @@ export type Shop = {
 	banner: string;
 	city: string;
 	address: string;
+	description: string;
 	created_at: string;
 };
 
@@ -41,7 +42,6 @@ export type ShopFormData = {
 	logo_url: File;
 	company_description: string;
 	company_status: string;
-	business_license: string;
 	balance?: string;
 	dead_balance?: string;
 	bank_transfer_details?: string;
@@ -50,4 +50,5 @@ export type ShopFormData = {
 	is_active?: boolean;
 	cover_url?: File;
 	city?: string;
+	business_license?: File;
 };

@@ -1,17 +1,18 @@
-import { useAppSelector } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { fr } from "yup-locales";
-import { ShopFormData } from "@/redux/api/shop/shop.type";
+import { Shop, ShopFormData } from "@/redux/api/shop/shop.type";
 import { useEffect, useState } from "react";
 import { cleannerError, getUserName } from "@/lib/utils";
-import { useCreateShopMutation } from "@/redux/api/shop/shop.api";
+import { useCreateOrUpdateShopMutation } from "@/redux/api/shop/shop.api";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { supplierPaths } from "@/routes/paths";
 import { colors } from "@/constants/Colors";
+import { onSetShop } from "@/redux/features/user.slice";
 
 yup.setLocale(fr);
 
@@ -32,14 +33,15 @@ const schema = yup.object().shape({
 		.string()
 		.required()
 		.label("Description de la boutique"),
-	business_license: yup.string().label("Permis d'exploitation"),
+	business_license: yup.mixed().label("Permis d'exploitation"),
 });
 
-export const useCrudShop = () => {
+export const useCrudShop = (item?: Shop) => {
 	const { user } = useAppSelector((state) => state.user);
 	const [phone, setPhone] = useState<string>("");
 	const [logo, setLogo] = useState<File | null>(null);
 	const [cover, setCover] = useState<File | null>(null);
+	const [businessLicense, setBusinessLicense] = useState<File | null>(null);
 
 	const {
 		register,
@@ -47,18 +49,28 @@ export const useCrudShop = () => {
 		formState: { errors },
 		setValue,
 		clearErrors,
+		reset,
 	} = useForm<ShopFormData>({
 		// @ts-ignore
 		resolver: yupResolver(schema),
 	});
 
-	const [createShop, { isLoading }] = useCreateShopMutation();
+	const [createShop, { isLoading }] = useCreateOrUpdateShopMutation();
 	const navigate = useNavigate();
+	const dispatch = useAppDispatch();
 
 	useEffect(() => {
 		console.log(errors);
 		cleannerError(errors, clearErrors);
 	}, [errors]);
+
+	useEffect(() => {
+		if (item) {
+			const data = item as unknown as ShopFormData;
+			reset(data);
+			setPhone(item.phone_number);
+		}
+	}, [item]);
 
 	const handlePhoneChange = (value: string) => {
 		setPhone(value);
@@ -81,33 +93,55 @@ export const useCrudShop = () => {
 		}
 	};
 
+	const handleBusinessLicenseChange = (
+		e: React.ChangeEvent<HTMLInputElement>
+	) => {
+		let file = e.target.files?.[0];
+		if (file) {
+			setBusinessLicense(file);
+			setValue("business_license", file);
+		}
+	};
+
 	const onSubmit = async (data: ShopFormData) => {
-		console.log(data);
 		if (user) {
 			data.user_id = user.id;
 			data.sales_manager_name = getUserName(user);
 		}
-		const res = await createShop(data);
+		const res = await createShop({
+			id: item?.id as number,
+			data,
+		});
 
 		if ("data" in res) {
-			Swal.fire({
-				title: "Votre boutique a été créée avec succès",
-				text: "Vous pouvez désormais commencer à vendre vos produits",
-				icon: "success",
-				confirmButtonText: "Ajouter un produit",
-				confirmButtonColor: colors.primary,
-				cancelButtonText: "Plus tard",
-			}).then((result) => {
-				if (result.isConfirmed) {
-					navigate(
-						`/fournisseur/${supplierPaths.addProduct}`
-					);
-				} else {
-					navigate(
-						`/fournisseur/${supplierPaths.dashboard}`
-					);
-				}
-			});
+			console.log(res.data);
+			const shop = res.data?.data as Shop;
+			dispatch(onSetShop(shop));
+			if (item) {
+				toast.success(
+					"Votre boutique a été modifiée avec succès"
+				);
+				navigate(`/fournisseur/${supplierPaths.dashboard}`);
+			} else {
+				Swal.fire({
+					title: "Votre boutique a été créée avec succès",
+					text: "Vous pouvez désormais commencer à vendre vos produits",
+					icon: "success",
+					confirmButtonText: "Ajouter un produit",
+					confirmButtonColor: colors.primary,
+					cancelButtonText: "Plus tard",
+				}).then((result) => {
+					if (result.isConfirmed) {
+						navigate(
+							`/fournisseur/${supplierPaths.addProduct}`
+						);
+					} else {
+						navigate(
+							`/fournisseur/${supplierPaths.dashboard}`
+						);
+					}
+				});
+			}
 		} else {
 			toast.error("Une erreur est survenue");
 		}
@@ -125,5 +159,7 @@ export const useCrudShop = () => {
 		logo,
 		cover,
 		isLoading,
+		handleBusinessLicenseChange,
+		businessLicense,
 	};
 };

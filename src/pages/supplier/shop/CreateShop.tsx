@@ -11,12 +11,13 @@ import Textarea from "@/components/ui/textarea";
 import React from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-// import hp from "@/assets/images/admin/hp.png";
-// import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import Label from "@/components/ui/label";
 import ButtonSubmit from "@/components/ui/buttonSubmit";
 import { useCrudShop } from "./useCrudShop";
 import { Error } from "@/components/common/Error";
+import { Shop } from "@/redux/api/shop/shop.type";
+import { isImage } from "@/lib/utils";
+import { IoIosDocument } from "react-icons/io";
 
 const CreateShop = () => {
 	return (
@@ -30,7 +31,7 @@ const CreateShop = () => {
 	);
 };
 
-export function ShopForm() {
+export function ShopForm({ item }: { item?: Shop }) {
 	const {
 		register,
 		onSubmit,
@@ -41,7 +42,10 @@ export function ShopForm() {
 		handleCoverChange,
 		logo,
 		cover,
-	} = useCrudShop();
+		isLoading,
+		handleBusinessLicenseChange,
+		businessLicense,
+	} = useCrudShop(item);
 
 	return (
 		<form onSubmit={onSubmit}>
@@ -58,6 +62,7 @@ export function ShopForm() {
 							label="Téléchargez votre image"
 							id="logo"
 							onChange={handleLogoChange}
+							accept="image/*"
 						/>
 						{logo && (
 							<img
@@ -75,7 +80,7 @@ export function ShopForm() {
 				<FormLeftCol>
 					<LabelWithDescription
 						label="Image de couverture"
-						description="Téléchargez l'image de couverture de votre boutique à partir d'ici La dimension de l'image de couverture doit être de 1170 x 435 px"
+						description="La dimension de l'image de couverture doit être de 1170 x 450 px"
 					/>
 				</FormLeftCol>
 				<FormRightCol className="">
@@ -84,6 +89,7 @@ export function ShopForm() {
 							label="Téléchargez votre image"
 							id="cover"
 							onChange={handleCoverChange}
+							accept="image/*"
 						/>
 						{cover && (
 							<img
@@ -91,6 +97,45 @@ export function ShopForm() {
 								alt="cover"
 								className="w-12 h-12 object-contain mt-3"
 							/>
+						)}
+						<Error error={errors.cover_url?.message} />
+					</div>
+				</FormRightCol>
+			</FormRow>
+			<Divider margin="my-5" />
+			<Divider margin="my-5" />
+			<FormRow>
+				<FormLeftCol>
+					<LabelWithDescription
+						label="Business license"
+						description="Téléchargez votre business license au format PDF ou image"
+					/>
+				</FormLeftCol>
+				<FormRightCol className="">
+					<div>
+						<InputFile
+							label="Téléchargez votre business license"
+							id="business_license"
+							onChange={handleBusinessLicenseChange}
+							accept="application/pdf, image/*"
+						/>
+						{businessLicense &&
+						isImage(businessLicense) ? (
+							<img
+								src={URL.createObjectURL(
+									businessLicense
+								)}
+								alt="cover"
+								className="w-12 h-12 object-contain mt-3"
+							/>
+						) : (
+							<p className="flex items-center gap-2 pt-3 text-gray-500">
+								<IoIosDocument
+									fontSize={24}
+									className="text-gray-500"
+								/>
+								{businessLicense?.name}
+							</p>
 						)}
 						<Error error={errors.cover_url?.message} />
 					</div>
@@ -266,6 +311,7 @@ export function ShopForm() {
 				<ButtonSubmit
 					className="ml-auto w-min"
 					label="Enregistrez"
+					isLoading={isLoading}
 				/>
 			</div>
 		</form>

@@ -16,7 +16,7 @@ const SupplierDashboard = () => {
 						<img
 							src={getBannerUrl(shop.banner)}
 							alt="banner boutique"
-							className="w-full min-h-[200px]  h-[500px] object-cover"
+							className="w-full min-h-[200px]  h-[450px] object-cover"
 						/>
 					</div>
 					<div className="flex items-center justify-between mb-5">
@@ -48,8 +48,9 @@ const SupplierDashboard = () => {
 							</div>
 						</div>
 						<Link
-							to={`/fournisseur/${supplierPaths.editBoutique}`}
+							to={`/fournisseur/tableau-de-bord/modifier-votre-boutique/${shop?.id}`}
 							className="bg-[#FB8885] hover:bg-orange-400 text-white p-3 font-normal"
+							state={{ item: shop }}
 						>
 							Modifiez la boutique
 						</Link>
@@ -72,12 +73,7 @@ const SupplierDashboard = () => {
 									Description
 								</p>
 								<p className="text-th-gray font-normal text-sm">
-									Le lorem ipsum est, en
-									imprimerie, une suite de
-									mots sans signification
-									utilisée à titre
-									provisoire pour calibrer
-									une mise
+									{shop?.description}
 								</p>
 							</div>
 						</div>

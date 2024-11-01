@@ -170,3 +170,8 @@ export function formatDateToDayMonthYear(date: string) {
 		year: "numeric",
 	});
 }
+
+// check if file is an image
+export function isImage(file: File) {
+	return file.type.startsWith("image/");
+}

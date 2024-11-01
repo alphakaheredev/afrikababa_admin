@@ -25,6 +25,17 @@ export const ShopApi = createApi({
 			}),
 		}),
 
+		createOrUpdateShop: build.mutation<
+			{ data: Shop },
+			{ id: number; data: ShopFormData }
+		>({
+			query: ({ id, data }) => ({
+				url: `shops${id ? `/${id}` : ""}`,
+				method: id ? "PUT" : "POST",
+				body: data,
+			}),
+		}),
+
 		deleteShop: build.mutation<Shop, number>({
 			query: (id) => ({
 				url: `shops/${id}`,
@@ -57,4 +68,5 @@ export const {
 	useCreateShopMutation,
 	useGetShopsByUserQuery,
 	useLazyGetShopsByUserQuery,
+	useCreateOrUpdateShopMutation,
 } = ShopApi;
