@@ -49,7 +49,6 @@ export const useLoginForm = () => {
 				timer: 2000,
 			}).then(async () => {
 				reset();
-				navigate("/admin");
 				if (res.data) {
 					dispatch(
 						onSetUserToken({
@@ -64,6 +63,7 @@ export const useLoginForm = () => {
 						}
 					}
 				}
+				navigate("/admin");
 			});
 		} else if ("error" in res) {
 			const error = res.error as QueryError;

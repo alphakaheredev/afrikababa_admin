@@ -25,7 +25,7 @@ export const ProductApi = createApi({
 			{ id?: number; data: ProductFormData | FormData }
 		>({
 			query: ({ id, data }) => ({
-				url: `products/${id}`,
+				url: `products${id ? `/${id}` : ""}`,
 				method: id ? "PUT" : "POST",
 				body: data,
 			}),

@@ -12,6 +12,10 @@ import { getImageUrl } from "@/lib/utils";
 import { toast } from "react-toastify";
 import { Switch } from "@/components/ui/switch";
 import { Shop } from "@/redux/api/shop/shop.type";
+import { useState } from "react";
+import { useAppSelector } from "@/redux/hooks";
+import FilterProductSection from "@/components/common/FilterProductSection";
+import { User } from "@/redux/api/user/user.type";
 
 function Delete({ item }: { item: Product }) {
 	const [deleteItem, { isSuccess, isError, error }] =
@@ -27,19 +31,49 @@ function Delete({ item }: { item: Product }) {
 	return <ButtonDelete onClick={onDelete} />;
 }
 
-const ProductsTable = ({ q, shop_id, category_id }: ProductQuery) => {
+const ProductsTable = ({ q }: ProductQuery) => {
+	const { user, shop } = useAppSelector((state) => state.user);
+
+	const [filter, setFilter] = useState<{
+		category?: number;
+		shop?: number;
+	}>();
 	const { data: result, isLoading } = useGetProductsListQuery({
 		q,
-		shop_id,
-		category_id,
+		shop_id: shop?.id ?? filter?.shop,
+		category_id: filter?.category,
 	});
 	const [updateProductStatus] = useUpdateProductStatusMutation();
+
+	const handleFilter = (
+		e: React.ChangeEvent<HTMLSelectElement>,
+		type: "category" | "shop"
+	) => {
+		console.log("change", e.currentTarget.value);
+		if (type === "category") {
+			setFilter({
+				...filter,
+				category:
+					e.currentTarget.value !== "Toutes"
+						? parseInt(e.currentTarget.value)
+						: undefined,
+			});
+		} else {
+			setFilter({
+				...filter,
+				shop:
+					e.currentTarget.value !== "Toutes"
+						? parseInt(e.currentTarget.value)
+						: undefined,
+			});
+		}
+	};
 
 	// const stockStatusFormatter = (cell: string) => {
 	// 	let colorClass = "";
 
 	// 	switch (cell) {
-	// 		case "In Stock":  
+	// 		case "In Stock":
 	// 			colorClass = "bg-th-primary";
 	// 			break;
 	// 		case "Out of Stock":
@@ -122,11 +156,19 @@ const ProductsTable = ({ q, shop_id, category_id }: ProductQuery) => {
 	];
 
 	return (
-		<Table<Product>
-			data={result?.data}
-			columns={columns}
-			isLoading={isLoading}
-		/>
+		<>
+			{result?.data && result?.data.length > 0 && (
+				<FilterProductSection
+					handleFilter={handleFilter}
+					user={user as User}
+				/>
+			)}
+			<Table<Product>
+				data={result?.data}
+				columns={columns}
+				isLoading={isLoading}
+			/>
+		</>
 	);
 };
 

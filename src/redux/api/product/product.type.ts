@@ -43,6 +43,7 @@ export type ProductFormData = Pick<
 	| "category_id"
 	| "product_dimensions"
 	| "video"
+	| "status"
 > & {
 	main_image_url: File;
 	images: File[];

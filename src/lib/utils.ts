@@ -175,3 +175,16 @@ export function formatDateToDayMonthYear(date: string) {
 export function isImage(file: File) {
 	return file.type.startsWith("image/");
 }
+
+export function appendDataToFormData(formData: FormData, data: any) {
+	Object.entries(data).forEach(([key, value]) => {
+		// check if is Array
+		if (Array.isArray(value)) {
+			value.forEach((item) => {
+				formData.append(key, item);
+			});
+		} else if (value) {
+			formData.append(key, value as string);
+		}
+	});
+}

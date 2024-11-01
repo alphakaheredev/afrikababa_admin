@@ -1,44 +1,14 @@
 import { InputSearch } from "@/components/ui/input";
 import ProductsTable from "./ProductsTable";
-import FilterProductSection from "@/components/common/FilterProductSection";
 import { useSearch } from "@/hooks/hooks";
-import { useState } from "react";
 import { ButtonAddLink } from "@/components/ui/button";
 import { useAppSelector } from "@/redux/hooks";
 import { isSupplier } from "@/routes/routerUtils";
 import { User } from "@/redux/api/user/user.type";
 
 const Products = () => {
-	const { user, shop } = useAppSelector((state) => state.user);
+	const { user } = useAppSelector((state) => state.user);
 	const { search, handleSearch } = useSearch();
-	const [filter, setFilter] = useState<{
-		category?: number;
-		shop?: number;
-	}>();
-
-	const handleFilter = (
-		e: React.ChangeEvent<HTMLSelectElement>,
-		type: "category" | "shop"
-	) => {
-		console.log("change", e.currentTarget.value);
-		if (type === "category") {
-			setFilter({
-				...filter,
-				category:
-					e.currentTarget.value !== "Toutes"
-						? parseInt(e.currentTarget.value)
-						: undefined,
-			});
-		} else {
-			setFilter({
-				...filter,
-				shop:
-					e.currentTarget.value !== "Toutes"
-						? parseInt(e.currentTarget.value)
-						: undefined,
-			});
-		}
-	};
 
 	return (
 		<>
@@ -58,15 +28,8 @@ const Products = () => {
 					)}
 				</div>
 			</div>
-			<FilterProductSection
-				handleFilter={handleFilter}
-				user={user as User}
-			/>
-			<ProductsTable
-				q={search}
-				shop_id={shop?.id ?? filter?.shop}
-				category_id={filter?.category}
-			/>
+
+			<ProductsTable q={search} />
 		</>
 	);
 };

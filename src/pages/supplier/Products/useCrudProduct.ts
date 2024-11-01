@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -6,7 +6,7 @@ import { fr } from "yup-locales";
 import { setLocale } from "yup";
 import { Product, ProductFormData } from "@/redux/api/product/product.type";
 import { useCreateOrUpdateProductMutation } from "@/redux/api/product/product.api";
-import { cleannerError } from "@/lib/utils";
+import { appendDataToFormData, cleannerError } from "@/lib/utils";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useGetCategorysListQuery } from "@/redux/api/category/category.api";
@@ -36,6 +36,9 @@ export const useCrudProduct = (item?: Product) => {
 		resolver: yupResolver(schema),
 	});
 
+	const [images, setImages] = useState<File[]>([]);
+	const [mainImage, setMainImage] = useState<File | null>(null);
+	const [description, setDescription] = useState<string>("");
 	const navigate = useNavigate();
 
 	const [createOrUpdate, { isLoading }] =
@@ -59,21 +62,47 @@ export const useCrudProduct = (item?: Product) => {
 		}
 	}, [item, setValue, reset]);
 
-	// Handle logo file selection
-	// const handleSelectIcon = (e: React.FormEvent<HTMLInputElement>) => {
-	// 	let file = e.currentTarget.files?.[0];
-	// 	if (file) setValue("logo", file);
-	// };
+	// Handle main image change
+	const handleChangeMainImage = (e: React.FormEvent<HTMLInputElement>) => {
+		let file = e.currentTarget.files?.[0];
+		if (file) {
+			setMainImage(file);
+			setValue("main_image_url", file);
+		}
+	};
+
+	const handleChangeImages = (e: React.FormEvent<HTMLInputElement>) => {
+		let files = e.currentTarget.files;
+		if (files) {
+			const newImages = [...images, ...Array.from(files)];
+			setImages(newImages);
+			setValue("images", newImages);
+		}
+	};
+
+	const removeImage = (index: number) => {
+		const newImages = images.filter((_, i) => i !== index);
+		setImages(newImages);
+		setValue("images", newImages);
+	};
+
+	const handleChangeDescription = (value: string) => {
+		setDescription(value);
+		setValue("description", value);
+	};
+
+	const handleChangeStatus = (value: "active" | "inactive") => {
+		setValue("status", value);
+	};
 
 	// Form submission handler
 	const onSubmit = async (data: ProductFormData) => {
+		console.log(data);
+		const { product_dimensions, ...rest } = data;
 		// Prepare form data for submission
 		const fd = new FormData();
-		fd.append("name", data.name);
-		fd.append("description", data?.description as string);
-		fd.append("price", data.price.toString());
-		fd.append("quantity", data.quantity.toString());
-		// data.logo && fd.append("logo", data?.logo);
+		appendDataToFormData(fd, rest);
+		fd.append("product_dimensions", JSON.stringify(product_dimensions));
 
 		// Send create/update request
 		const res = await createOrUpdate({
@@ -109,5 +138,13 @@ export const useCrudProduct = (item?: Product) => {
 			value: category.id,
 			label: category.name,
 		})),
+		handleChangeMainImage,
+		handleChangeImages,
+		images,
+		mainImage,
+		description,
+		handleChangeDescription,
+		removeImage,
+		handleChangeStatus,
 	};
 };
