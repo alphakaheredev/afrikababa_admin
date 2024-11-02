@@ -5,7 +5,10 @@ import * as yup from "yup";
 import { fr } from "yup-locales";
 import { setLocale } from "yup";
 import { Product, ProductFormData } from "@/redux/api/product/product.type";
-import { useCreateOrUpdateProductMutation } from "@/redux/api/product/product.api";
+import {
+	useAddMediaMutation,
+	useCreateOrUpdateProductMutation,
+} from "@/redux/api/product/product.api";
 import { appendDataToFormData, cleannerError } from "@/lib/utils";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -46,6 +49,7 @@ export const useCrudProduct = (item?: Product) => {
 	const [description, setDescription] = useState<string>("");
 	const navigate = useNavigate();
 	const { shop } = useAppSelector((state) => state.user);
+	const [addMedia] = useAddMediaMutation();
 
 	const [createOrUpdate, { isLoading }] =
 		useCreateOrUpdateProductMutation();
@@ -77,12 +81,20 @@ export const useCrudProduct = (item?: Product) => {
 		}
 	};
 
-	const handleChangeImages = (e: React.FormEvent<HTMLInputElement>) => {
+	const handleChangeImages = async (
+		e: React.FormEvent<HTMLInputElement>
+	) => {
 		let files = e.currentTarget.files;
 		if (files) {
 			const newImages = [...images, ...Array.from(files)];
 			setImages(newImages);
 			setValue("product_media", newImages);
+			const fd = new FormData();
+			fd.append("product_media", files[0]);
+			const addMediaRes = await addMedia(fd);
+			if ("data" in addMediaRes) {
+				console.log(addMediaRes.data);
+			}
 		}
 	};
 

@@ -1,5 +1,10 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { Product, ProductFormData, ProductQuery } from "./product.type";
+import {
+	Product,
+	ProductFormData,
+	ProductMedia,
+	ProductQuery,
+} from "./product.type";
 import { PaginationResults } from "@/lib/type";
 import { baseQueryWithLogout } from "@/lib/baseQuery";
 
@@ -14,6 +19,18 @@ export const ProductApi = createApi({
 		>({
 			query: (query) => ({
 				url: `products`,
+				method: "GET",
+				params: { ...query },
+			}),
+			providesTags: ["products"],
+		}),
+
+		getProductsListByShop: build.query<
+			PaginationResults<Product>,
+			ProductQuery
+		>({
+			query: ({ id, ...query }) => ({
+				url: `boutique/products/${id}`,
 				method: "GET",
 				params: { ...query },
 			}),
@@ -58,6 +75,23 @@ export const ProductApi = createApi({
 				method: "GET",
 			}),
 		}),
+
+		//add product to media
+		addMedia: build.mutation<ProductMedia, FormData>({
+			query: (data) => ({
+				url: `product_media`,
+				method: "POST",
+				body: data,
+			}),
+		}),
+
+		//delete media
+		deleteMedia: build.mutation<Product, number>({
+			query: (id) => ({
+				url: `product_media/${id}`,
+				method: "DELETE",
+			}),
+		}),
 	}),
 });
 
@@ -67,4 +101,7 @@ export const {
 	useUpdateProductStatusMutation,
 	useGetTopSellingProductsQuery,
 	useCreateOrUpdateProductMutation,
+	useAddMediaMutation,
+	useDeleteMediaMutation,
+	useGetProductsListByShopQuery,
 } = ProductApi;

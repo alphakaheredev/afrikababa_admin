@@ -2,8 +2,8 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import { Shop, ShopFormData, ShopStats } from "./shop.type";
 import { PaginationResults, TypeQuery } from "@/lib/type";
 import { baseQueryWithLogout } from "@/lib/baseQuery";
-import { Payment } from "../payment/payment.type";
 import { Order } from "../order/order.type";
+import { WindrawRequest } from "../windraw/windraw.type";
 
 export const ShopApi = createApi({
 	reducerPath: "shopApi",
@@ -68,12 +68,12 @@ export const ShopApi = createApi({
 			}),
 		}),
 
-		getTransactionsByShop: build.query<
-			PaginationResults<Payment>,
+		getWithdrawalRequestsByShop: build.query<
+			PaginationResults<WindrawRequest>,
 			TypeQuery
 		>({
-			query: (query) => ({
-				url: `/transactions/shop`,
+			query: ({ id, ...query }) => ({
+				url: `boutique/withdrawal-requests/${id}`,
 				method: "GET",
 				params: { ...query },
 			}),
@@ -98,4 +98,6 @@ export const {
 	useLazyGetShopsByUserQuery,
 	useCreateOrUpdateShopMutation,
 	useGetShopStatsQuery,
+	useGetOrdersByShopQuery,
+	useGetWithdrawalRequestsByShopQuery,
 } = ShopApi;

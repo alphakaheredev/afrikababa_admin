@@ -1,12 +1,9 @@
 import { InputSearch } from "@/components/ui/input";
-import OrdersTable from "./OrdersTable";
 import { useSearch } from "@/hooks/hooks";
-import { useAppSelector } from "@/redux/hooks";
+import OrdersTable from "./OrdersTable";
 
-const Orders = () => {
+const SupplierOrders = () => {
 	const { search, handleSearch } = useSearch();
-	const { shop } = useAppSelector((state) => state.user);
-	console.log(shop);
 	return (
 		<>
 			<div className="flex flex-col md:flex-row md:items-center gap-2 justify-between mb-8">
@@ -16,9 +13,9 @@ const Orders = () => {
 					onChange={handleSearch}
 				/>
 			</div>
-			<OrdersTable order_number={search} shop_id={shop?.id} />
+			<OrdersTable order_number={search} />
 		</>
 	);
 };
 
-export default Orders;
+export default SupplierOrders;

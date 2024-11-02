@@ -2,20 +2,15 @@ import Table, { Column } from "@/components/ui/Table";
 import { ButtonDelete, ButtonViewLink } from "@/components/ui/button";
 import {
 	useDeleteProductMutation,
-	useGetProductsListQuery,
 	useUpdateProductStatusMutation,
 } from "@/redux/api/product/product.api";
 import { useDelete } from "@/hooks/useDelete";
-import { Product, ProductQuery } from "@/redux/api/product/product.type";
+import { Product } from "@/redux/api/product/product.type";
 import { Category } from "@/redux/api/category/category.type";
 import { getImageUrl } from "@/lib/utils";
 import { toast } from "react-toastify";
 import { Switch } from "@/components/ui/switch";
 import { Shop } from "@/redux/api/shop/shop.type";
-import { useState } from "react";
-import { useAppSelector } from "@/redux/hooks";
-import FilterProductSection from "@/components/common/FilterProductSection";
-import { User } from "@/redux/api/user/user.type";
 
 function Delete({ item }: { item: Product }) {
 	const [deleteItem, { isSuccess, isError, error }] =
@@ -31,43 +26,14 @@ function Delete({ item }: { item: Product }) {
 	return <ButtonDelete onClick={onDelete} />;
 }
 
-const ProductsTable = ({ q }: ProductQuery) => {
-	const { user, shop } = useAppSelector((state) => state.user);
-
-	const [filter, setFilter] = useState<{
-		category?: number;
-		shop?: number;
-	}>();
-	const { data: result, isLoading } = useGetProductsListQuery({
-		q,
-		shop_id: shop?.id ?? filter?.shop,
-		category_id: filter?.category,
-	});
+const ProductsTable = ({
+	data,
+	isLoading,
+}: {
+	data?: Product[];
+	isLoading: boolean;
+}) => {
 	const [updateProductStatus] = useUpdateProductStatusMutation();
-
-	const handleFilter = (
-		e: React.ChangeEvent<HTMLSelectElement>,
-		type: "category" | "shop"
-	) => {
-		console.log("change", e.currentTarget.value);
-		if (type === "category") {
-			setFilter({
-				...filter,
-				category:
-					e.currentTarget.value !== "Toutes"
-						? parseInt(e.currentTarget.value)
-						: undefined,
-			});
-		} else {
-			setFilter({
-				...filter,
-				shop:
-					e.currentTarget.value !== "Toutes"
-						? parseInt(e.currentTarget.value)
-						: undefined,
-			});
-		}
-	};
 
 	// const stockStatusFormatter = (cell: string) => {
 	// 	let colorClass = "";
@@ -157,14 +123,8 @@ const ProductsTable = ({ q }: ProductQuery) => {
 
 	return (
 		<>
-			{result?.data && result?.data.length > 0 && (
-				<FilterProductSection
-					handleFilter={handleFilter}
-					user={user as User}
-				/>
-			)}
 			<Table<Product>
-				data={result?.data}
+				data={data}
 				columns={columns}
 				isLoading={isLoading}
 			/>

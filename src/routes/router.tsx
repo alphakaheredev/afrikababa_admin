@@ -48,6 +48,9 @@ import OrderDetail from "@/pages/admin/Orders/OrderDetail";
 import DetailOrder from "@/pages/admin/Orders/DetailOrder";
 import CreateShop from "@/pages/supplier/shop/CreateShop";
 import EditShop from "@/pages/supplier/shop/EditShop";
+import SupplierOrders from "@/pages/supplier/Orders/Orders";
+import SupplierWindrawRequest from "@/pages/supplier/Windraw/WindrawRequest";
+import SupplierProducts from "@/pages/supplier/Products/Products";
 
 export const adminRoutes = [
 	{
@@ -227,7 +230,7 @@ export const supplierRoutes = [
 	},
 	{
 		path: supplierPaths.products,
-		element: <Products />,
+		element: <SupplierProducts />,
 	},
 	{
 		path: supplierPaths.addProduct,
@@ -255,7 +258,7 @@ export const supplierRoutes = [
 	},
 	{
 		path: supplierPaths.orders,
-		element: <Orders />,
+		element: <SupplierOrders />,
 	},
 	{
 		path: supplierPaths.detailOrder,
@@ -296,6 +299,10 @@ export const supplierRoutes = [
 	{
 		path: supplierPaths.profil,
 		element: <Profil />,
+	},
+	{
+		path: supplierPaths.withdrawalRequests,
+		element: <SupplierWindrawRequest />,
 	},
 ];
 

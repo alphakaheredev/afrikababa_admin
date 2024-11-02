@@ -68,3 +68,9 @@ export type Review = {
 	product_id: number;
 	product: Product;
 };
+
+export interface ProductMedia {
+	id: number;
+	product_id: number;
+	media_url: string;
+}

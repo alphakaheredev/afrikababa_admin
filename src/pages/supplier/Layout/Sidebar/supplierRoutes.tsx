@@ -38,9 +38,9 @@ export const routes = [
 				path: supplierPaths.orders,
 			},
 			{
-				label: "Transactions",
+				label: "Démandes de retrait",
 				icon: <IconExchange />,
-				path: supplierPaths.transactions,
+				path: supplierPaths.withdrawalRequests,
 			},
 		],
 	},

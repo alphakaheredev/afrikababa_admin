@@ -24,6 +24,6 @@ export type TypeQuery = Partial<{
 	page?: number;
 	limit?: number;
 	q?: string;
-	slug?: string;
+	id?: number;
 	role?: ROLE;
 }>;

@@ -68,4 +68,5 @@ export const supplierPaths = {
 	reviews: "avis",
 	settings: "parametres",
 	profil: "profil",
+	withdrawalRequests: "demandes-retrait",
 };

@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { InputSearch } from "@/components/ui/input";
-import ProductsTable from "./ProductsTable";
 import { useSearch } from "@/hooks/hooks";
 import { ButtonAddLink } from "@/components/ui/button";
 import { useAppSelector } from "@/redux/hooks";
 import { isSupplier } from "@/routes/routerUtils";
 import { User } from "@/redux/api/user/user.type";
 import FilterProductSection from "@/components/common/FilterProductSection";
-import { useGetProductsListQuery } from "@/redux/api/product/product.api";
+import { useGetProductsListByShopQuery } from "@/redux/api/product/product.api";
+import ProductsTable from "@/pages/admin/Products/ProductsTable";
 
-const Products = () => {
-	const { user } = useAppSelector((state) => state.user);
+const SupplierProducts = () => {
+	const { user, shop } = useAppSelector((state) => state.user);
 	const { search, handleSearch } = useSearch();
 	const [filter, setFilter] = useState<{
 		category?: number;
@@ -41,9 +41,9 @@ const Products = () => {
 		}
 	};
 
-	const { data: result, isLoading } = useGetProductsListQuery({
+	const { data: result, isLoading } = useGetProductsListByShopQuery({
 		q: search,
-		shop_id: filter?.shop,
+		id: shop?.id,
 		category_id: filter?.category,
 	});
 
@@ -77,4 +77,4 @@ const Products = () => {
 	);
 };
 
-export default Products;
+export default SupplierProducts;
