@@ -59,6 +59,15 @@ const Register = () => {
 							/>
 							<Input
 								label=""
+								placeholder="Adresse *"
+								type="text"
+								id="address"
+								variant="auth"
+								{...register("adresse")}
+								error={errors.adresse}
+							/>
+							<Input
+								label=""
 								placeholder="Mot de passe *"
 								type="password"
 								id="password"

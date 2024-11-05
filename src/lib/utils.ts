@@ -4,6 +4,7 @@ import { RefundStatus } from "@/redux/api/refund/refund.type";
 import { ROLE, User } from "@/redux/api/user/user.type";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { ApiBaseUrl } from "./http";
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
@@ -55,6 +56,11 @@ export function getLogoUrl(icon: string) {
 
 export function getImageUrl(image_url: string) {
 	if (image_url) return image_url;
+	return "/images/product-default.png";
+}
+
+export function getMainImage(main_image: string) {
+	if (main_image) return ApiBaseUrl + main_image;
 	return "/images/product-default.png";
 }
 

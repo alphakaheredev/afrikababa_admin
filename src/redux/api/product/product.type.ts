@@ -22,6 +22,7 @@ export type Product = {
 	product_width: number;
 	created_at: string;
 	main_image_url: string;
+	main_image: string;
 	updated_at: string;
 	product_dimensions: {
 		length: number;

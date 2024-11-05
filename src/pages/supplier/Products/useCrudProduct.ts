@@ -23,7 +23,6 @@ const schema = yup.object().shape({
 	name: yup.string().required("Le nom est obligatoire"),
 	description: yup.string().label("Description"),
 	price: yup.number().required("Le prix est obligatoire"),
-	quantity: yup.number().required("La quantité est obligatoire"),
 	main_image: yup.mixed(),
 	category_id: yup.number().required("La catégorie est obligatoire"),
 });

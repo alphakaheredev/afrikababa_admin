@@ -10,6 +10,8 @@ export type Shop = {
 	email_address: string;
 	company_website: string;
 	logo: string;
+	logo_url: string;
+	banner_url: string;
 	company_description: string;
 	company_status: string;
 	business_license: string;

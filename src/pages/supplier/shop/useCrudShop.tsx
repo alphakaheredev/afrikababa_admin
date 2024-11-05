@@ -16,24 +16,44 @@ import { onSetShop } from "@/redux/features/user.slice";
 
 yup.setLocale(fr);
 
-const schema = yup.object().shape({
-	company_name: yup.string().required().label("Nom de la boutique"),
-	sales_manager_name: yup.string().label("Nom du vendeur"),
-	company_registration: yup
-		.string()
-		.required()
-		.label("Numéro d'enregistrement"),
-	address: yup.string().required().label("Adresse de la boutique"),
-	phone_number: yup.string().required().label("Numéro de contact"),
-	email_address: yup.string().email().required().label("Adresse e-mail"),
-	company_website: yup.string().label("Site web de la boutique"),
-	logo: yup.mixed().label("Logo de la boutique").nullable(),
-	banner: yup.mixed().label("Image de couverture").nullable(),
-	description: yup.string().required().label("Description de la boutique"),
-	business_license: yup.mixed().label("Permis d'exploitation").nullable(),
-});
-
 export const useCrudShop = (item?: Shop) => {
+	const schema = yup.object().shape({
+		isEdit: yup.boolean().default(!!item),
+		company_name: yup.string().required().label("Nom de la boutique"),
+		sales_manager_name: yup.string().label("Nom du vendeur"),
+		company_registration: yup
+			.string()
+			.required()
+			.label("Numéro d'enregistrement"),
+		address: yup.string().required().label("Adresse de la boutique"),
+		phone_number: yup.string().required().label("Numéro de contact"),
+		email_address: yup
+			.string()
+			.email()
+			.required()
+			.label("Adresse e-mail"),
+		company_website: yup.string().label("Site web de la boutique"),
+		logo: yup.mixed().when("isEdit", {
+			is: true,
+			then: () => yup.mixed().nullable(),
+			otherwise: () =>
+				yup.mixed().required().label("Logo de la boutique"),
+		}),
+		banner: yup.mixed().when("isEdit", {
+			is: true,
+			then: () => yup.mixed().nullable(),
+			otherwise: () =>
+				yup.mixed().required().label("Image de couverture"),
+		}),
+		description: yup
+			.string()
+			.required()
+			.label("Description de la boutique"),
+		business_license: yup
+			.mixed()
+			.label("Permis d'exploitation")
+			.nullable(),
+	});
 	const { user } = useAppSelector((state) => state.user);
 	const [phone, setPhone] = useState<string>("");
 	const [logo, setLogo] = useState<File | null>(null);
@@ -125,7 +145,7 @@ export const useCrudShop = (item?: Shop) => {
 			} else {
 				Swal.fire({
 					title: "Votre boutique a été créée avec succès",
-					text: "Vous pouvez désormais commencer à vendre vos produits",
+					text: "Vous pouvez désormais commencer à ajouter vos produits",
 					icon: "success",
 					confirmButtonText: "Ajouter un produit",
 					confirmButtonColor: colors.primary,

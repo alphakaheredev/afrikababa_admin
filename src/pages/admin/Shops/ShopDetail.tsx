@@ -53,7 +53,8 @@ const ShopDetail = () => {
 							</div>
 							<div className="flex items-center gap-2">
 								<span className="text-dark font-normal">
-									Numéro d'enregistrement:
+									Numéro de registre de
+									commerce:
 								</span>
 								<span className="text-gray-500 text-sm">
 									{

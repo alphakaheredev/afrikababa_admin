@@ -40,6 +40,7 @@ const ProductsTable = ({
 	isSupplier?: boolean;
 }) => {
 	const [updateProductStatus] = useUpdateProductStatusMutation();
+	console.log(data);
 
 	// const stockStatusFormatter = (cell: string) => {
 	// 	let colorClass = "";

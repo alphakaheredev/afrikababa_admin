@@ -32,8 +32,8 @@ export const ShopApi = createApi({
 			{ id: number; data: ShopFormData | FormData }
 		>({
 			query: ({ id, data }) => ({
-				url: `shops${id ? `/${id}` : ""}`,
-				method: id ? "PUT" : "POST",
+				url: `shops${id ? `/update/${id}` : ""}`,
+				method: "POST",
 				body: data,
 			}),
 		}),

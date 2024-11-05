@@ -59,11 +59,13 @@ export const useLoginForm = () => {
 					if (res.data.user.role === "SUPPLIER") {
 						const shops = await getShopsByUser();
 						if (shops.data) {
-							dispatch(onSetShop(shops.data[0]));
+							await dispatch(
+								onSetShop(shops.data[0])
+							);
 						}
 					}
+					navigate("/admin");
 				}
-				navigate("/admin");
 			});
 		} else if ("error" in res) {
 			const error = res.error as QueryError;

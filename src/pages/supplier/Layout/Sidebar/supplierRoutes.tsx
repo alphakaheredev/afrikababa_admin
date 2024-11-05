@@ -6,7 +6,7 @@ import {
 	IconProduct,
 } from "@/components/common/Icons";
 import { FiSettings } from "react-icons/fi";
-import { FaRegEnvelope } from "react-icons/fa6";
+// import { FaRegEnvelope } from "react-icons/fa6";
 
 export const routes = [
 	{
@@ -44,16 +44,16 @@ export const routes = [
 			},
 		],
 	},
-	{
-		category: "GESTION DES FONCTIONNALITÉS",
-		items: [
-			{
-				label: "Messages",
-				icon: <FaRegEnvelope fontSize={22} />,
-				path: supplierPaths.chat,
-			},
-		],
-	},
+	// {
+	// 	category: "GESTION DES FONCTIONNALITÉS",
+	// 	items: [
+	// 		{
+	// 			label: "Messages",
+	// 			icon: <FaRegEnvelope fontSize={22} />,
+	// 			path: supplierPaths.chat,
+	// 		},
+	// 	],
+	// },
 	{
 		category: "ADMINISTRATION DU SITE",
 		items: [

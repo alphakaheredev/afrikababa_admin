@@ -10,25 +10,26 @@ import { useGetShopStatsQuery } from "@/redux/api/shop/shop.api";
 const SupplierDashboard = () => {
 	const { shop } = useAppSelector((state) => state.user);
 	const { data } = useGetShopStatsQuery(shop?.id as number);
-	console.log(data);
 	return (
 		<Fragment>
 			{shop ? (
 				<>
-					<div>
+					<div className="min-h-[200px]  h-[300px]">
 						<img
-							src={getBannerUrl(shop.banner)}
+							src={getBannerUrl(shop.banner_url)}
 							alt="banner boutique"
-							className="w-full min-h-[200px]  h-[450px] object-cover"
+							className="w-full h-full object-cover"
 						/>
 					</div>
 					<div className="flex items-center justify-between mb-5">
 						<div className="flex items-center space-x-4">
-							<div className="bg-dark w-28 h-28 rounded-full flex justify-center items-center -mt-10">
+							<div className="w-28 h-28 rounded-full flex justify-center items-center -mt-10 border border-gray-100 ">
 								<img
-									src={getLogo(shop.logo)}
+									src={getLogo(
+										shop.logo_url
+									)}
 									alt="logo"
-									className="w-20 h-20"
+									className="w-full h-full rounded-full object-cover"
 								/>
 							</div>
 							<div>

@@ -21,6 +21,7 @@ const registerFormSchema = yup.object().shape({
 	email: yup.string().email().required().label("Email"),
 	phone_number: yup.string().required().label("Numéro de téléphone"),
 	password: yup.string().min(6).required().label("Mot de passe"),
+	adresse: yup.string().required().label("Adresse"),
 	password_confirmation: yup
 		.string()
 		.oneOf(

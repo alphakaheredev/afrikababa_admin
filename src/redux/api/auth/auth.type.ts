@@ -12,6 +12,7 @@ export type RegisterFormData = {
 	phone_number: string;
 	password: string;
 	password_confirmation: string;
+	adresse: string;
 	role?: ROLE;
 };
 

@@ -240,14 +240,7 @@ export function ProductForm({ item }: { item?: Product }) {
 							{...register("price")}
 							error={errors.price?.message}
 						/>
-						<Input
-							label="Quantité"
-							id="quantity"
-							type="number"
-							required
-							{...register("quantity")}
-							error={errors.quantity?.message}
-						/>
+						
 						<Input
 							label="Largeur"
 							id="largeur"
@@ -268,6 +261,14 @@ export function ProductForm({ item }: { item?: Product }) {
 							type="number"
 							{...register("product_height")}
 							error={errors.product_height?.message}
+						/>
+						<Input
+							label="Poids"
+							id="poids"
+							type="number"
+							required
+							{...register("product_weight")}
+							error={errors.product_weight?.message}
 						/>
 					</div>
 				</FormRightCol>

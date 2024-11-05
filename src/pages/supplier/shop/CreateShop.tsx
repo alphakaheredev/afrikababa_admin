@@ -180,7 +180,7 @@ export function ShopForm({ item }: { item?: Shop }) {
 							error={errors.description?.message}
 						/>
 						<Input
-							label="Numéro d'enregistrement"
+							label="Numéro de registre de commerce"
 							id="enregistrement_boutique"
 							type="text"
 							{...register("company_registration")}
