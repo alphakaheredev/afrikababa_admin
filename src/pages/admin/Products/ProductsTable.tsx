@@ -1,5 +1,9 @@
 import Table, { Column } from "@/components/ui/Table";
-import { ButtonDelete, ButtonViewLink } from "@/components/ui/button";
+import {
+	ButtonDelete,
+	ButtonEditLink,
+	ButtonViewLink,
+} from "@/components/ui/button";
 import {
 	useDeleteProductMutation,
 	useUpdateProductStatusMutation,
@@ -29,9 +33,11 @@ function Delete({ item }: { item: Product }) {
 const ProductsTable = ({
 	data,
 	isLoading,
+	isSupplier,
 }: {
 	data?: Product[];
 	isLoading: boolean;
+	isSupplier?: boolean;
 }) => {
 	const [updateProductStatus] = useUpdateProductStatusMutation();
 
@@ -90,9 +96,17 @@ const ProductsTable = ({
 	const actionFormatter = (_cell: string, row: Product) => (
 		<div className="flex items-center gap-2">
 			<ButtonViewLink
-				to={`/admin/produits/${row.id}`}
+				to={`/${
+					isSupplier ? "fournisseur" : "admin"
+				}/produits/${row.id}`}
 				state={row}
 			/>
+			{isSupplier && (
+				<ButtonEditLink
+					to={`/fournisseur/produits/modifier/${row.id}`}
+					state={row}
+				/>
+			)}
 			<Delete item={row} />
 		</div>
 	);

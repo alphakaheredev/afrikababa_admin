@@ -36,9 +36,9 @@ const DetailProduct = () => {
 					<div>
 						<p>
 							Dimensions:{" "}
-							{item?.product_dimensions.length} x{" "}
-							{item?.product_dimensions.width} x{" "}
-							{item?.product_dimensions.height}
+							{item?.product_dimensions?.length} x{" "}
+							{item?.product_dimensions?.width} x{" "}
+							{item?.product_dimensions?.height}
 						</p>
 						<p>Poids: {item?.product_weight} kg</p>
 					</div>

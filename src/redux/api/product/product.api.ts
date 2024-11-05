@@ -25,10 +25,7 @@ export const ProductApi = createApi({
 			providesTags: ["products"],
 		}),
 
-		getProductsListByShop: build.query<
-			PaginationResults<Product>,
-			ProductQuery
-		>({
+		getProductsListByShop: build.query<Product[], ProductQuery>({
 			query: ({ id, ...query }) => ({
 				url: `boutique/products/${id}`,
 				method: "GET",
@@ -46,6 +43,7 @@ export const ProductApi = createApi({
 				method: id ? "PUT" : "POST",
 				body: data,
 			}),
+			invalidatesTags: ["products"],
 		}),
 
 		deleteProduct: build.mutation<Product, number>({

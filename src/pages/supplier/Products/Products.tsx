@@ -49,7 +49,7 @@ const SupplierProducts = () => {
 
 	return (
 		<>
-			{result?.data && result?.data.length > 0 && (
+			{result && result.length > 0 && (
 				<FilterProductSection
 					handleFilter={handleFilter}
 					user={user as User}
@@ -72,7 +72,11 @@ const SupplierProducts = () => {
 				</div>
 			</div>
 
-			<ProductsTable data={result?.data} isLoading={isLoading} />
+			<ProductsTable
+				data={result}
+				isLoading={isLoading}
+				isSupplier={true}
+			/>
 		</>
 	);
 };

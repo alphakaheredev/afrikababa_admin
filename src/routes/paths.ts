@@ -69,4 +69,6 @@ export const supplierPaths = {
 	settings: "parametres",
 	profil: "profil",
 	withdrawalRequests: "demandes-retrait",
+	editProduct: "produits/modifier/:id",
+	detailProduct: "produits/:id",
 };

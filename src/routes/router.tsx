@@ -51,6 +51,7 @@ import EditShop from "@/pages/supplier/shop/EditShop";
 import SupplierOrders from "@/pages/supplier/Orders/Orders";
 import SupplierWindrawRequest from "@/pages/supplier/Windraw/WindrawRequest";
 import SupplierProducts from "@/pages/supplier/Products/Products";
+import EditProduct from "@/pages/supplier/Products/EditProduct";
 
 export const adminRoutes = [
 	{
@@ -303,6 +304,14 @@ export const supplierRoutes = [
 	{
 		path: supplierPaths.withdrawalRequests,
 		element: <SupplierWindrawRequest />,
+	},
+	{
+		path: supplierPaths.editProduct,
+		element: <EditProduct />,
+	},
+	{
+		path: supplierPaths.detailProduct,
+		element: <DetailProduct />,
 	},
 ];
 

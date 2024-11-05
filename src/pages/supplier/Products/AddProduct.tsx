@@ -46,6 +46,7 @@ export function ProductForm({ item }: { item?: Product }) {
 		removeImage,
 		handleChangeStatus,
 		handleChangeCategory,
+		status,
 	} = useCrudProduct(item);
 
 	return (
@@ -165,12 +166,12 @@ export function ProductForm({ item }: { item?: Product }) {
 							{...register("name")}
 							error={errors.name?.message}
 						/>
-						<Input
+						{/* <Input
 							label="Unité"
 							id="nom"
 							type="text"
 							required
-						/>
+						/> */}
 						<div>
 							<Label>Description</Label>
 							<ReactQuill
@@ -189,6 +190,9 @@ export function ProductForm({ item }: { item?: Product }) {
 									id="publish"
 									value="active"
 									className="my-0"
+									checked={
+										status === "active"
+									}
 								/>
 								<label
 									htmlFor="publish"
@@ -202,6 +206,10 @@ export function ProductForm({ item }: { item?: Product }) {
 									id="brouillon"
 									value="inactive"
 									className="my-0"
+									checked={
+										status ===
+										"inactive"
+									}
 								/>
 								<label
 									htmlFor="brouillon"

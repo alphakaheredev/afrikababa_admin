@@ -47,6 +47,7 @@ export const useCrudProduct = (item?: Product) => {
 	const [images, setImages] = useState<File[]>([]);
 	const [mainImage, setMainImage] = useState<File | null>(null);
 	const [description, setDescription] = useState<string>("");
+	const [status, setStatus] = useState<string>("");
 	const navigate = useNavigate();
 	const { shop } = useAppSelector((state) => state.user);
 	const [addMedia] = useAddMediaMutation();
@@ -63,10 +64,20 @@ export const useCrudProduct = (item?: Product) => {
 
 	useEffect(() => {
 		if (item) {
+			console.log(item);
 			setValue("name", item.name);
 			setValue("description", item.description);
 			setValue("price", item.price);
 			setValue("quantity", item.quantity);
+			setValue("category_id", item.category_id);
+			setValue("status", item.status);
+			setValue("product_weight", item.product_weight);
+			setValue("product_length", item.product_length);
+			setValue("product_width", item.product_width);
+			setValue("product_height", item.product_height);
+			setValue("video", item.video);
+			setDescription(item.description);
+			setStatus(item.status);
 		} else {
 			reset();
 		}
@@ -112,6 +123,7 @@ export const useCrudProduct = (item?: Product) => {
 	const handleChangeStatus = (value: "active" | "inactive") => {
 		console.log(value);
 		setValue("status", value);
+		setStatus(value);
 	};
 
 	const handleChangeCategory = (
@@ -173,5 +185,6 @@ export const useCrudProduct = (item?: Product) => {
 		removeImage,
 		handleChangeStatus,
 		handleChangeCategory,
+		status,
 	};
 };
