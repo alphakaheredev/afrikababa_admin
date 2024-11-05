@@ -163,3 +163,68 @@ export const useCrudShop = (item?: Shop) => {
 		businessLicense,
 	};
 };
+
+
+export const useEditPaymentInfos = () => {
+	// const validationSchema = yup.object().shape({
+	// 	bank_transfer_details: yup
+	// 		.string()
+	// 		.required()
+	// 		.label("IBAN et N° de compte bancaire"),
+	// 	paypal_details: yup.string().required().label("Détails de PayPal"),
+	// });
+	const { shop } = useAppSelector((state) => state.user);
+
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+		setValue,
+		clearErrors,
+	} = useForm<ShopFormData>();
+
+	const [createShop, { isLoading }] = useCreateOrUpdateShopMutation();
+	const dispatch = useAppDispatch();
+
+	useEffect(() => {
+		console.log(errors);
+		cleannerError(errors, clearErrors);
+	}, [errors]);
+
+	useEffect(() => {
+		if (shop) {
+			setValue("bank_transfer_details", shop.bank_transfer_details);
+			setValue("paypal_details", shop.paypal_details);
+		}
+	}, [shop]);
+
+	const onSubmit = async (data: ShopFormData) => {
+		if (!data.bank_transfer_details || !data.paypal_details) {
+			return toast.error(
+				"Veuillez renseigner au moins un moyen de paiement"
+			);
+		}
+		// const formData = new FormData();
+		// appendDataToFormData(formData, data);
+
+		const res = await createShop({
+			id: shop?.id as number,
+			data: data,
+		});
+
+		if ("data" in res) {
+			const shop = res.data?.data as Shop;
+			dispatch(onSetShop(shop));
+			toast.success("Informations mises à jour avec succès");
+		} else {
+			toast.error("Une erreur est survenue");
+		}
+	};
+
+	return {
+		register,
+		onSubmit: handleSubmit(onSubmit),
+		errors,
+		isLoading,
+	};
+};

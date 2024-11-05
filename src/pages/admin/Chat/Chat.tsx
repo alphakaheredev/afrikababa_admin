@@ -4,8 +4,11 @@ import avatar from "@/assets/images/avatar.png";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import FormSendChat from "./FormSendChat";
 import ModalSelectProvider from "./ModalSelectProvider";
+import { useGetChatsListQuery } from "@/redux/api/chat/chat.api";
 
 const Chat = () => {
+  const { data: chats } = useGetChatsListQuery({});
+  console.log(chats);
   return (
     <div className="flex gap-3">
       <div className="w-1/4 mx-1 my-1 card-shadow min-h-[80vh] relative">
