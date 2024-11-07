@@ -117,7 +117,7 @@ export function ShopForm({ item }: { item?: Shop }) {
 							label="Téléchargez votre business license"
 							id="business_license"
 							onChange={handleBusinessLicenseChange}
-							accept="application/pdf, image/*"
+							accept="application/pdf"
 						/>
 						{businessLicense &&
 						typeof businessLicense !== "string" ? (

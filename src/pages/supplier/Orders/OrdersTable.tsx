@@ -21,11 +21,14 @@ import {
 import { ChevronDownIcon } from "lucide-react";
 import { toast } from "react-toastify";
 import { useGetOrdersByShopQuery } from "@/redux/api/shop/shop.api";
+import { useAppSelector } from "@/redux/hooks";
 
 const OrdersTable = ({ limit, order_number }: OrderQuery) => {
+	const { shop } = useAppSelector((s) => s?.user);
 	const { data: orders, isLoading } = useGetOrdersByShopQuery({
 		limit,
 		q: order_number,
+		shop: shop?.id,
 	});
 	const [changeOrderStatus] = useChangeOrderStatusMutation();
 

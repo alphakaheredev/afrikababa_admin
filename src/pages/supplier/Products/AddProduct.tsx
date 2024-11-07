@@ -73,7 +73,7 @@ export function ProductForm({ item }: { item?: Product }) {
 				</FormRightCol>
 			</FormRow>
 			<Divider margin="my-5" />
-			<FormRow>
+			{/* <FormRow>
 				<FormLeftCol>
 					<LabelWithDescription
 						label="Galerie"
@@ -106,7 +106,7 @@ export function ProductForm({ item }: { item?: Product }) {
 					</div>
 				</FormRightCol>
 			</FormRow>
-			<Divider margin="my-5" />
+			<Divider margin="my-5" /> */}
 			<FormRow>
 				<FormLeftCol>
 					<LabelWithDescription
@@ -240,7 +240,7 @@ export function ProductForm({ item }: { item?: Product }) {
 							{...register("price")}
 							error={errors.price?.message}
 						/>
-						
+
 						<Input
 							label="Largeur"
 							id="largeur"

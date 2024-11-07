@@ -25,7 +25,10 @@ export const ProductApi = createApi({
 			providesTags: ["products"],
 		}),
 
-		getProductsListByShop: build.query<Product[], ProductQuery>({
+		getProductsListByShop: build.query<
+			PaginationResults<Product>,
+			ProductQuery
+		>({
 			query: ({ id, ...query }) => ({
 				url: `boutique/products/${id}`,
 				method: "GET",

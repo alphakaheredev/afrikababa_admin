@@ -215,17 +215,21 @@ export const useEditPaymentInfos = () => {
 		if (shop) {
 			setValue("bank_transfer_details", shop.bank_transfer_details);
 			setValue("paypal_details", shop.paypal_details);
+			setValue("western_union_details", shop.western_union_details);
 		}
 	}, [shop]);
 
 	const onSubmit = async (data: ShopFormData) => {
-		if (!data.bank_transfer_details || !data.paypal_details) {
+		console.log(data);
+		if (
+			!data.bank_transfer_details ||
+			!data.paypal_details ||
+			!data?.western_union_details
+		) {
 			return toast.error(
 				"Veuillez renseigner au moins un moyen de paiement"
 			);
 		}
-		// const formData = new FormData();
-		// appendDataToFormData(formData, data);
 
 		const res = await createShop({
 			id: shop?.id as number,
@@ -246,5 +250,6 @@ export const useEditPaymentInfos = () => {
 		onSubmit: handleSubmit(onSubmit),
 		errors,
 		isLoading,
+		shop,
 	};
 };

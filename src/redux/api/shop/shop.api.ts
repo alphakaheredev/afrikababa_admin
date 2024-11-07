@@ -79,9 +79,12 @@ export const ShopApi = createApi({
 			}),
 		}),
 
-		getOrdersByShop: build.query<PaginationResults<Order>, TypeQuery>({
-			query: (query) => ({
-				url: `/order-items/supplier`,
+		getOrdersByShop: build.query<
+			PaginationResults<Order>,
+			TypeQuery & { shop?: number }
+		>({
+			query: ({ shop, ...query }) => ({
+				url: `/boutique/order-items/${shop}`,
 				method: "GET",
 				params: { ...query },
 			}),
