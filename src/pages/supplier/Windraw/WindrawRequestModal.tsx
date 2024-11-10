@@ -26,7 +26,7 @@ const WindrawRequestModal: React.FC<{ isOpen: boolean; close: () => void }> = (
 				<form onSubmit={onSubmit} className="space-y-5">
 					<Input
 						label="Montant"
-						type="text"
+						type="number"
 						id="amount"
 						placeholder="Montant"
 						required

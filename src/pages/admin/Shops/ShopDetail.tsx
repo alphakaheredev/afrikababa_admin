@@ -2,12 +2,11 @@ import Divider from "@/components/common/Divider";
 import { getImageUrl } from "@/lib/utils";
 import { Shop } from "@/redux/api/shop/shop.type";
 import { useLocation } from "react-router-dom";
-import OrdersTable from "../Orders/OrdersTable";
 import { ButtonBack } from "@/components/ui/button";
+import OrdersTable from "@/pages/supplier/Orders/OrdersTable";
 
 const ShopDetail = () => {
 	const item = useLocation().state as Shop;
-	console.log(item);
 	return (
 		<>
 			<div className="flex items-center gap-2 mb-12">

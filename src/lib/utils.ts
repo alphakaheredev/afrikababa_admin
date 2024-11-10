@@ -34,7 +34,8 @@ export function formatRole(role: ROLE) {
 }
 
 // function to get name from User
-export function getUserName(user: User) {
+export function getUserName(user?: User) {
+	if (!user) return "";
 	return `${user.firstname} ${user.lastname}`;
 }
 
@@ -193,4 +194,10 @@ export function appendDataToFormData(formData: FormData, data: any) {
 			formData.append(key, value as string);
 		}
 	});
+}
+
+// format price to usd
+export function formatPriceToUsd(price: number) {
+	if (!price) return "";
+	return `${price.toLocaleString("en-US")} $`;
 }

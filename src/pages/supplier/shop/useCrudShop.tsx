@@ -231,22 +231,23 @@ export const useEditPaymentInfos = () => {
 			otherwise: () => yup.string().notRequired(),
 		}),
 		// western union
-		western_union_details: yup.string().when("type", {
+		western_union_firstname: yup.string().when("type", {
 			is: "western_union",
-			then: () =>
-				yup
-					.string()
-					.required()
-					.label("Détails de Western Union"),
+			then: () => yup.string().required().label("Prénom"),
 			otherwise: () => yup.string().notRequired(),
 		}),
-		phone_number: yup.string().when("type", {
+		western_union_lastname: yup.string().when("type", {
+			is: "western_union",
+			then: () => yup.string().required().label("Nom"),
+			otherwise: () => yup.string().notRequired(),
+		}),
+		western_union_phone_number: yup.string().when("type", {
 			is: "western_union",
 			then: () =>
 				yup.string().required().label("Numéro de contact"),
 			otherwise: () => yup.string().notRequired(),
 		}),
-		city: yup.string().when("type", {
+		western_union_city: yup.string().when("type", {
 			is: "western_union",
 			then: () => yup.string().required().label("Ville"),
 			otherwise: () => yup.string().notRequired(),
@@ -295,16 +296,6 @@ export const useEditPaymentInfos = () => {
 	};
 
 	const onSubmit = async (data: ShopFormData) => {
-		if (
-			!data.bank_account_number ||
-			!data.paypal_details ||
-			!data?.western_union_details
-		) {
-			return toast.error(
-				"Veuillez renseigner au moins un moyen de paiement"
-			);
-		}
-
 		const res = await createShop({
 			id: shop?.id as number,
 			data: data,

@@ -25,6 +25,7 @@ import { Order } from "@/redux/api/order/order.type";
 
 const RefundReasonsTable = () => {
 	const { data: result, isLoading } = useGetRefundsListQuery({});
+	console.log(result);
 	const [changeRefundStatus] = useChangeRefundStatusMutation();
 
 	const changeStatus = async (status: RefundStatus, row: Refund) => {

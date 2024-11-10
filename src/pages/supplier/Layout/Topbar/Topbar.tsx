@@ -8,14 +8,14 @@ import {
 import useScrollPosition from "@/hooks/useScrollPosition";
 import { IconBurger } from "@/components/common/Icons";
 import { supplierPaths } from "@/routes/paths";
-import avatar from "@/assets/images/avatar.png";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { onlogout } from "@/redux/features/user.slice";
+import { getUserAvatarUrl } from "@/lib/utils";
 
 const Topbar = ({ open }: { open: () => void }) => {
 	const scrollPosition = useScrollPosition();
 	const dispatch = useAppDispatch();
-	const { shop } = useAppSelector((state) => state.user);
+	const { user, shop } = useAppSelector((state) => state.user);
 
 	const onLogout = () => {
 		dispatch(onlogout());
@@ -68,9 +68,11 @@ const Topbar = ({ open }: { open: () => void }) => {
 						</a> */}
 						<Popover>
 							<PopoverTrigger asChild>
-								<Avatar className="cursor-pointer w-12 h-12">
+								<Avatar className="cursor-pointer w-10 h-10">
 									<AvatarImage
-										src={avatar}
+										src={getUserAvatarUrl(
+											user?.avatar_url as string
+										)}
 										alt="user avatar"
 									/>
 									<AvatarFallback>

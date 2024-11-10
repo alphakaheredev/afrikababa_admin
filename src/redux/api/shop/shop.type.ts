@@ -29,11 +29,17 @@ export type Shop = {
 	city: string;
 	address: string;
 	description: string;
+	// bank details
 	bank_account_number: string;
 	bank_name: string;
 	bank_code: string;
 	bank_swift_code: string;
 	bank_address: string;
+	// western union details
+	western_union_firstname: string;
+	western_union_lastname: string;
+	western_union_city: string;
+	western_union_phone_number: string;
 	created_at: string;
 };
 
@@ -63,6 +69,10 @@ export type ShopFormData = {
 	bank_code?: string;
 	bank_swift_code?: string;
 	bank_address?: string;
+	western_union_firstname?: string;
+	western_union_lastname?: string;
+	western_union_city?: string;
+	western_union_phone_number?: string;
 };
 
 export interface ShopStats {

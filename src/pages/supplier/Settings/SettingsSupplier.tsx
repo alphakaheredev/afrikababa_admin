@@ -12,9 +12,10 @@ import paypal from "@/assets/images/payments/paypal.png";
 import wu from "@/assets/images/payments/wu.png";
 import cb from "@/assets/images/payments/cb.png";
 import FormInfoBancaire from "./FormInfoBancaire";
+import FormWesternUnion from "./FormWesternUnion";
 
 const SettingsSupplier = () => {
-	const { onSubmit, register, isLoading, errors, shop, handleTypeChange } =
+	const { onSubmit, register, isLoading, errors, handleTypeChange } =
 		useEditPaymentInfos();
 	return (
 		<Tabs defaultValue="payment" className="w-full">
@@ -114,52 +115,7 @@ const SettingsSupplier = () => {
 						</AccordionTrigger>
 
 						<AccordionContent className="text-th-gray text-sm font-normal pt-5">
-							<form
-								onSubmit={onSubmit}
-								className="space-y-4"
-							>
-								<Input
-									label="Prénoms et nom"
-									placeholder="Entrez votre prénoms et nom"
-									type="text"
-									id="name"
-									value={
-										shop?.sales_manager_name
-									}
-									disabled
-								/>
-								<Input
-									label="Numéro de téléphone"
-									placeholder="Entrez votre numero"
-									type="text"
-									id="phone_number"
-									{...register(
-										"phone_number"
-									)}
-									error={
-										errors.phone_number
-											?.message
-									}
-								/>
-								<Input
-									label="Ville"
-									placeholder="Entrez votre ville"
-									type="text"
-									id="city"
-									value={shop?.city}
-									disabled
-								/>
-
-								<div className="flex justify-end pt-5">
-									<ButtonSubmit
-										isLoading={
-											isLoading
-										}
-										label="Enregistrer"
-										className="w-fit"
-									/>
-								</div>
-							</form>
+							<FormWesternUnion />
 						</AccordionContent>
 					</AccordionItem>
 				</Accordion>

@@ -30,14 +30,13 @@ export const WindrawApi = createApi({
 			query: ({ id, data }) => {
 				if (id) {
 					return {
-						url: `refund_requests/${id}`,
-
+						url: `withdraw_requests/${id}`,
 						method: "PUT",
 						body: data,
 					};
 				}
 				return {
-					url: `refund_requests`,
+					url: `withdraw_requests`,
 					method: "POST",
 					body: data,
 				};
@@ -47,10 +46,21 @@ export const WindrawApi = createApi({
 
 		deleteWindrawRequest: build.mutation<WindrawRequest, number>({
 			query: (id) => ({
-				url: `refund_requests/${id}`,
+				url: `withdraw_requests/${id}`,
 				method: "DELETE",
 			}),
 			invalidatesTags: ["windraw"],
+		}),
+
+		getWithdrawalRequestsByShop: build.query<
+			PaginationResults<WindrawRequest>,
+			TypeQuery & { shop_id?: number }
+		>({
+			query: ({ shop_id, ...query }) => ({
+				url: `boutique/withdrawal-requests/${shop_id}`,
+				method: "GET",
+				params: { ...query },
+			}),
 		}),
 	}),
 });
@@ -59,4 +69,5 @@ export const {
 	useCreateOrUpdateWindrawRequestMutation,
 	useGetWindrawRequestsListQuery,
 	useDeleteWindrawRequestMutation,
+	useGetWithdrawalRequestsByShopQuery,
 } = WindrawApi;

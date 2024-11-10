@@ -68,17 +68,6 @@ export const ShopApi = createApi({
 			}),
 		}),
 
-		getWithdrawalRequestsByShop: build.query<
-			PaginationResults<WindrawRequest>,
-			TypeQuery
-		>({
-			query: ({ id, ...query }) => ({
-				url: `boutique/withdrawal-requests/${id}`,
-				method: "GET",
-				params: { ...query },
-			}),
-		}),
-
 		getOrdersByShop: build.query<
 			PaginationResults<Order>,
 			TypeQuery & { shop?: number }
@@ -102,5 +91,4 @@ export const {
 	useCreateOrUpdateShopMutation,
 	useGetShopStatsQuery,
 	useGetOrdersByShopQuery,
-	useGetWithdrawalRequestsByShopQuery,
 } = ShopApi;

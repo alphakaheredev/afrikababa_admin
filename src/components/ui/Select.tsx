@@ -15,7 +15,7 @@ interface Props extends React.InputHTMLAttributes<HTMLSelectElement> {
 }
 
 const Select = React.forwardRef<HTMLSelectElement, Props>(
-	({ id, label, placeholder, options, error, ...rest }, ref) => {
+	({ id, label, placeholder, options, error, required, ...rest }, ref) => {
 		return (
 			<div className="flex-1">
 				{label && (
@@ -23,7 +23,12 @@ const Select = React.forwardRef<HTMLSelectElement, Props>(
 						htmlFor={id}
 						className="block text-sm font-medium text-dark"
 					>
-						{label}
+						{label}{" "}
+						{required && (
+							<span className="text-red-500">
+								*
+							</span>
+						)}
 					</label>
 				)}
 				<select

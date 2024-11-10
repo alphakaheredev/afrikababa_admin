@@ -48,7 +48,7 @@ export const useCrudProduct = (item?: Product) => {
 	console.log(media);
 	const [mainImage, setMainImage] = useState<File | null>(null);
 	const [description, setDescription] = useState<string>("");
-	const [status, setStatus] = useState<string>("");
+	const [status, setStatus] = useState<string>("active");
 	const navigate = useNavigate();
 	const { shop } = useAppSelector((state) => state.user);
 	const [addMedia] = useAddMediaMutation();

@@ -234,7 +234,7 @@ export function ProductForm({ item }: { item?: Product }) {
 				<FormRightCol>
 					<div className="space-y-5">
 						<Input
-							label="Prix"
+							label="Prix (USD)"
 							id="price"
 							type="text"
 							required

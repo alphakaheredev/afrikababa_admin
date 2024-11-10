@@ -1,14 +1,14 @@
 import Table, { Column } from "@/components/ui/Table";
 import { ButtonDelete } from "@/components/ui/button";
 import { getUserName } from "@/lib/utils";
-import { useGetWithdrawalRequestsByShopQuery } from "@/redux/api/shop/shop.api";
+import { useGetWithdrawalRequestsByShopQuery } from "@/redux/api/windraw/windraw.api";
 import { WindrawRequest } from "@/redux/api/windraw/windraw.type";
 import { useAppSelector } from "@/redux/hooks";
 
 const WindrawRequestTable = () => {
 	const { shop } = useAppSelector((state) => state.user);
 	const { data: result, isLoading } = useGetWithdrawalRequestsByShopQuery({
-		id: shop?.id,
+		shop_id: shop?.id,
 	});
 	const actionFormatter = () => <ButtonDelete />;
 

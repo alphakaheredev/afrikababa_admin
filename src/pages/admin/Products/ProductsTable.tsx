@@ -11,24 +11,12 @@ import {
 import { useDelete } from "@/hooks/useDelete";
 import { Product } from "@/redux/api/product/product.type";
 import { Category } from "@/redux/api/category/category.type";
-import { getImageUrl } from "@/lib/utils";
+import { formatPriceToUsd, getImageUrl } from "@/lib/utils";
 import { toast } from "react-toastify";
 import { Switch } from "@/components/ui/switch";
 import { Shop } from "@/redux/api/shop/shop.type";
-
-function Delete({ item }: { item: Product }) {
-	const [deleteItem, { isSuccess, isError, error }] =
-		useDeleteProductMutation();
-	const onDelete = useDelete<Product>({
-		item,
-		deleteItem,
-		isSuccess,
-		isError,
-		error,
-		successMessage: "Produit supprimé",
-	});
-	return <ButtonDelete onClick={onDelete} />;
-}
+import Swal from "sweetalert2";
+import { colors } from "@/constants/Colors";
 
 const ProductsTable = ({
 	data,
@@ -40,26 +28,28 @@ const ProductsTable = ({
 	isSupplier?: boolean;
 }) => {
 	const [updateProductStatus] = useUpdateProductStatusMutation();
+	const [deleteItem] = useDeleteProductMutation();
 
-	// const stockStatusFormatter = (cell: string) => {
-	// 	let colorClass = "";
-
-	// 	switch (cell) {
-	// 		case "In Stock":
-	// 			colorClass = "bg-th-primary";
-	// 			break;
-	// 		case "Out of Stock":
-	// 			colorClass = "bg-red-500";
-	// 			break;
-	// 		case "Low Stock":
-	// 			colorClass = "bg-[#FB8885]";
-	// 			break;
-	// 		default:
-	// 			colorClass = "bg-dark";
-	// 	}
-
-	// 	return <Badge className={colorClass}>{cell}</Badge>;
-	// };
+	const handleDelete = (id: number) => {
+		Swal.fire({
+			title: "Voulez-vous vraiment supprimer ce produit ?",
+			icon: "question",
+			showCancelButton: true,
+			confirmButtonText: "OUI",
+			cancelButtonText: "NON",
+			showLoaderOnConfirm: true,
+			iconColor: colors.info,
+			confirmButtonColor: colors.danger,
+			preConfirm: async () => {
+				const res = await deleteItem(id);
+				if ("data" in res) {
+					toast.success("Produit supprimé avec succès");
+				} else {
+					toast.error("Une erreur est survenue");
+				}
+			},
+		});
+	};
 
 	const statusFormatter = (status: string, row: Product) => {
 		const handleStatusChange = async (checked: boolean) => {
@@ -93,7 +83,7 @@ const ProductsTable = ({
 		);
 	};
 
-	const actionFormatter = (_cell: string, row: Product) => (
+	const actionFormatter = (cell: number, row: Product) => (
 		<div className="flex items-center gap-2">
 			<ButtonViewLink
 				to={`/${
@@ -107,7 +97,7 @@ const ProductsTable = ({
 					state={row}
 				/>
 			)}
-			<Delete item={row} />
+			<ButtonDelete onClick={() => handleDelete(cell)} />
 		</div>
 	);
 
@@ -131,8 +121,12 @@ const ProductsTable = ({
 		{ header: "Statut", name: "status", formatter: statusFormatter },
 
 		// { header: "Type de produits", name: "type" },
-		{ header: "Prix unitaire", name: "price" },
-		{ header: "Actions", name: "actions", formatter: actionFormatter },
+		{
+			header: "Prix unitaire",
+			name: "price",
+			formatter: (cell: number) => formatPriceToUsd(cell),
+		},
+		{ header: "Actions", name: "id", formatter: actionFormatter },
 	];
 
 	return (
