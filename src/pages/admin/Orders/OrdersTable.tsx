@@ -9,10 +9,7 @@ import {
 	getInitialsOfName,
 } from "@/lib/utils";
 import { Link } from "react-router-dom";
-import {
-	useGetOrdersListQuery,
-	useChangeOrderStatusMutation,
-} from "@/redux/api/order/order.api";
+import { useChangeOrderStatusMutation } from "@/redux/api/order/order.api";
 import { Order, OrderQuery, OrderStatus } from "@/redux/api/order/order.type";
 import { User } from "@/redux/api/user/user.type";
 import {
@@ -23,12 +20,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ChevronDownIcon } from "lucide-react";
 import { toast } from "react-toastify";
+import { useGetOrdersByShopQuery } from "@/redux/api/shop/shop.api";
 
 const OrdersTable = ({ limit, order_number, shop_id }: OrderQuery) => {
-	const { data: orders, isLoading } = useGetOrdersListQuery({
+	const { data: orders, isLoading } = useGetOrdersByShopQuery({
 		limit,
-		shop_id,
 		q: order_number,
+		shop: shop_id,
 	});
 	const [changeOrderStatus] = useChangeOrderStatusMutation();
 

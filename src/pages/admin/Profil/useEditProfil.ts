@@ -73,7 +73,7 @@ export const useEditProfil = () => {
 		const file = e.target.files?.[0];
 		if (file) {
 			setAvatar(URL.createObjectURL(file));
-			setValue("avatar_url", file);
+			setValue("avatar", file);
 		}
 	};
 
@@ -83,8 +83,8 @@ export const useEditProfil = () => {
 		fd.append("lastname", data.lastname);
 		fd.append("phone_number", data.phone_number);
 		fd.append("email", data.email);
-		data.avatar_url && fd.append("avatar_url", data.avatar_url);
 		data.address && fd.append("address", data.address);
+		data.avatar && fd.append("avatar", data.avatar);
 
 		const res = await updateUser({
 			id: user?.id,

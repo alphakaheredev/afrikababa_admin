@@ -49,12 +49,10 @@ const Products = () => {
 
 	return (
 		<>
-			{result?.data && result?.data.length > 0 && (
-				<FilterProductSection
-					handleFilter={handleFilter}
-					user={user as User}
-				/>
-			)}
+			<FilterProductSection
+				handleFilter={handleFilter}
+				user={user as User}
+			/>
 			<div className="flex flex-col md:flex-row md:items-center gap-2 justify-between mb-8">
 				<h3 className="text-dark font-semibold">
 					Touts les produits

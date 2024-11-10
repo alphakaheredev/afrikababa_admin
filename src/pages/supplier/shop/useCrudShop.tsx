@@ -186,13 +186,72 @@ export const useCrudShop = (item?: Shop) => {
 
 
 export const useEditPaymentInfos = () => {
-	// const validationSchema = yup.object().shape({
-	// 	bank_transfer_details: yup
-	// 		.string()
-	// 		.required()
-	// 		.label("IBAN et N° de compte bancaire"),
-	// 	paypal_details: yup.string().required().label("Détails de PayPal"),
-	// });
+	const [type, setType] = useState<"bank" | "western_union" | "paypal">(
+		"bank"
+	);
+	const schema = yup.object().shape({
+		type: yup.string().required().default(type),
+		paypal_details: yup.string().when("type", {
+			is: "paypal",
+			then: () =>
+				yup.string().required().label("Détails de PayPal"),
+			otherwise: () => yup.string().notRequired(),
+		}),
+
+		// bank
+		bank_account_number: yup.string().when("type", {
+			is: "bank",
+			then: () =>
+				yup
+					.string()
+					.required()
+					.label("IBAN et N° de compte bancaire"),
+			otherwise: () => yup.string().notRequired(),
+		}),
+		bank_name: yup.string().when("type", {
+			is: "bank",
+			then: () => yup.string().required().label("Nom de la banque"),
+			otherwise: () => yup.string().notRequired(),
+		}),
+		bank_swift_code: yup.string().when("type", {
+			is: "bank",
+			then: () => yup.string().required().label("Code SWIFT"),
+			otherwise: () => yup.string().notRequired(),
+		}),
+		bank_code: yup.string().when("type", {
+			is: "bank",
+			then: () =>
+				yup.string().required().label("Code de la banque"),
+			otherwise: () => yup.string().notRequired(),
+		}),
+		bank_address: yup.string().when("type", {
+			is: "bank",
+			then: () =>
+				yup.string().required().label("Adresse de la banque"),
+			otherwise: () => yup.string().notRequired(),
+		}),
+		// western union
+		western_union_details: yup.string().when("type", {
+			is: "western_union",
+			then: () =>
+				yup
+					.string()
+					.required()
+					.label("Détails de Western Union"),
+			otherwise: () => yup.string().notRequired(),
+		}),
+		phone_number: yup.string().when("type", {
+			is: "western_union",
+			then: () =>
+				yup.string().required().label("Numéro de contact"),
+			otherwise: () => yup.string().notRequired(),
+		}),
+		city: yup.string().when("type", {
+			is: "western_union",
+			then: () => yup.string().required().label("Ville"),
+			otherwise: () => yup.string().notRequired(),
+		}),
+	});
 	const { shop } = useAppSelector((state) => state.user);
 
 	const {
@@ -201,7 +260,10 @@ export const useEditPaymentInfos = () => {
 		formState: { errors },
 		setValue,
 		clearErrors,
-	} = useForm<ShopFormData>();
+	} = useForm<ShopFormData>({
+		// @ts-ignore
+		resolver: yupResolver(schema),
+	});
 
 	const [createShop, { isLoading }] = useCreateOrUpdateShopMutation();
 	const dispatch = useAppDispatch();
@@ -213,16 +275,28 @@ export const useEditPaymentInfos = () => {
 
 	useEffect(() => {
 		if (shop) {
-			setValue("bank_transfer_details", shop.bank_transfer_details);
 			setValue("paypal_details", shop.paypal_details);
+			// bank
+			setValue("bank_account_number", shop.bank_account_number);
+			setValue("bank_name", shop.bank_name);
+			setValue("bank_swift_code", shop.bank_swift_code);
+			setValue("bank_code", shop.bank_code);
+			setValue("bank_address", shop.bank_address);
+
+			// western union
 			setValue("western_union_details", shop.western_union_details);
+			setValue("phone_number", shop.phone_number);
+			setValue("city", shop.city);
 		}
 	}, [shop]);
 
+	const handleTypeChange = (value: "bank" | "western_union" | "paypal") => {
+		setType(value);
+	};
+
 	const onSubmit = async (data: ShopFormData) => {
-		console.log(data);
 		if (
-			!data.bank_transfer_details ||
+			!data.bank_account_number ||
 			!data.paypal_details ||
 			!data?.western_union_details
 		) {
@@ -251,5 +325,6 @@ export const useEditPaymentInfos = () => {
 		errors,
 		isLoading,
 		shop,
+		handleTypeChange,
 	};
 };

@@ -27,7 +27,7 @@ export type User = {
 export type UserFormData = Pick<
 	User,
 	"firstname" | "lastname" | "email" | "phone_number" | "role" | "address"
-> & { avatar_url?: File };
+> & { avatar?: File };
 
 export interface AuthState {
 	user: User | null;

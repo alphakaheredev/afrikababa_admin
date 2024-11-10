@@ -11,9 +11,10 @@ import ButtonSubmit from "@/components/ui/buttonSubmit";
 import paypal from "@/assets/images/payments/paypal.png";
 import wu from "@/assets/images/payments/wu.png";
 import cb from "@/assets/images/payments/cb.png";
+import FormInfoBancaire from "./FormInfoBancaire";
 
 const SettingsSupplier = () => {
-	const { onSubmit, register, isLoading, errors, shop } =
+	const { onSubmit, register, isLoading, errors, shop, handleTypeChange } =
 		useEditPaymentInfos();
 	return (
 		<Tabs defaultValue="payment" className="w-full">
@@ -24,28 +25,24 @@ const SettingsSupplier = () => {
 			</TabsList>
 			<TabsContent value="payment">
 				{/* accordion */}
-				<form onSubmit={onSubmit}>
-					<Accordion
-						type="single"
-						collapsible
-						className="w-full"
+				<Accordion type="single" collapsible className="w-full">
+					<AccordionItem
+						value="item-1"
+						className="border mb-4 p-2 rounded"
 					>
-						<AccordionItem
-							value="item-1"
-							className="border mb-4 p-2 rounded"
-						>
-							<AccordionTrigger className="font-medium text-lg gap-2 hover:no-underline p-0">
-								<div className="flex items-center gap-2">
-									<img
-										src={paypal}
-										alt="paypal"
-										className="w-8 h-8"
-									/>
-									<span>Paypal</span>
-								</div>
-							</AccordionTrigger>
+						<AccordionTrigger className="font-medium text-lg gap-2 hover:no-underline p-0">
+							<div className="flex items-center gap-2">
+								<img
+									src={paypal}
+									alt="paypal"
+									className="w-8 h-8"
+								/>
+								<span>Paypal</span>
+							</div>
+						</AccordionTrigger>
 
-							<AccordionContent className="text-th-gray text-sm font-normal pt-5">
+						<AccordionContent className="text-th-gray text-sm font-normal pt-5">
+							<form onSubmit={onSubmit}>
 								<Input
 									label="Adresse email de votre paypal"
 									placeholder="Entrez votre adresse email"
@@ -59,74 +56,71 @@ const SettingsSupplier = () => {
 											.paypal_details
 											?.message
 									}
+									required
 								/>
-							</AccordionContent>
-						</AccordionItem>
-					</Accordion>
-					<Accordion
-						type="single"
-						collapsible
-						className="w-full"
-					>
-						<AccordionItem
-							value="item-2"
-							className="border mb-4 p-2 rounded"
-						>
-							<AccordionTrigger className="font-medium text-lg gap-2 hover:no-underline p-0">
-								<div className="flex items-center gap-2">
-									<img
-										src={cb}
-										alt="paypal"
-										className="w-8 h-8"
+								<div className="flex justify-end pt-5">
+									<ButtonSubmit
+										isLoading={
+											isLoading
+										}
+										label="Enregistrer"
+										className="w-fit"
+										onClick={() =>
+											handleTypeChange(
+												"paypal"
+											)
+										}
 									/>
-									<span>
-										Carte bancaire
-									</span>
 								</div>
-							</AccordionTrigger>
-
-							<AccordionContent className="text-th-gray text-sm font-normal pt-5">
-								<Input
-									label="IBAN et N° de compte bancaire"
-									placeholder="Entrez votre IBAN et N° de compte bancaire"
-									type="text"
-									id="bank_account_number"
-									{...register(
-										"bank_transfer_details"
-									)}
-									error={
-										errors
-											.bank_transfer_details
-											?.message
-									}
+							</form>
+						</AccordionContent>
+					</AccordionItem>
+				</Accordion>
+				<Accordion type="single" collapsible className="w-full">
+					<AccordionItem
+						value="item-2"
+						className="border mb-4 p-2 rounded"
+					>
+						<AccordionTrigger className="font-medium text-lg gap-2 hover:no-underline p-0">
+							<div className="flex items-center gap-2">
+								<img
+									src={cb}
+									alt="paypal"
+									className="w-8 h-8"
 								/>
-							</AccordionContent>
-						</AccordionItem>
-					</Accordion>
-					<Accordion
-						type="single"
-						collapsible
-						className="w-full"
-					>
-						<AccordionItem
-							value="item-2"
-							className="border mb-4 p-2 rounded"
-						>
-							<AccordionTrigger className="font-medium text-lg gap-2 hover:no-underline p-0">
-								<div className="flex items-center gap-2">
-									<img
-										src={wu}
-										alt="wester union"
-										className="w-8 h-8"
-									/>
-									<span>Western union</span>
-								</div>
-							</AccordionTrigger>
+								<span>Virement bancaire</span>
+							</div>
+						</AccordionTrigger>
 
-							<AccordionContent className="text-th-gray text-sm font-normal pt-5 space-y-3">
+						<AccordionContent className="text-th-gray text-sm font-normal pt-5 space-y-3">
+							<FormInfoBancaire />
+						</AccordionContent>
+					</AccordionItem>
+				</Accordion>
+				<Accordion type="single" collapsible className="w-full">
+					<AccordionItem
+						value="item-2"
+						className="border mb-4 p-2 rounded"
+					>
+						<AccordionTrigger className="font-medium text-lg gap-2 hover:no-underline p-0">
+							<div className="flex items-center gap-2">
+								<img
+									src={wu}
+									alt="wester union"
+									className="w-8 h-8"
+								/>
+								<span>Western union</span>
+							</div>
+						</AccordionTrigger>
+
+						<AccordionContent className="text-th-gray text-sm font-normal pt-5">
+							<form
+								onSubmit={onSubmit}
+								className="space-y-4"
+							>
 								<Input
-									label="Numéro western union"
-									placeholder="Entrez votre numero"
+									label="Prénoms et nom"
+									placeholder="Entrez votre prénoms et nom"
 									type="text"
 									id="name"
 									value={
@@ -135,30 +129,40 @@ const SettingsSupplier = () => {
 									disabled
 								/>
 								<Input
-									label="Numéro western union"
+									label="Numéro de téléphone"
 									placeholder="Entrez votre numero"
 									type="text"
-									id="bank_account_number"
+									id="phone_number"
 									{...register(
-										"western_union_details"
+										"phone_number"
 									)}
 									error={
-										errors
-											.western_union_details
+										errors.phone_number
 											?.message
 									}
 								/>
-							</AccordionContent>
-						</AccordionItem>
-					</Accordion>
-					<div className="flex justify-end">
-						<ButtonSubmit
-							isLoading={isLoading}
-							label="Enregistrer les modifications"
-							className="w-fit"
-						/>
-					</div>
-				</form>
+								<Input
+									label="Ville"
+									placeholder="Entrez votre ville"
+									type="text"
+									id="city"
+									value={shop?.city}
+									disabled
+								/>
+
+								<div className="flex justify-end pt-5">
+									<ButtonSubmit
+										isLoading={
+											isLoading
+										}
+										label="Enregistrer"
+										className="w-fit"
+									/>
+								</div>
+							</form>
+						</AccordionContent>
+					</AccordionItem>
+				</Accordion>
 			</TabsContent>
 		</Tabs>
 	);

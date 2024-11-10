@@ -29,6 +29,11 @@ export type Shop = {
 	city: string;
 	address: string;
 	description: string;
+	bank_account_number: string;
+	bank_name: string;
+	bank_code: string;
+	bank_swift_code: string;
+	bank_address: string;
 	created_at: string;
 };
 
@@ -53,6 +58,11 @@ export type ShopFormData = {
 	banner?: File;
 	city?: string;
 	business_license?: File;
+	bank_account_number?: string;
+	bank_name?: string;
+	bank_code?: string;
+	bank_swift_code?: string;
+	bank_address?: string;
 };
 
 export interface ShopStats {

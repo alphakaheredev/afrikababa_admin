@@ -60,7 +60,8 @@ export const useLoginForm = () => {
 						const shops = await getShopsByUser();
 						if (shops.data) {
 							await dispatch(
-								onSetShop(shops.data[0])
+								// @ts-ignore
+								onSetShop(shops.data.data[0])
 							);
 						}
 					}
