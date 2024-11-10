@@ -31,6 +31,7 @@ export type Product = {
 		weight: number;
 	};
 	reviews: Review[];
+	video_url: string;
 	video: string;
 };
 

@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+} from "@/components/ui/popover";
 import useScrollPosition from "@/hooks/useScrollPosition";
 import { IconBurger } from "@/components/common/Icons";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
@@ -57,8 +57,8 @@ const Topbar = ({ open }: { open: () => void }) => {
 						>
 							visitez le site
 						</a> */}
-						<HoverCard>
-							<HoverCardTrigger asChild>
+						<Popover>
+							<PopoverTrigger asChild>
 								<Avatar className="cursor-pointer w-12 h-12">
 									<AvatarImage
 										src={getUserAvatarUrl(
@@ -75,8 +75,8 @@ const Topbar = ({ open }: { open: () => void }) => {
 										)}
 									</AvatarFallback>
 								</Avatar>
-							</HoverCardTrigger>
-							<HoverCardContent className="w-40 px-3 py-1">
+							</PopoverTrigger>
+							<PopoverContent className="w-40 px-3 py-1">
 								<Link
 									to="/admin/profil"
 									className="text-dark text-sm"
@@ -89,8 +89,8 @@ const Topbar = ({ open }: { open: () => void }) => {
 								>
 									Se déconnecter
 								</button>
-							</HoverCardContent>
-						</HoverCard>
+							</PopoverContent>
+						</Popover>
 					</div>
 				</nav>
 			</div>

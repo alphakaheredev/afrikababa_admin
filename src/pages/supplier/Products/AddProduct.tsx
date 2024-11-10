@@ -44,6 +44,9 @@ export function ProductForm({ item }: { item?: Product }) {
 		handleChangeStatus,
 		handleChangeCategory,
 		status,
+		handleChangeImages,
+		images,
+		removeImage,
 	} = useCrudProduct(item);
 
 	return (
@@ -70,7 +73,7 @@ export function ProductForm({ item }: { item?: Product }) {
 				</FormRightCol>
 			</FormRow>
 			<Divider margin="my-5" />
-			{/* <FormRow>
+			<FormRow>
 				<FormLeftCol>
 					<LabelWithDescription
 						label="Galerie"
@@ -103,7 +106,7 @@ export function ProductForm({ item }: { item?: Product }) {
 					</div>
 				</FormRightCol>
 			</FormRow>
-			<Divider margin="my-5" /> */}
+			<Divider margin="my-5" />
 			<FormRow>
 				<FormLeftCol>
 					<LabelWithDescription
@@ -141,6 +144,7 @@ export function ProductForm({ item }: { item?: Product }) {
 							placeholder="Sélectionner une catégorie"
 							onChange={handleChangeCategory}
 							error={errors.category_id?.message}
+							value={item?.category_id}
 						/>
 					</div>
 				</FormRightCol>

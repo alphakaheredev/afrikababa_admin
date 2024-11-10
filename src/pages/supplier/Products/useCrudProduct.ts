@@ -44,6 +44,8 @@ export const useCrudProduct = (item?: Product) => {
 	});
 
 	const [images, setImages] = useState<File[]>([]);
+	const [media, setMedia] = useState<string[]>([]);
+	console.log(media);
 	const [mainImage, setMainImage] = useState<File | null>(null);
 	const [description, setDescription] = useState<string>("");
 	const [status, setStatus] = useState<string>("");
@@ -74,7 +76,7 @@ export const useCrudProduct = (item?: Product) => {
 			setValue("product_length", item.product_length);
 			setValue("product_width", item.product_width);
 			setValue("product_height", item.product_height);
-			setValue("video", item.video);
+			setValue("video", item.video_url);
 			setDescription(item.description);
 			setStatus(item.status);
 		} else {
@@ -98,12 +100,15 @@ export const useCrudProduct = (item?: Product) => {
 		if (files) {
 			const newImages = [...images, ...Array.from(files)];
 			setImages(newImages);
-			setValue("product_media", newImages);
 			const fd = new FormData();
-			fd.append("product_media", files[0]);
-			const addMediaRes = await addMedia(fd);
-			if ("data" in addMediaRes) {
-				console.log(addMediaRes.data);
+			fd.append("media_url", files[0]);
+			const res = await addMedia(fd);
+			if ("data" in res) {
+				console.log(res.data);
+				setMedia([
+					...media,
+					res?.data?.data?.media_url as string,
+				]);
 			}
 		}
 	};
@@ -112,6 +117,7 @@ export const useCrudProduct = (item?: Product) => {
 		const newImages = images.filter((_, i) => i !== index);
 		setImages(newImages);
 		setValue("product_media", newImages);
+		setMedia(media.filter((_, i) => i !== index));
 	};
 
 	const handleChangeDescription = (value: string) => {
@@ -140,6 +146,9 @@ export const useCrudProduct = (item?: Product) => {
 		// Prepare form data for submission
 		const fd = new FormData();
 		appendDataToFormData(fd, data);
+		if (media) {
+			fd.append("product_media", JSON.stringify(media));
+		}
 
 		// Send create/update request
 		const res = await createOrUpdate({

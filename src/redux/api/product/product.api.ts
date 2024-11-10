@@ -78,7 +78,7 @@ export const ProductApi = createApi({
 		}),
 
 		//add product to media
-		addMedia: build.mutation<ProductMedia, FormData>({
+		addMedia: build.mutation<{ data: ProductMedia }, FormData>({
 			query: (data) => ({
 				url: `product_media`,
 				method: "POST",
