@@ -100,16 +100,16 @@ export const useCrudProduct = (item?: Product) => {
 		if (files) {
 			const newImages = [...images, ...Array.from(files)];
 			setImages(newImages);
-			const fd = new FormData();
-			fd.append("media_url", files[0]);
-			const res = await addMedia(fd);
-			if ("data" in res) {
-				console.log(res.data);
-				setMedia([
-					...media,
-					res?.data?.data?.media_url as string,
-				]);
-			}
+			// const fd = new FormData();
+			// fd.append("media_url", files[0]);
+			// const res = await addMedia(fd);
+			// if ("data" in res) {
+			// 	console.log(res.data);
+			// 	setMedia([
+			// 		...media,
+			// 		res?.data?.data?.media_url as string,
+			// 	]);
+			// }
 		}
 	};
 
@@ -158,12 +158,29 @@ export const useCrudProduct = (item?: Product) => {
 
 		// Handle response
 		if ("data" in res) {
-			// Success case
+			console.log(res.data);
 			toast.success(
 				`Produit ${item?.id ? "modifié" : "ajouté"} avec succès`
 			);
-			reset();
+
+			if (images.length > 0) {
+				const formData = new FormData();
+				formData.append(
+					"product_id",
+					res.data?.id.toString() as string
+				);
+				formData.append("media_type", "image");
+				images.forEach((image) => {
+					formData.append("medias[]", image);
+				});
+
+				const response = await addMedia(formData);
+				if ("data" in response) {
+					setImages([]);
+				}
+			}
 			navigate(-1);
+			reset();
 		} else if ("error" in res) {
 			// Error case
 			const error = res.error as any;

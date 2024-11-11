@@ -8,7 +8,6 @@ import {
 	useDeleteProductMutation,
 	useUpdateProductStatusMutation,
 } from "@/redux/api/product/product.api";
-import { useDelete } from "@/hooks/useDelete";
 import { Product } from "@/redux/api/product/product.type";
 import { Category } from "@/redux/api/category/category.type";
 import { formatPriceToUsd, getImageUrl } from "@/lib/utils";

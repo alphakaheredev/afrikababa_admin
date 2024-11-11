@@ -47,6 +47,7 @@ export const ProductApi = createApi({
 				body: data,
 			}),
 			invalidatesTags: ["products"],
+			transformResponse: (response: any) => response.data,
 		}),
 
 		deleteProduct: build.mutation<Product, number>({

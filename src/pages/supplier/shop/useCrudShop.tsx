@@ -283,11 +283,22 @@ export const useEditPaymentInfos = () => {
 			setValue("bank_swift_code", shop.bank_swift_code);
 			setValue("bank_code", shop.bank_code);
 			setValue("bank_address", shop.bank_address);
+			setValue("address", shop.address);
 
 			// western union
-			setValue("western_union_details", shop.western_union_details);
-			setValue("phone_number", shop.phone_number);
-			setValue("city", shop.city);
+			setValue(
+				"western_union_firstname",
+				shop.western_union_firstname
+			);
+			setValue(
+				"western_union_lastname",
+				shop.western_union_lastname
+			);
+			setValue(
+				"western_union_phone_number",
+				shop.western_union_phone_number
+			);
+			setValue("western_union_city", shop.western_union_city);
 		}
 	}, [shop]);
 

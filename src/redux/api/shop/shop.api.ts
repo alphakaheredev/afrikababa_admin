@@ -3,7 +3,6 @@ import { Shop, ShopFormData, ShopStats } from "./shop.type";
 import { PaginationResults, TypeQuery } from "@/lib/type";
 import { baseQueryWithLogout } from "@/lib/baseQuery";
 import { Order } from "../order/order.type";
-import { WindrawRequest } from "../windraw/windraw.type";
 
 export const ShopApi = createApi({
 	reducerPath: "shopApi",

@@ -2,7 +2,7 @@ import React from "react";
 import { MdClose } from "react-icons/md";
 
 type Props = {
-	image: File;
+	image: File | string;
 	onRemove?: () => void;
 };
 
@@ -18,7 +18,11 @@ const PreviewImage: React.FC<Props> = ({ image, onRemove }) => {
 					<MdClose fontSize={20} />
 				</button>
 				<img
-					src={URL.createObjectURL(image)}
+					src={
+						typeof image === "string"
+							? image
+							: URL.createObjectURL(image)
+					}
 					alt="cover"
 					className="w-14 h-12 rounded"
 				/>
@@ -27,7 +31,11 @@ const PreviewImage: React.FC<Props> = ({ image, onRemove }) => {
 	}
 	return (
 		<img
-			src={URL.createObjectURL(image)}
+			src={
+				typeof image === "string"
+					? image
+					: URL.createObjectURL(image)
+			}
 			alt="cover"
 			className="w-12 h-12 object-contain mt-3 rounded"
 		/>

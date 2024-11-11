@@ -33,6 +33,7 @@ export type Product = {
 	reviews: Review[];
 	video_url: string;
 	video: string;
+	product_media: ProductMedia[];
 };
 
 export type ProductFormData = Pick<

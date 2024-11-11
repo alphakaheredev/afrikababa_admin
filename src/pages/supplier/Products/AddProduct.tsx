@@ -49,6 +49,7 @@ export function ProductForm({ item }: { item?: Product }) {
 		removeImage,
 	} = useCrudProduct(item);
 
+
 	return (
 		<form onSubmit={onSubmit}>
 			<FormRow>
@@ -66,9 +67,13 @@ export function ProductForm({ item }: { item?: Product }) {
 							onChange={handleChangeMainImage}
 							accept="image/*"
 						/>
-						{mainImage && (
+						{mainImage ? (
 							<PreviewImage image={mainImage} />
-						)}
+						) : item?.main_image_url ? (
+							<PreviewImage
+								image={item.main_image_url}
+							/>
+						) : null}
 					</div>
 				</FormRightCol>
 			</FormRow>
@@ -90,18 +95,34 @@ export function ProductForm({ item }: { item?: Product }) {
 							multiple
 						/>
 						<div className="flex flex-wrap gap-2">
-							{images &&
-								images.map((image, index) => (
-									<PreviewImage
-										image={image}
-										key={image.name}
-										onRemove={() =>
-											removeImage(
-												index
-											)
-										}
-									/>
-								))}
+							{images
+								? images.map((image, index) => (
+										<PreviewImage
+											image={image}
+											key={
+												image.name
+											}
+											onRemove={() =>
+												removeImage(
+													index
+												)
+											}
+										/>
+								  ))
+								: item?.product_media
+								? item.product_media.map(
+										(media) => (
+											<PreviewImage
+												image={
+													media.media_url
+												}
+												key={
+													media.id
+												}
+											/>
+										)
+								  )
+								: null}
 						</div>
 					</div>
 				</FormRightCol>
