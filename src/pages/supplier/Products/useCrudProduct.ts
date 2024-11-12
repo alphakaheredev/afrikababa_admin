@@ -8,6 +8,7 @@ import { Product, ProductFormData } from "@/redux/api/product/product.type";
 import {
 	useAddMediaMutation,
 	useCreateOrUpdateProductMutation,
+	useDeleteMediaMutation,
 } from "@/redux/api/product/product.api";
 import { appendDataToFormData, cleannerError } from "@/lib/utils";
 import { toast } from "react-toastify";
@@ -45,13 +46,13 @@ export const useCrudProduct = (item?: Product) => {
 
 	const [images, setImages] = useState<File[]>([]);
 	const [media, setMedia] = useState<string[]>([]);
-	console.log(media);
 	const [mainImage, setMainImage] = useState<File | null>(null);
 	const [description, setDescription] = useState<string>("");
 	const [status, setStatus] = useState<string>("active");
 	const navigate = useNavigate();
 	const { shop } = useAppSelector((state) => state.user);
 	const [addMedia] = useAddMediaMutation();
+	const [deleteMedia] = useDeleteMediaMutation();
 
 	const [createOrUpdate, { isLoading }] =
 		useCreateOrUpdateProductMutation();
@@ -65,7 +66,6 @@ export const useCrudProduct = (item?: Product) => {
 
 	useEffect(() => {
 		if (item) {
-			console.log(item);
 			setValue("name", item.name);
 			setValue("description", item.description);
 			setValue("price", item.price);
@@ -100,16 +100,6 @@ export const useCrudProduct = (item?: Product) => {
 		if (files) {
 			const newImages = [...images, ...Array.from(files)];
 			setImages(newImages);
-			// const fd = new FormData();
-			// fd.append("media_url", files[0]);
-			// const res = await addMedia(fd);
-			// if ("data" in res) {
-			// 	console.log(res.data);
-			// 	setMedia([
-			// 		...media,
-			// 		res?.data?.data?.media_url as string,
-			// 	]);
-			// }
 		}
 	};
 
@@ -135,6 +125,13 @@ export const useCrudProduct = (item?: Product) => {
 		e: React.ChangeEvent<HTMLSelectElement>
 	) => {
 		setValue("category_id", parseInt(e.currentTarget.value));
+	};
+
+	const handleDeleteMedia = async (id: number) => {
+		const res = await deleteMedia(id);
+		if ("data" in res) {
+			console.log(res.data);
+		}
 	};
 
 	// Form submission handler
@@ -211,5 +208,6 @@ export const useCrudProduct = (item?: Product) => {
 		handleChangeStatus,
 		handleChangeCategory,
 		status,
+		handleDeleteMedia,
 	};
 };

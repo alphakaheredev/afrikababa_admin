@@ -77,7 +77,6 @@ export const useCrudShop = (item?: Shop) => {
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
-		console.log(errors);
 		cleannerError(errors, clearErrors);
 	}, [errors]);
 
@@ -184,7 +183,6 @@ export const useCrudShop = (item?: Shop) => {
 	};
 };
 
-
 export const useEditPaymentInfos = () => {
 	const [type, setType] = useState<"bank" | "western_union" | "paypal">(
 		"bank"
@@ -270,12 +268,13 @@ export const useEditPaymentInfos = () => {
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
-		console.log(errors);
 		cleannerError(errors, clearErrors);
 	}, [errors]);
 
 	useEffect(() => {
 		if (shop) {
+			console.log(shop);
+
 			setValue("paypal_details", shop.paypal_details);
 			// bank
 			setValue("bank_account_number", shop.bank_account_number);
