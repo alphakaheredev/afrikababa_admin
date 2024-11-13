@@ -6,7 +6,7 @@ import { useAppSelector } from "@/redux/hooks";
 import { isSupplier } from "@/routes/routerUtils";
 import { User } from "@/redux/api/user/user.type";
 import FilterProductSection from "@/components/common/FilterProductSection";
-import { useGetProductsListQuery } from "@/redux/api/product/product.api";
+import { useGetProductsListByShopQuery } from "@/redux/api/product/product.api";
 import ProductsTable from "@/pages/admin/Products/ProductsTable";
 
 const SupplierProducts = () => {
@@ -21,7 +21,6 @@ const SupplierProducts = () => {
 		e: React.ChangeEvent<HTMLSelectElement>,
 		type: "category" | "shop"
 	) => {
-		console.log("change", e.currentTarget.value);
 		if (type === "category") {
 			setFilter({
 				...filter,
@@ -41,9 +40,9 @@ const SupplierProducts = () => {
 		}
 	};
 
-	const { data: result, isLoading } = useGetProductsListQuery({
+	const { data: result, isLoading } = useGetProductsListByShopQuery({
 		q: search,
-		shop_id: shop?.id,
+		id: shop?.id,
 		category_id: filter?.category,
 		name: search,
 	});

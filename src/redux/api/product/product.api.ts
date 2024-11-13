@@ -115,7 +115,7 @@ export const {
 	useCreateOrUpdateProductMutation,
 	useAddMediaMutation,
 	useDeleteMediaMutation,
-	// useGetProductsListByShopQuery,
+	useGetProductsListByShopQuery,
 	useFindProductQuery,
 	useLazyFindProductQuery,
 } = ProductApi;
