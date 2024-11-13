@@ -6,7 +6,7 @@ import { useAppSelector } from "@/redux/hooks";
 import { isSupplier } from "@/routes/routerUtils";
 import { User } from "@/redux/api/user/user.type";
 import FilterProductSection from "@/components/common/FilterProductSection";
-import { useGetProductsListByShopQuery } from "@/redux/api/product/product.api";
+import { useGetProductsListQuery } from "@/redux/api/product/product.api";
 import ProductsTable from "@/pages/admin/Products/ProductsTable";
 
 const SupplierProducts = () => {
@@ -41,10 +41,11 @@ const SupplierProducts = () => {
 		}
 	};
 
-	const { data: result, isLoading } = useGetProductsListByShopQuery({
+	const { data: result, isLoading } = useGetProductsListQuery({
 		q: search,
-		id: shop?.id,
+		shop_id: shop?.id,
 		category_id: filter?.category,
+		name: search,
 	});
 
 	return (

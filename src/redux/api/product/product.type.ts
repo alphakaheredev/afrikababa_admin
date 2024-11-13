@@ -59,6 +59,7 @@ export type ProductFormData = Pick<
 export type ProductQuery = TypeQuery & {
 	shop_id?: number;
 	category_id?: number;
+	name?: string;
 };
 
 export type Review = {

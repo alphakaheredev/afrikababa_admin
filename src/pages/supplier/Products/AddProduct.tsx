@@ -48,6 +48,7 @@ export function ProductForm({ item }: { item?: Product }) {
 		images,
 		removeImage,
 		handleDeleteMedia,
+		product,
 	} = useCrudProduct(item);
 
 	return (
@@ -104,8 +105,8 @@ export function ProductForm({ item }: { item?: Product }) {
 									}
 								/>
 							))}
-							{item?.product_media
-								? item.product_media.map(
+							{product?.product_media
+								? product.product_media.map(
 										(item) => (
 											<PreviewImage
 												image={

@@ -9,6 +9,7 @@ import {
 	useAddMediaMutation,
 	useCreateOrUpdateProductMutation,
 	useDeleteMediaMutation,
+	useLazyFindProductQuery,
 } from "@/redux/api/product/product.api";
 import { appendDataToFormData, cleannerError } from "@/lib/utils";
 import { toast } from "react-toastify";
@@ -44,11 +45,13 @@ export const useCrudProduct = (item?: Product) => {
 		},
 	});
 
+	const [product, setProduct] = useState<Product | undefined>(undefined);
 	const [images, setImages] = useState<File[]>([]);
 	const [media, setMedia] = useState<string[]>([]);
 	const [mainImage, setMainImage] = useState<File | null>(null);
 	const [description, setDescription] = useState<string>("");
 	const [status, setStatus] = useState<string>("active");
+	const [findProduct] = useLazyFindProductQuery();
 	const navigate = useNavigate();
 	const { shop } = useAppSelector((state) => state.user);
 	const [addMedia] = useAddMediaMutation();
@@ -64,25 +67,38 @@ export const useCrudProduct = (item?: Product) => {
 		}
 	}, [errors, clearErrors]);
 
+	const getProduct = async () => {
+		const res = await findProduct(item?.id as number);
+		if ("data" in res) {
+			setProduct(res.data as Product);
+		}
+	};
+
 	useEffect(() => {
 		if (item) {
-			setValue("name", item.name);
-			setValue("description", item.description);
-			setValue("price", item.price);
-			setValue("quantity", item.quantity);
-			setValue("category_id", item.category_id);
-			setValue("status", item.status);
-			setValue("product_weight", item.product_weight);
-			setValue("product_length", item.product_length);
-			setValue("product_width", item.product_width);
-			setValue("product_height", item.product_height);
-			setValue("video", item.video_url);
-			setDescription(item.description);
-			setStatus(item.status);
+			getProduct();
+		}
+	}, [item]);
+
+	useEffect(() => {
+		if (product) {
+			setValue("name", product.name);
+			setValue("description", product.description);
+			setValue("price", product.price);
+			setValue("quantity", product.quantity);
+			setValue("category_id", product.category_id);
+			setValue("status", product.status);
+			setValue("product_weight", product.product_weight);
+			setValue("product_length", product.product_length);
+			setValue("product_width", product.product_width);
+			setValue("product_height", product.product_height);
+			setValue("video", product.video_url);
+			setDescription(product.description);
+			setStatus(product.status);
 		} else {
 			reset();
 		}
-	}, [item, setValue, reset]);
+	}, [product, setValue, reset]);
 
 	// Handle main image change
 	const handleChangeMainImage = (e: React.FormEvent<HTMLInputElement>) => {
@@ -117,7 +133,6 @@ export const useCrudProduct = (item?: Product) => {
 
 	const handleChangeStatus = (value: "active" | "inactive") => {
 		console.log(value);
-		setValue("status", value);
 		setStatus(value);
 	};
 
@@ -130,13 +145,14 @@ export const useCrudProduct = (item?: Product) => {
 	const handleDeleteMedia = async (id: number) => {
 		const res = await deleteMedia(id);
 		if ("data" in res) {
-			console.log(res.data);
+			setTimeout(async () => {
+				getProduct();
+			}, 1000);
 		}
 	};
 
 	// Form submission handler
 	const onSubmit = async (data: ProductFormData) => {
-		console.log(data);
 		if (shop) {
 			data.shop_id = shop.id;
 		}
@@ -209,5 +225,6 @@ export const useCrudProduct = (item?: Product) => {
 		handleChangeCategory,
 		status,
 		handleDeleteMedia,
+		product,
 	};
 };

@@ -10,7 +10,7 @@ import { baseQueryWithLogout } from "@/lib/baseQuery";
 
 export const ProductApi = createApi({
 	reducerPath: "productApi",
-	tagTypes: ["products"],
+	tagTypes: ["products", "product"],
 	baseQuery: baseQueryWithLogout,
 	endpoints: (build) => ({
 		getProductsList: build.query<
@@ -47,6 +47,15 @@ export const ProductApi = createApi({
 				body: data,
 			}),
 			invalidatesTags: ["products"],
+			transformResponse: (response: any) => response.data,
+		}),
+
+		findProduct: build.query<Product, number>({
+			query: (id) => ({
+				url: `products/${id}`,
+				method: "GET",
+			}),
+			providesTags: ["product"],
 			transformResponse: (response: any) => response.data,
 		}),
 
@@ -93,6 +102,7 @@ export const ProductApi = createApi({
 				url: `product_media/${id}`,
 				method: "DELETE",
 			}),
+			invalidatesTags: ["product"],
 		}),
 	}),
 });
@@ -105,5 +115,7 @@ export const {
 	useCreateOrUpdateProductMutation,
 	useAddMediaMutation,
 	useDeleteMediaMutation,
-	useGetProductsListByShopQuery,
+	// useGetProductsListByShopQuery,
+	useFindProductQuery,
+	useLazyFindProductQuery,
 } = ProductApi;

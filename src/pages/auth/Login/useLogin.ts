@@ -63,9 +63,13 @@ export const useLoginForm = () => {
 								// @ts-ignore
 								onSetShop(shops.data.data[0])
 							);
+							setTimeout(() => {
+								navigate("/fournisseur");
+							}, 1500);
 						}
+					} else {
+						navigate("/admin");
 					}
-					navigate("/admin");
 				}
 			});
 		} else if ("error" in res) {
