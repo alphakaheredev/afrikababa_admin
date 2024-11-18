@@ -52,6 +52,7 @@ import SupplierOrders from "@/pages/supplier/Orders/Orders";
 import SupplierWindrawRequest from "@/pages/supplier/Windraw/WindrawRequest";
 import SupplierProducts from "@/pages/supplier/Products/Products";
 import EditProduct from "@/pages/supplier/Products/EditProduct";
+import Transitaires from "@/pages/admin/Transitaires/Transitaires";
 
 export const adminRoutes = [
 	{
@@ -213,6 +214,10 @@ export const adminRoutes = [
 	{
 		path: adminPaths.withdrawRequests,
 		element: <WindrawRequest />,
+	},
+	{
+		path: adminPaths.transitaires,
+		element: <Transitaires />,
 	},
 ];
 

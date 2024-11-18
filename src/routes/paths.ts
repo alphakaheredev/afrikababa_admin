@@ -45,6 +45,7 @@ export const adminPaths = {
 	addCondition: "parametres/conditions-et-termes/ajouter",
 	editCondition: "parametres/conditions-et-termes/modifier/:id",
 	withdrawRequests: "demandes-retrait",
+	transitaires: "transitaires",
 };
 
 export const supplierPaths = {

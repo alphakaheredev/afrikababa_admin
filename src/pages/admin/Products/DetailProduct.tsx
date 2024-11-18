@@ -18,7 +18,14 @@ const DetailProduct = () => {
 			</div>
 			<div className="grid grid-cols-1 lg:grid-cols-3 px-3 py-2 mb-12">
 				<div className=" overflow-hidden">
-					<ProductCarousel />
+					<ProductCarousel
+						images={[
+							item?.main_image_url,
+							...item?.product_media?.map(
+								(item) => item.media_url
+							),
+						]}
+					/>
 				</div>
 				<div className="col-span-2">
 					<h5 className="text-lg text-dark font-medium mb-2">

@@ -12,6 +12,7 @@ import {
 } from "@/components/common/Icons";
 import { FiSettings, FiTruck, FiUser, FiUsers } from "react-icons/fi";
 import { FaHandHoldingUsd } from "react-icons/fa";
+import { FaPersonMilitaryToPerson } from "react-icons/fa6";
 // import { FaRegEnvelope } from "react-icons/fa6";
 // import { HiOutlineStar } from "react-icons/hi";
 // import { IoDocumentTextOutline } from "react-icons/io5";
@@ -109,6 +110,11 @@ export const routes = [
 				label: "Clients",
 				icon: <FiUsers fontSize={22} />,
 				path: adminPaths.customers,
+			},
+			{
+				label: "Transitaires",
+				icon: <FaPersonMilitaryToPerson fontSize={20} />,
+				path: adminPaths.transitaires,
 			},
 		],
 	},

@@ -1,6 +1,5 @@
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import product from "@/assets/images/products/product1.png";
 
 const responsive = {
 	superLargeDesktop: {
@@ -21,7 +20,11 @@ const responsive = {
 	},
 };
 
-const ProductCarousel = () => {
+interface Props {
+	images: string[];
+}
+
+const ProductCarousel = ({ images }: Props) => {
 	return (
 		<Carousel
 			responsive={responsive}
@@ -32,10 +35,10 @@ const ProductCarousel = () => {
 			dotListClass="custom-dot-list"
 			showDots
 		>
-			{[...Array(3)].map((_item, index) => (
+			{images.map((image, index) => (
 				<div key={index}>
 					<img
-						src={product}
+						src={image}
 						alt="author"
 						className="object-contain w-full h-full max-h-[200px]"
 					/>
