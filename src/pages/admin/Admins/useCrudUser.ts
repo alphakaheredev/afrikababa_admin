@@ -30,7 +30,11 @@ export const userValidationschema = yup.object().shape({
 		.required("Le rôle est requis"),
 });
 
-export const useCrudUser = (closeModal: () => void, item?: User) => {
+export const useCrudUser = (
+	closeModal: () => void,
+	role: ROLE,
+	item?: User
+) => {
 	const {
 		register,
 		handleSubmit,
@@ -41,7 +45,7 @@ export const useCrudUser = (closeModal: () => void, item?: User) => {
 	} = useForm<UserFormData>({
 		resolver: yupResolver(userValidationschema),
 		defaultValues: {
-			role: item ? item?.role : ROLE.admin,
+			role: item ? item?.role : role,
 		},
 	});
 
@@ -64,9 +68,11 @@ export const useCrudUser = (closeModal: () => void, item?: User) => {
 		if ("data" in res) {
 			closeModal();
 			toast.success(
-				`Administrateur ${
-					item?.id ? "modifié" : "ajouté"
-				}  avec succès`
+				`${
+					role === ROLE.admin
+						? "Administrateur"
+						: "Transitaire"
+				} ${item?.id ? "modifié" : "ajouté"}  avec succès`
 			);
 			reset();
 		} else if ("error" in res) {

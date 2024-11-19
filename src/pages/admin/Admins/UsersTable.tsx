@@ -13,6 +13,7 @@ import UserModal from "./UserModal";
 import { InputSearch } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "react-toastify";
+import { useState } from "react";
 
 const rolesFormatter = (role: ROLE) => (
 	<span className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-xs">
@@ -20,7 +21,7 @@ const rolesFormatter = (role: ROLE) => (
 	</span>
 );
 
-export function Delete({ item }: { item: User }) {
+export function Delete({ item, role }: { item: User; role: ROLE }) {
 	const [deleteItem, { isSuccess, isError, error }] =
 		useDeleteUserMutation();
 	const onDelete = useDelete<User>({
@@ -29,7 +30,9 @@ export function Delete({ item }: { item: User }) {
 		isSuccess,
 		isError,
 		error,
-		successMessage: "Administrateur supprimé",
+		successMessage: `${
+			role === ROLE.admin ? "Administrateur" : "Transitaire"
+		} supprimé`,
 	});
 	return <ButtonDelete onClick={onDelete} />;
 }
@@ -38,6 +41,7 @@ const UsersTable = ({ role }: { role: ROLE }) => {
 	const { search, handleSearch } = useSearch();
 	const { isOpen, item, closeModal, openEditModal, openModal } =
 		useModal<User>();
+	const [modalRole, setModalRole] = useState<ROLE>(ROLE.admin);
 
 	const { data: result, isLoading } = useGetUsersListQuery({
 		role,
@@ -52,7 +56,7 @@ const UsersTable = ({ role }: { role: ROLE }) => {
 			{role === ROLE.admin && (
 				<ButtonEdit onClick={() => openEditModal(row)} />
 			)}
-			<Delete item={row} />
+			<Delete item={row} role={role} />
 		</div>
 	);
 
@@ -128,8 +132,23 @@ const UsersTable = ({ role }: { role: ROLE }) => {
 						onChange={handleSearch}
 					/>
 					{role === ROLE.admin && (
-						<ButtonAdd onClick={openModal}>
+						<ButtonAdd
+							onClick={() => {
+								setModalRole(ROLE.admin);
+								openModal();
+							}}
+						>
 							Ajoutez un administrateur
+						</ButtonAdd>
+					)}
+					{role === ROLE.forwarder && (
+						<ButtonAdd
+							onClick={() => {
+								setModalRole(ROLE.forwarder);
+								openModal();
+							}}
+						>
+							Ajoutez un transitaire
 						</ButtonAdd>
 					)}
 				</div>
@@ -144,6 +163,7 @@ const UsersTable = ({ role }: { role: ROLE }) => {
 					item={item}
 					isOpen={isOpen}
 					close={closeModal}
+					role={modalRole}
 				/>
 			)}
 		</>

@@ -8,14 +8,18 @@ import {
 } from "@/components/ui/dialog";
 import Input from "@/components/ui/input";
 import { ModalProps } from "@/lib/type";
-import { User } from "@/redux/api/user/user.type";
+import { ROLE, User } from "@/redux/api/user/user.type";
 import { useCrudUser } from "./useCrudUser";
 
+interface UserModalProps extends ModalProps<User> {
+	role: ROLE;
+}
 
-const UserModal: React.FC<ModalProps<User>> = (props) => {
-	const { isOpen, close, item } = props;
+const UserModal: React.FC<UserModalProps> = (props) => {
+	const { isOpen, close, item, role } = props;
 	const { register, onSubmit, errors, isLoading } = useCrudUser(
 		close,
+		role,
 		item
 	);
 	return (
@@ -23,8 +27,17 @@ const UserModal: React.FC<ModalProps<User>> = (props) => {
 			<DialogContent className="max-w-lg">
 				<DialogHeader className="mb-5">
 					<DialogTitle>
-						{!item ? "Ajouter un " : "Modifier l'"}
-						administrateur
+						{!item
+							? `Ajouter un ${
+									role === ROLE.admin
+										? "administrateur"
+										: "transitaire"
+							  }`
+							: `Modifier ${
+									role === ROLE.admin
+										? "l'administrateur"
+										: "le transitaire"
+							  }`}
 					</DialogTitle>
 				</DialogHeader>
 				<form onSubmit={onSubmit} className="space-y-5">
