@@ -5,6 +5,7 @@ import {
 	DialogFooter,
 	DialogHeader,
 	DialogTitle,
+	DialogDescription,
 } from "@/components/ui/dialog";
 import Input from "@/components/ui/input";
 import { ModalProps } from "@/lib/type";
@@ -39,6 +40,9 @@ const UserModal: React.FC<UserModalProps> = (props) => {
 										: "le transitaire"
 							  }`}
 					</DialogTitle>
+					<DialogDescription hidden>
+						Modal d'ajout d'un utilisateur
+					</DialogDescription>
 				</DialogHeader>
 				<form onSubmit={onSubmit} className="space-y-5">
 					<Input
@@ -83,18 +87,27 @@ const UserModal: React.FC<UserModalProps> = (props) => {
 						defaultValue={item?.phone_number}
 					/>
 
-					{/* <div>
-						<Select
-							label="Type d'utilisateur"
-							id="type_user"
-							placeholder="Choisir le type"
-							required
-							options={roles}
-							// error={errors?.roles?.message}
-							onChange={onSelectRoles}
-							value={selectRole}
-						/>
-					</div> */}
+					<Input
+						label="Pays"
+						type="text"
+						id="country"
+						placeholder="Pays"
+						required
+						{...register("country")}
+						error={errors?.country}
+						defaultValue={item?.country}
+					/>
+					<Input
+						label="Adresse"
+						type="text"
+						id="address"
+						placeholder="Adresse"
+						required
+						{...register("adresse")}
+						error={errors?.adresse}
+						defaultValue={item?.adresse}
+					/>
+
 					<DialogFooter className="pt-5">
 						<ButtonSubmit
 							label={item ? "Modifier" : "Ajouter"}

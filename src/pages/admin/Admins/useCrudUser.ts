@@ -12,29 +12,38 @@ import { toast } from "react-toastify";
 
 setLocale(fr);
 
-export const userValidationschema = yup.object().shape({
-	firstname: yup.string().required().label("Prénoms"),
-	lastname: yup.string().required().label("Nom"),
-	phone_number: yup.string().required().label("Téléphone"),
-	email: yup
-		.string()
-		.email("Ce champ doit être une adresse e-mail valide")
-		.required()
-		.label("Email"),
-	role: yup
-		.string()
-		.oneOf(
-			Object.values(ROLE),
-			"Le rôle doit être l'un des suivants : ADMIN, SUPPLIER, CUSTOMER"
-		)
-		.required("Le rôle est requis"),
-});
-
 export const useCrudUser = (
 	closeModal: () => void,
 	role: ROLE,
 	item?: User
 ) => {
+	const userValidationschema = yup.object().shape({
+		firstname: yup.string().required().label("Prénoms"),
+		lastname: yup.string().required().label("Nom"),
+		phone_number: yup.string().required().label("Téléphone"),
+		email: yup
+			.string()
+			.email("Ce champ doit être une adresse e-mail valide")
+			.required()
+			.label("Email"),
+		role: yup
+			.string()
+			.oneOf(
+				Object.values(ROLE),
+				"Le rôle doit être l'un des suivants : ADMIN, SUPPLIER, CUSTOMER"
+			)
+			.required("Le rôle est requis"),
+		country: yup.string().when("role", {
+			is: (role: ROLE) => role === ROLE.forwarder,
+			then: () => yup.string().required("Le pays est requis"),
+			otherwise: () => yup.string().notRequired(),
+		}),
+		adresse: yup.string().when("role", {
+			is: (role: ROLE) => role === ROLE.forwarder,
+			then: () => yup.string().required("L'adresse est requise"),
+			otherwise: () => yup.string().notRequired(),
+		}),
+	});
 	const {
 		register,
 		handleSubmit,
@@ -61,6 +70,7 @@ export const useCrudUser = (
 	const onSubmit = async (data: UserFormData) => {
 		const res = await createorupdate({
 			id: item?.id,
+			role,
 			// @ts-ignore
 			data: data,
 		});

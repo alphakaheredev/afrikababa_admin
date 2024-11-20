@@ -1,5 +1,5 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { User, UserFormData } from "./user.type";
+import { ROLE, User, UserFormData } from "./user.type";
 import { PaginationResults, TypeQuery } from "@/lib/type";
 import { baseQueryWithLogout } from "@/lib/baseQuery";
 
@@ -22,21 +22,30 @@ export const UserApi = createApi({
 			{
 				id?: number;
 				data: UserFormData | FormData;
+				role: ROLE;
 			}
 		>({
-			query: ({ id, data }) => {
-				if (id) {
+			query: ({ id, role, data }) => {
+				if (role === ROLE.forwarder) {
 					return {
-						url: `users/update/${id}`,
+						url: `register-transitaire`,
+						method: "POST",
+						body: data,
+					};
+				} else {
+					if (id) {
+						return {
+							url: `users/update/${id}`,
+							method: "POST",
+							body: data,
+						};
+					}
+					return {
+						url: `auth/admin/register`,
 						method: "POST",
 						body: data,
 					};
 				}
-				return {
-					url: `auth/admin/register`,
-					method: "POST",
-					body: data,
-				};
 			},
 			invalidatesTags: ["users"],
 		}),
