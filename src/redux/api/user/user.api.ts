@@ -77,4 +77,5 @@ export const {
 	useGetUsersListQuery,
 	useDeleteUserMutation,
 	useUpdateUserStatusMutation,
+	useLazyGetUsersListQuery,
 } = UserApi;

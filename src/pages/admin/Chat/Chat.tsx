@@ -5,80 +5,91 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import FormSendChat from "./FormSendChat";
 import ModalSelectProvider from "./ModalSelectProvider";
 import { useGetChatsListQuery } from "@/redux/api/chat/chat.api";
+// import chatImg from "@/assets/images/admin/chat/chat.png";
 
 const Chat = () => {
-  const { data: chats } = useGetChatsListQuery({});
-  console.log(chats);
-  return (
-    <div className="flex gap-3">
-      <div className="w-1/4 mx-1 my-1 card-shadow min-h-[80vh] relative">
-        <div className="mb-8 border-b-4 border-th-gray-e6 relative">
-          <input
-            type="search"
-            className="w-full py-3 px-3 text-sm"
-            placeholder="Recherchez par boutique..."
-          />
-          <CiSearch
-            className="absolute right-0 top-4 text-th-gray-c9"
-            fontSize={20}
-          />
-        </div>
-        <div>
-          {[...Array(3)].map((_item, i) => (
-            <div
-              className="flex items-center justify-between mb-5 border-b border-th-gray-c9 border-dashed pb-3 px-3"
-              key={i}
-            >
-              <div className="flex items-center space-x-2">
-                <div className="bg-slate-200 w-9 h-9 rounded-full flex items-center justify-center">
-                  <img
-                    src={diamond}
-                    alt="Icon"
-                    className="w-5 h-5 object-cover rounded"
-                  />
-                </div>
-                <h3 className="font-medium text-sm">Publication de Tom</h3>
-              </div>
-              <p className="text-th-gray-c9 text-sm font-normal">3 mois</p>
-            </div>
-          ))}
-          <ModalSelectProvider />
-        </div>
-      </div>
-      <div className="w-3/4  mx-1 my-1 card-shadow relative">
-        {/* Show this block when there is no chat history */}
+	const { data: chats } = useGetChatsListQuery({});
+	console.log(chats);
 
-        {/* <div className="w-full flex justify-center items-center h-[70vh]">
-          <img src={chatImg} alt="chat" />
-        </div> */}
+	return (
+		<div className="flex gap-3">
+			<div className="w-1/4 mx-1 my-1 card-shadow min-h-[80vh] relative">
+				<div className="mb-8 border-b-4 border-th-gray-e6 relative">
+					<input
+						type="search"
+						className="w-full py-3 px-3 text-sm"
+						placeholder="Recherchez par utilisateur..."
+					/>
+					<CiSearch
+						className="absolute right-0 top-4 text-th-gray-c9"
+						fontSize={20}
+					/>
+				</div>
+				<div>
+					{[...Array(3)].map((_item, i) => (
+						<div
+							className="flex items-center justify-between mb-5 border-b border-th-gray-c9 border-dashed pb-3 px-3"
+							key={i}
+						>
+							<div className="flex items-center space-x-2">
+								<div className="bg-slate-200 w-9 h-9 rounded-full flex items-center justify-center">
+									<img
+										src={diamond}
+										alt="Icon"
+										className="w-5 h-5 object-cover rounded"
+									/>
+								</div>
+								<h3 className="font-medium text-sm">
+									Publication de Tom
+								</h3>
+							</div>
+							<p className="text-th-gray-c9 text-sm font-normal">
+								3 mois
+							</p>
+						</div>
+					))}
+					<ModalSelectProvider />
+				</div>
+			</div>
+			<div className="w-3/4  mx-1 my-1 card-shadow relative">
+				{/* Show this block when there is no chat history */}
 
-        {/* end */}
+				{/* <div className="w-full flex justify-center items-center h-[70vh]">
+					<img src={chatImg} alt="chat" />
+				</div> */}
 
-        {/* Show this block when there is chat history */}
-        <div className="mb-8 border-b border-th-gray-e6 border-dashed flex items-center space-x-5 py-4 px-4">
-          <div className="flex items-center space-x-2">
-            <div className="bg-slate-200 w-9 h-9 rounded-full flex items-center justify-center">
-              <img
-                src={diamond}
-                alt="Icon"
-                className="w-5 h-5 object-cover rounded"
-              />
-            </div>
-            <h3 className="font-medium text-sm">Publication de Tom</h3>
-          </div>
-          <CiGlobe className="text-black font-semibold" fontSize={22} />
-        </div>
-        <div className="px-5">
-          <div>
-            <ProviderMessageItem />
-            <CustomerMessageItem />
-            <ProviderMessageItem />
-          </div>
-          <FormSendChat />
-        </div>
-      </div>
-    </div>
-  );
+				{/* end */}
+
+				{/* Show this block when there is chat history */}
+				<div className="mb-8 border-b border-th-gray-e6 border-dashed flex items-center space-x-5 py-4 px-4">
+					<div className="flex items-center space-x-2">
+						<div className="bg-slate-200 w-9 h-9 rounded-full flex items-center justify-center">
+							<img
+								src={diamond}
+								alt="Icon"
+								className="w-5 h-5 object-cover rounded"
+							/>
+						</div>
+						<h3 className="font-medium text-sm">
+							Publication de Tom
+						</h3>
+					</div>
+					<CiGlobe
+						className="text-black font-semibold"
+						fontSize={22}
+					/>
+				</div>
+				<div className="px-5">
+					<div>
+						<ProviderMessageItem />
+						<CustomerMessageItem />
+						<ProviderMessageItem />
+					</div>
+					<FormSendChat />
+				</div>
+			</div>
+		</div>
+	);
 };
 
 function ProviderMessageItem() {

@@ -1,6 +1,5 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { Chat, ChatFormData } from "./chat.type";
-import { PaginationResults, TypeQuery } from "@/lib/type";
 import { baseQueryWithLogout } from "@/lib/baseQuery";
 
 export const ChatApi = createApi({
@@ -8,18 +7,21 @@ export const ChatApi = createApi({
 	tagTypes: ["chat"],
 	baseQuery: baseQueryWithLogout,
 	endpoints: (build) => ({
-		getChatsList: build.query<PaginationResults<Chat>, TypeQuery>({
-			query: (query) => ({
-				url: `messages`,
-				method: "GET",
-				params: { ...query },
+		getChatsList: build.query<Chat[], { user_two_id?: number }>({
+			query: ({ user_two_id }) => ({
+				url: `conversations`,
+				method: "POST",
+				body: { user_two_id },
 			}),
 			providesTags: ["chat"],
+			// transformResponse: (response: {
+			// 	data: { messages: Chat[] };
+			// }) => response.data.messages,
 		}),
 
-		createChat: build.mutation<Chat, ChatFormData>({
+		sendMessage: build.mutation<Chat, ChatFormData>({
 			query: (data) => ({
-				url: `messages`,
+				url: `conversations/send-message`,
 				method: "POST",
 				body: data,
 			}),
@@ -53,8 +55,5 @@ export const ChatApi = createApi({
 	}),
 });
 
-export const {
-	useGetChatsListQuery,
-	useCreateChatMutation,
-	useGetChatsByUserQuery,
-} = ChatApi;
+export const { useGetChatsListQuery, useSendMessageMutation, useGetChatsByUserQuery } =
+	ChatApi;

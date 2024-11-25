@@ -1,42 +1,91 @@
 import { IconEdit } from "@/components/common/Icons";
-import ButtonSubmit from "@/components/ui/buttonSubmit";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
 } from "@/components/ui/dialog";
 import Input from "@/components/ui/input";
+import { getInitialsOfName, getUserAvatarUrl, getUserName } from "@/lib/utils";
+import { useLazyGetUsersListQuery } from "@/redux/api/user/user.api";
+import { ROLE, User } from "@/redux/api/user/user.type";
+import { AvatarFallback } from "@radix-ui/react-avatar";
+import { useState } from "react";
 
 function ModalSelectProvider() {
-  return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <button className="flex items-center justify-center space-x-1 w-full absolute bottom-5 ">
-          <IconEdit />
-          <span>Rédigez votre message</span>
-        </button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Démarrez votre conversation</DialogTitle>
-        </DialogHeader>
-        <div>
-          <Input
-            label=""
-            placeholder="Trouvez un fournisseur"
-            id="name"
-            variant="primary"
-          />
-        </div>
-        <DialogFooter>
-          <ButtonSubmit label="Démarrez une conversation" type="button" />
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  );
+	const [users, setUsers] = useState<User[]>([]);
+	const [fetchUsers] = useLazyGetUsersListQuery();
+
+	const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { data } = await fetchUsers({
+			role: ROLE.customer,
+			q: e.target.value,
+		});
+		setUsers(data?.data || []);
+	};
+
+	console.log(users);
+	return (
+		<Dialog>
+			<DialogTrigger asChild>
+				<button className="flex items-center justify-center space-x-1 w-full absolute bottom-5 ">
+					<IconEdit />
+					<span>Rédigez votre message</span>
+				</button>
+			</DialogTrigger>
+			<DialogContent className="sm:max-w-[425px]">
+				<DialogHeader>
+					<DialogTitle>
+						Démarrez votre conversation
+					</DialogTitle>
+					<DialogDescription hidden>
+						Choisissez un client pour commencer une
+						conversation
+					</DialogDescription>
+				</DialogHeader>
+				<div>
+					<Input
+						label=""
+						placeholder="Trouvez un client"
+						id="name"
+						variant="primary"
+						onChange={handleSearch}
+					/>
+					<ul className="max-h-[200px] overflow-y-auto space-y-3 pt-5">
+						{users.map((user) => (
+							<li
+								key={user.id}
+								className="flex items-center space-x-2"
+							>
+								<Avatar>
+									<AvatarImage
+										src={getUserAvatarUrl(
+											user.avatar_url
+										)}
+									/>
+									<AvatarFallback>
+										{getInitialsOfName(
+											user?.firstname
+										)}
+									</AvatarFallback>
+								</Avatar>
+								<span>{getUserName(user)}</span>
+							</li>
+						))}
+					</ul>
+				</div>
+				{/* <DialogFooter>
+					<ButtonSubmit
+						label="Démarrez une conversation"
+						type="button"
+					/>
+				</DialogFooter> */}
+			</DialogContent>
+		</Dialog>
+	);
 }
 
 export default ModalSelectProvider;

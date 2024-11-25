@@ -12,7 +12,8 @@ export type Chat = {
 };
 
 export type ChatFormData = {
-	user_id: number;
-	shop_id: number;
+	user_id?: number;
+	shop_id?: number;
+	conversation_id: number;
 	message: string;
 };
