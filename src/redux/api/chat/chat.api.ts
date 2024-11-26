@@ -7,16 +7,21 @@ export const ChatApi = createApi({
 	tagTypes: ["chat"],
 	baseQuery: baseQueryWithLogout,
 	endpoints: (build) => ({
-		getChatsList: build.query<Chat[], { user_two_id?: number }>({
+		getChatsList: build.query<{ messages: Chat[] }, void>({
+			query: () => ({
+				url: `conversations`,
+				method: "POST",
+			}),
+			providesTags: ["chat"],
+		}),
+
+		getConversation: build.query<Chat, { user_two_id: number }>({
 			query: ({ user_two_id }) => ({
 				url: `conversations`,
 				method: "POST",
 				body: { user_two_id },
 			}),
 			providesTags: ["chat"],
-			// transformResponse: (response: {
-			// 	data: { messages: Chat[] };
-			// }) => response.data.messages,
 		}),
 
 		sendMessage: build.mutation<Chat, ChatFormData>({
