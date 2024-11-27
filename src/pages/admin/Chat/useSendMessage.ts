@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { ChatFormData } from "@/redux/api/chat/chat.type";
 import { toast } from "react-toastify";
 
-const useSendMessage = () => {
+const useSendMessage = (conversationId: number) => {
 	const [sendMessage, { isLoading }] = useSendMessageMutation();
 
 	const schema = yup.object().shape({
@@ -16,6 +16,7 @@ const useSendMessage = () => {
 		register,
 		handleSubmit,
 		formState: { errors },
+		reset,
 	} = useForm<ChatFormData>({
 		//@ts-ignore
 		resolver: yupResolver(schema),
@@ -24,11 +25,12 @@ const useSendMessage = () => {
 	const onSubmit = async (data: ChatFormData) => {
 		console.log(data);
 		const response = await sendMessage({
-			conversation_id: 1,
+			conversation_id: conversationId,
 			message: data.message,
 		});
 		if (response.data) {
-			toast.success("Message envoyé avec succès");
+			reset();
+			console.log("Message envoyé avec succès");
 		} else {
 			toast.error("Erreur lors de l'envoi du message");
 		}

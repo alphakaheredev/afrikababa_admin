@@ -1,13 +1,16 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { Chat, ChatFormData } from "./chat.type";
+import { Chat, ChatFormData, Conversation } from "./chat.type";
 import { baseQueryWithLogout } from "@/lib/baseQuery";
+import { User } from "../user/user.type";
+import { channel } from "./pusher.config";
+import { useEffect, useState } from "react";
 
 export const ChatApi = createApi({
 	reducerPath: "chatApi",
-	tagTypes: ["chat"],
+	tagTypes: ["chat", "conversation"],
 	baseQuery: baseQueryWithLogout,
 	endpoints: (build) => ({
-		getChatsList: build.query<{ messages: Chat[] }, void>({
+		getChatsList: build.query<Conversation, void>({
 			query: () => ({
 				url: `conversations`,
 				method: "POST",
@@ -15,14 +18,29 @@ export const ChatApi = createApi({
 			providesTags: ["chat"],
 		}),
 
-		getConversation: build.query<Chat, { user_two_id: number }>({
-			query: ({ user_two_id }) => ({
-				url: `conversations`,
-				method: "POST",
-				body: { user_two_id },
-			}),
-			providesTags: ["chat"],
-		}),
+		getConversation: build.query<Conversation, { user_two_id: number }>(
+			{
+				query: ({ user_two_id }) => ({
+					url: `conversations`,
+					method: "POST",
+					body: { user_two_id },
+				}),
+				providesTags: ["conversation"],
+				transformResponse: (response: {
+					data: {
+						messages: Chat[];
+						user_one: User;
+						id: number;
+					};
+				}) => {
+					return {
+						messages: response.data.messages,
+						customer: response.data.user_one,
+						id: response.data.id,
+					};
+				},
+			}
+		),
 
 		sendMessage: build.mutation<Chat, ChatFormData>({
 			query: (data) => ({
@@ -30,6 +48,7 @@ export const ChatApi = createApi({
 				method: "POST",
 				body: data,
 			}),
+			invalidatesTags: ["conversation"],
 		}),
 
 		createOrUpdateChat: build.mutation<
@@ -41,6 +60,7 @@ export const ChatApi = createApi({
 				method: id ? "PUT" : "POST",
 				body: data,
 			}),
+			invalidatesTags: ["conversation"],
 		}),
 
 		deleteChat: build.mutation<Chat, number>({
@@ -48,7 +68,7 @@ export const ChatApi = createApi({
 				url: `messages/${id}`,
 				method: "DELETE",
 			}),
-			invalidatesTags: ["chat"],
+			invalidatesTags: ["conversation"],
 		}),
 
 		getChatsByUser: build.query<Chat[], void>({
@@ -60,5 +80,27 @@ export const ChatApi = createApi({
 	}),
 });
 
-export const { useGetChatsListQuery, useSendMessageMutation, useGetChatsByUserQuery } =
-	ChatApi;
+export function useChatMessages() {
+	const [messages, setMessages] = useState<any[]>([]);
+
+	useEffect(() => {
+		const messageHandler = (data: any) => {
+			setMessages((prevMessages) => [...prevMessages, data]);
+		};
+
+		channel.bind("message", messageHandler);
+
+		return () => {
+			channel.unbind("message", messageHandler);
+		};
+	}, []);
+
+	return messages;
+}
+
+export const {
+	useGetChatsListQuery,
+	useSendMessageMutation,
+	useGetChatsByUserQuery,
+	useGetConversationQuery,
+} = ChatApi;

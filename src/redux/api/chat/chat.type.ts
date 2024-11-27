@@ -17,3 +17,9 @@ export type ChatFormData = {
 	conversation_id: number;
 	message: string;
 };
+
+export type Conversation = {
+	id: number;
+	messages: Chat[];
+	customer: User;
+};

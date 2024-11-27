@@ -10,7 +10,7 @@ export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
 }
 
-export function getInitialsOfName(name: string) {
+export function getInitialsOfName(name?: string) {
 	if (!name) return "";
 	const words = name.split(" ");
 	const initials = words
@@ -40,7 +40,7 @@ export function getUserName(user?: User) {
 }
 
 // funtion to get user avatar url else return default avatar image
-export function getUserAvatarUrl(avatar_url: string) {
+export function getUserAvatarUrl(avatar_url?: string) {
 	if (avatar_url) return avatar_url;
 	return "/images/avatar-default.png";
 }
