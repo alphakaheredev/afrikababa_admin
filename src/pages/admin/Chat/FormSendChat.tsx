@@ -13,6 +13,12 @@ const FormSendChat = ({ conversationId }: { conversationId: number }) => {
 					className="min-h-28 bg-[#F5F5F5] pr-10"
 					{...register("message")}
 					error={errors.message?.message}
+					onKeyDown={(e) => {
+						if (e.key === "Enter" && !e.shiftKey) {
+							e.preventDefault();
+							onSubmit(e);
+						}
+					}}
 				/>
 				<button className="text-[#323232] font-normal absolute right-2 top-2">
 					<FiSend fontSize={24} />

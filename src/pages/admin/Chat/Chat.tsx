@@ -1,7 +1,10 @@
 import { CiGlobe, CiSearch } from "react-icons/ci";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import FormSendChat from "./FormSendChat";
-import { useGetChatsListQuery } from "@/redux/api/chat/chat.api";
+import {
+	useGetChatsListQuery,
+	useLazyGetConversationQuery,
+} from "@/redux/api/chat/chat.api";
 import Alert from "@/components/common/Alert";
 import chatImg from "@/assets/images/admin/chat/chat.png";
 import { useEffect, useState } from "react";
@@ -15,24 +18,48 @@ import {
 	getUserAvatarUrl,
 	getUserName,
 } from "@/lib/utils";
+import { pusher } from "@/redux/api/chat/pusher.config";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const Chat = () => {
 	const { user } = useAppSelector((state) => state.user);
 	const { data, isLoading } = useGetChatsListQuery();
 	const [conversation, setConversation] = useState<Conversation>();
+	const [fetchConversation, { isLoading: isFetchingConversation }] =
+		useLazyGetConversationQuery();
 
-	const getConversation = (conversation: Conversation) => {
-		setConversation(conversation);
+	const getConversation = async (conversation: Conversation) => {
+		const { data } = await fetchConversation({
+			user_two_id: conversation.customer.id,
+		});
+		setConversation(data);
 	};
 
 	useEffect(() => {
-		if (data) {
-			setConversation(data[0]);
+		if (data && data.length > 0) {
+			getConversation(data[0]);
 		}
 	}, [data]);
+
+	useEffect(() => {
+		if (!conversation) return;
+
+		const channel = pusher.subscribe(`conversation.${conversation.id}`);
+		const messageHandler = () => {
+			getConversation(conversation);
+		};
+
+		channel.bind("new-message", messageHandler);
+
+		return () => {
+			channel.unbind("new-message", messageHandler);
+			pusher.unsubscribe(`conversation.${conversation.id}`);
+		};
+	}, [conversation]);
+
 	return (
 		<div className="flex gap-3">
-			<div className="w-1/4 mx-1 my-1 card-shadow min-h-[80vh] overflow-y-auto relative">
+			<div className="w-1/4 mx-1 my-1 card-shadow  relative">
 				<div className="mb-8 border-b-4 border-th-gray-e6 relative">
 					<input
 						type="search"
@@ -112,7 +139,7 @@ const Chat = () => {
 			<div className="w-3/4  mx-1 my-1 card-shadow relative">
 				{conversation ? (
 					<>
-						<div className="mb-8 border-b border-th-gray-e6 border-dashed flex items-center space-x-5 py-4 px-4">
+						<div className="border-b border-th-gray-e6 border-dashed flex items-center space-x-5 py-4 px-4">
 							<div className="flex items-center space-x-3">
 								<div className="bg-slate-200 w-10 h-10 rounded-full flex items-center justify-center">
 									<Avatar className="cursor-pointer w-10 h-10">
@@ -120,7 +147,7 @@ const Chat = () => {
 											src={getUserAvatarUrl(
 												conversation
 													?.customer
-													.avatar_url
+													?.avatar_url
 											)}
 											alt="user avatar"
 										/>
@@ -134,7 +161,7 @@ const Chat = () => {
 									{
 										conversation
 											?.customer
-											.firstname
+											?.firstname
 									}
 								</h3>
 							</div>
@@ -143,12 +170,12 @@ const Chat = () => {
 								fontSize={22}
 							/>
 						</div>
-						<div className="px-5">
+						<ScrollArea className="px-5 h-[80vh] overflow-y-auto pt-8 pb-3">
 							<div>
-								{conversation?.messages.map(
+								{conversation?.messages?.map(
 									(chat) => {
 										if (
-											chat.user_id !==
+											chat?.user_id !==
 											user?.id
 										) {
 											return (
@@ -162,7 +189,7 @@ const Chat = () => {
 													avatar={
 														conversation
 															?.customer
-															.avatar_url
+															?.avatar_url
 													}
 													username={getUserName(
 														conversation?.customer
@@ -194,11 +221,11 @@ const Chat = () => {
 									conversation?.id
 								}
 							/>
-						</div>
+						</ScrollArea>
 					</>
 				) : (
 					<>
-						{isLoading ? (
+						{isFetchingConversation ? (
 							<div className="animate-pulse">
 								<div className="mb-8 border-b border-th-gray-e6 border-dashed flex items-center space-x-5 py-4 px-4">
 									<div className="flex items-center space-x-3">

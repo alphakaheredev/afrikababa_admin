@@ -119,4 +119,5 @@ export const {
 	useSendMessageMutation,
 	useGetChatsByUserQuery,
 	useGetConversationQuery,
+	useLazyGetConversationQuery,
 } = ChatApi;
