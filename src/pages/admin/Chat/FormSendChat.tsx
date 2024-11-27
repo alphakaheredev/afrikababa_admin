@@ -5,7 +5,7 @@ import useSendMessage from "./useSendMessage";
 const FormSendChat = ({ conversationId }: { conversationId: number }) => {
 	const { register, errors, onSubmit } = useSendMessage(conversationId);
 	return (
-		<div className="absolute bottom-2 left-2 w-[98%]">
+		<div className="mt-5 w-full">
 			<form action="" className="relative" onSubmit={onSubmit}>
 				<Textarea
 					label=""

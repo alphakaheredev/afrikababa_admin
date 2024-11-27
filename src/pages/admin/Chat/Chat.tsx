@@ -1,7 +1,7 @@
 import { CiGlobe, CiSearch } from "react-icons/ci";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import FormSendChat from "./FormSendChat";
-import { useGetConversationQuery } from "@/redux/api/chat/chat.api";
+import { useGetChatsListQuery } from "@/redux/api/chat/chat.api";
 import Alert from "@/components/common/Alert";
 import chatImg from "@/assets/images/admin/chat/chat.png";
 import { useEffect, useState } from "react";
@@ -9,25 +9,30 @@ import { Chat as ChatType, Conversation } from "@/redux/api/chat/chat.type";
 import { useAppSelector } from "@/redux/hooks";
 import { formatDistanceToNow } from "date-fns";
 import { fr } from "date-fns/locale";
-import { getInitialsOfName, getUserAvatarUrl, getUserName } from "@/lib/utils";
+import {
+	cn,
+	getInitialsOfName,
+	getUserAvatarUrl,
+	getUserName,
+} from "@/lib/utils";
 
 const Chat = () => {
 	const { user } = useAppSelector((state) => state.user);
-	const { data, isLoading } = useGetConversationQuery({
-		user_two_id: 2,
-	});
+	const { data, isLoading } = useGetChatsListQuery();
 	const [conversation, setConversation] = useState<Conversation>();
-	console.log(data);
+
+	const getConversation = (conversation: Conversation) => {
+		setConversation(conversation);
+	};
 
 	useEffect(() => {
 		if (data) {
-			setConversation(data);
+			setConversation(data[0]);
 		}
 	}, [data]);
-
 	return (
 		<div className="flex gap-3">
-			<div className="w-1/4 mx-1 my-1 card-shadow min-h-[80vh] relative">
+			<div className="w-1/4 mx-1 my-1 card-shadow min-h-[80vh] overflow-y-auto relative">
 				<div className="mb-8 border-b-4 border-th-gray-e6 relative">
 					<input
 						type="search"
@@ -41,35 +46,47 @@ const Chat = () => {
 				</div>
 				<div className="px-3">
 					{!isLoading ? (
-						data?.messages?.length &&
-						data?.messages?.length > 0 ? (
-							data?.messages.map((chat) => (
+						data && data?.length > 0 ? (
+							data.map((itm) => (
 								<div
-									className="flex items-center justify-between mb-5 border-b border-th-gray-c9 border-dashed py-3 px-3 cursor-pointer hover:bg-slate-50 transition-colors duration-300 group"
-									key={chat.id}
+									className={cn(
+										"flex items-center justify-between mb-5 border-b border-th-gray-c9 border-dashed py-3 px-3 cursor-pointer hover:bg-slate-50 transition-colors duration-300 group",
+										conversation?.id ===
+											itm.id &&
+											"bg-slate-100"
+									)}
+									key={itm.id}
+									onClick={() =>
+										getConversation(itm)
+									}
 								>
 									<div className="flex items-center space-x-2">
 										<div className="bg-slate-200 w-8 h-8 rounded-full flex items-center justify-center">
 											<img
 												src={getUserAvatarUrl(
-													data
+													itm
 														?.customer
-														.avatar_url
+														?.avatar_url
 												)}
 												alt={getUserName(
-													data?.customer
+													itm?.customer
 												)}
 												className="w-6 h-6 object-cover rounded"
 											/>
 										</div>
 										<h3 className="font-medium text-sm">
 											{getUserName(
-												data?.customer
+												itm?.customer
 											)}
 										</h3>
 									</div>
 									<p className="text-th-gray-c9 text-sm font-normal group-hover:text-slate-300 transition-colors duration-300">
-										3 mois
+										{formatDistanceToNow(
+											new Date(
+												itm?.messages?.[0]?.created_at
+											),
+											{ locale: fr }
+										)}
 									</p>
 								</div>
 							))
@@ -101,7 +118,7 @@ const Chat = () => {
 									<Avatar className="cursor-pointer w-10 h-10">
 										<AvatarImage
 											src={getUserAvatarUrl(
-												data
+												conversation
 													?.customer
 													.avatar_url
 											)}
@@ -114,7 +131,11 @@ const Chat = () => {
 								</div>
 								<h3 className="font-medium text-sm">
 									Message de{" "}
-									{data?.customer.firstname}
+									{
+										conversation
+											?.customer
+											.firstname
+									}
 								</h3>
 							</div>
 							<CiGlobe
@@ -139,12 +160,12 @@ const Chat = () => {
 														chat.id
 													}
 													avatar={
-														data
+														conversation
 															?.customer
 															.avatar_url
 													}
 													username={getUserName(
-														data?.customer
+														conversation?.customer
 													)}
 												/>
 											);

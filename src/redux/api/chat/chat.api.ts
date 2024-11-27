@@ -10,12 +10,28 @@ export const ChatApi = createApi({
 	tagTypes: ["chat", "conversation"],
 	baseQuery: baseQueryWithLogout,
 	endpoints: (build) => ({
-		getChatsList: build.query<Conversation, void>({
+		getChatsList: build.query<Conversation[], void>({
 			query: () => ({
 				url: `conversations`,
-				method: "POST",
+				method: "GET",
 			}),
 			providesTags: ["chat"],
+			transformResponse: (response: {
+				data: {
+					messages: Chat[];
+					user_one: User;
+					id: number;
+					created_at: string;
+				}[];
+			}) => {
+				return response?.data
+					?.map((item) => ({
+						messages: item.messages,
+						customer: item.user_one,
+						id: item.id,
+					}))
+					?.filter((item) => item?.messages?.length > 0);
+			},
 		}),
 
 		getConversation: build.query<Conversation, { user_two_id: number }>(
@@ -88,10 +104,10 @@ export function useChatMessages() {
 			setMessages((prevMessages) => [...prevMessages, data]);
 		};
 
-		channel.bind("message", messageHandler);
+		channel.bind("new-message", messageHandler);
 
 		return () => {
-			channel.unbind("message", messageHandler);
+			channel.unbind("new-message", messageHandler);
 		};
 	}, []);
 
