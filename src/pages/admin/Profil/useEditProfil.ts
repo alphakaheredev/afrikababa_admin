@@ -6,7 +6,7 @@ import { fr } from "yup-locales";
 import { setLocale } from "yup";
 import { QueryError } from "@/lib/type";
 import { cleannerError } from "@/lib/utils";
-import { User, UserFormData } from "@/redux/api/user/user.type";
+import { ROLE, User, UserFormData } from "@/redux/api/user/user.type";
 import { useCreateOrUpdateUserMutation } from "@/redux/api/user/user.api";
 import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
@@ -64,7 +64,7 @@ export const useEditProfil = () => {
 				lastname: user.lastname,
 				phone_number: user.phone_number,
 				email: user.email,
-				address: user.address,
+				adresse: user.adresse,
 			});
 		}
 	}, [user]);
@@ -83,12 +83,13 @@ export const useEditProfil = () => {
 		fd.append("lastname", data.lastname);
 		fd.append("phone_number", data.phone_number);
 		fd.append("email", data.email);
-		data.address && fd.append("address", data.address);
+		data.adresse && fd.append("adresse", data.adresse);
 		data.avatar && fd.append("avatar", data.avatar);
 
 		const res = await updateUser({
 			id: user?.id,
 			data: fd,
+			role: user?.role as ROLE,
 		});
 
 		if ("data" in res) {
