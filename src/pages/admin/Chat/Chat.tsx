@@ -270,7 +270,7 @@ interface MessageItemProps {
 
 function CustomerMessageItem({ item, avatar, username }: MessageItemProps) {
 	return (
-		<div className="flex items-start space-x-4 lg:w-1/2">
+		<div className="flex items-start space-x-4 lg:w-1/2 mb-3">
 			<div className="border-4 border-slate-200 rounded-full flex items-center justify-center">
 				<Avatar className="cursor-pointer w-10 h-10">
 					<AvatarImage src={avatar} alt={username} />
@@ -298,7 +298,7 @@ function CustomerMessageItem({ item, avatar, username }: MessageItemProps) {
 
 function ProviderMessageItem({ item, avatar, username }: MessageItemProps) {
 	return (
-		<div className="flex items-start justify-end space-x-4 lg:w-1/2 ml-auto">
+		<div className="flex items-start justify-end space-x-4 lg:w-1/2 ml-auto mb-3">
 			<div className="space-y-1">
 				<div className="bg-[#4A4E7B] text-white py-3 px-3 rounded-[30px] rounded-br-none">
 					<p className="text-white font-normal text-sm">

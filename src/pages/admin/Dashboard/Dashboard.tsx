@@ -9,21 +9,6 @@ import { useGetTopSellingProductsQuery } from "@/redux/api/product/product.api";
 import { useSearch } from "@/hooks/hooks";
 import { MonthlyOrderData } from "@/redux/api/config/config.type";
 
-export const books = [
-	{
-		title: "Le coeur se souvient",
-		price: "10.000F",
-		quantity: 1,
-		image: "https://via.placeholder.com/100",
-	},
-	{
-		title: "Le cahier méditation",
-		price: "1.500F",
-		quantity: 1,
-		image: "https://via.placeholder.com/100",
-	},
-];
-
 const convertMonthlyDataToArray = (data?: MonthlyOrderData) => {
 	if (!data) return [];
 	return Object.entries(data).map(([month, value]) => ({
