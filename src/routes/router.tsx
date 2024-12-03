@@ -320,68 +320,43 @@ export const supplierRoutes = [
 	},
 ];
 
-// src/routes/router.tsx
-
-// ... existing imports ...
-
-// Function to get the subdomain
-const getSubdomain = () => {
-	const host = window.location.host;
-	const subdomain = host.split('.')[0];
-	return subdomain;
-  };
-  
-  const subdomain = getSubdomain();
-  
-  let routes;
-  
-  if (subdomain === "admin") {
-		routes = [
-			{
-				path: "/",
-				element: (
-					<ProtectedRoute>
-						<AdminLayout />
-					</ProtectedRoute>
-				),
-				children: adminRoutes,
-			},
-		];
-  } else if (subdomain === "fournisseur") {
-		routes = [
-			{
-				path: "/",
-				element: (
-					<ProtectedRoute>
-						<SupplierLayout />
-					</ProtectedRoute>
-				),
-				children: supplierRoutes,
-			},
-		];
-  } else {
-		routes = [
-			{
-				path: "/",
-				element: (
-					<RedirectAuthRoute>
-						<App />
-					</RedirectAuthRoute>
-				),
-			},
-			{
-				path: authPaths.register,
-				element: <Register />,
-			},
-			{
-				path: authPaths.forgotPassword,
-				element: <ForgotPassword />,
-			},
-			{
-				path: authPaths.resetPassword,
-				element: <ResetPassword />,
-			},
-		];
-  }
-
-  export const router = createBrowserRouter(routes);
+export const router = createBrowserRouter([
+	{
+		path: "/",
+		element: (
+			<RedirectAuthRoute>
+				<App />
+			</RedirectAuthRoute>
+		),
+	},
+	{
+		path: authPaths.register,
+		element: <Register />,
+	},
+	{
+		path: authPaths.forgotPassword,
+		element: <ForgotPassword />,
+	},
+	{
+		path: authPaths.resetPassword,
+		element: <ResetPassword />,
+	},
+	{
+		path: "admin",
+		element: (
+			<ProtectedRoute>
+				<AdminLayout />
+			</ProtectedRoute>
+		),
+		children: adminRoutes,
+	},
+	{
+		path: "fournisseur",
+		element: (
+			<ProtectedRoute>
+				<SupplierLayout />
+			</ProtectedRoute>
+		),
+		children: supplierRoutes,
+	},
+]);

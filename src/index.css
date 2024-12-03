@@ -79,3 +79,18 @@ div[data-radix-popper-content-wrapper] {
     width: calc(100% - 200px) !important;
   }
 }
+
+/* ********** custom style react-select  ********** */
+.react-select__control, .react-multi-select__control {
+  min-height: 43px !important;
+  background-color: #fff !important;
+  border-color: rgb(230, 230, 230) !important;
+}
+
+.css-b62m3t-container {
+  margin: 0 !important;
+}
+
+.react-multi-select__control--is-focused, .react-select__control--is-focused {
+  border-color: rgb(230, 230, 230) !important;
+}

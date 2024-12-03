@@ -11,6 +11,10 @@ import Input from "@/components/ui/input";
 import { ModalProps } from "@/lib/type";
 import { ROLE, User } from "@/redux/api/user/user.type";
 import { useCrudUser } from "./useCrudUser";
+import countries from "./countries.json";
+import Label from "@/components/ui/label";
+import Select from "react-select";
+import { Error } from "@/components/common/Error";
 
 interface UserModalProps extends ModalProps<User> {
 	role: ROLE;
@@ -18,11 +22,14 @@ interface UserModalProps extends ModalProps<User> {
 
 const UserModal: React.FC<UserModalProps> = (props) => {
 	const { isOpen, close, item, role } = props;
-	const { register, onSubmit, errors, isLoading } = useCrudUser(
-		close,
-		role,
-		item
-	);
+	const {
+		register,
+		onSubmit,
+		errors,
+		isLoading,
+		country,
+		handleSelectCountry,
+	} = useCrudUser(close, role, item);
 	return (
 		<Dialog open={isOpen} onOpenChange={close}>
 			<DialogContent className="max-w-lg">
@@ -87,7 +94,7 @@ const UserModal: React.FC<UserModalProps> = (props) => {
 						defaultValue={item?.phone_number}
 					/>
 
-					<Input
+					{/* <Select
 						label="Pays"
 						type="text"
 						id="country"
@@ -96,9 +103,31 @@ const UserModal: React.FC<UserModalProps> = (props) => {
 						{...register("country")}
 						error={errors?.country}
 						defaultValue={item?.country}
-					/>
+						options={Object.entries(countries).map(
+							([key, value]) => ({
+								value: key,
+								label: value,
+							})
+						)}
+					/> */}
+					<div className="space-y-2">
+						<Label className="mb-3">Pays</Label>
+						<Select
+							// @ts-ignore
+							options={Object.entries(
+								countries
+							).map(([key, value]) => ({
+								value: key,
+								label: value,
+							}))}
+							classNamePrefix="react-select"
+							value={country}
+							onChange={handleSelectCountry}
+						/>
+						<Error error={errors?.country} />
+					</div>
 					<Input
-						label="Adresse"
+						label="Adresse de l'entrepot en chine"
 						type="text"
 						id="address"
 						placeholder="Adresse"

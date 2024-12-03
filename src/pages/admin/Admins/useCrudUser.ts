@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -44,13 +44,14 @@ export const useCrudUser = (
 			otherwise: () => yup.string().notRequired(),
 		}),
 	});
+
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 		reset,
 		clearErrors,
-		// setValue,
+		setValue,
 	} = useForm<UserFormData>({
 		resolver: yupResolver(userValidationschema),
 		defaultValues: {
@@ -58,6 +59,7 @@ export const useCrudUser = (
 		},
 	});
 
+	const [country, setCountry] = useState<string>("");
 	const [createorupdate, { isLoading }] = useCreateOrUpdateUserMutation();
 
 	useEffect(() => {
@@ -66,6 +68,11 @@ export const useCrudUser = (
 			cleannerError(errors, clearErrors);
 		}
 	}, [errors, clearErrors]);
+
+	const handleSelectCountry = (country: any) => {
+		setValue("country", country.value);
+		setCountry(country);
+	};
 
 	const onSubmit = async (data: UserFormData) => {
 		const res = await createorupdate({
@@ -115,5 +122,7 @@ export const useCrudUser = (
 		errors,
 		onSubmit: handleSubmit(onSubmit),
 		isLoading,
+		country,
+		handleSelectCountry,
 	};
 };
