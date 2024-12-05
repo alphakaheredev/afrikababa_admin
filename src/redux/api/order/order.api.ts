@@ -1,5 +1,5 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { Order, OrderQuery, OrderStatus } from "./order.type";
+import { Order, OrderItemStatus, OrderQuery, OrderStatus } from "./order.type";
 import { PaginationResults } from "@/lib/type";
 import { baseQueryWithLogout } from "@/lib/baseQuery";
 
@@ -48,6 +48,18 @@ export const OrderApi = createApi({
 			}),
 			invalidatesTags: ["orders"],
 		}),
+
+		changeOrderStatusBySupplier: build.mutation<
+			Order,
+			{ id: number; status: OrderItemStatus }
+		>({
+			query: ({ id, status }) => ({
+				url: `/order-items/${id}/statut`,
+				method: "PATCH",
+				body: { status },
+			}),
+			invalidatesTags: ["orders"],
+		}),
 	}),
 });
 
@@ -56,4 +68,5 @@ export const {
 	useDeleteOrderMutation,
 	useUpdateOrderStatusMutation,
 	useChangeOrderStatusMutation,
+	useChangeOrderStatusBySupplierMutation,
 } = OrderApi;

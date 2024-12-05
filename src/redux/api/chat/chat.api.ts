@@ -29,6 +29,7 @@ export const ChatApi = createApi({
 						messages: item.messages,
 						customer: item.user_one,
 						id: item.id,
+						created_at: item.created_at,
 					}))
 					?.filter((item) => item?.messages?.length > 0);
 			},

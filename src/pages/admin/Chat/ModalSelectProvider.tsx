@@ -27,7 +27,6 @@ function ModalSelectProvider() {
 		setUsers(data?.data || []);
 	};
 
-	console.log(users);
 	return (
 		<Dialog>
 			<DialogTrigger asChild>

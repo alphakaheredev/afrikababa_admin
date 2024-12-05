@@ -64,7 +64,6 @@ export const useCrudUser = (
 
 	useEffect(() => {
 		if (errors) {
-			console.log(errors);
 			cleannerError(errors, clearErrors);
 		}
 	}, [errors, clearErrors]);

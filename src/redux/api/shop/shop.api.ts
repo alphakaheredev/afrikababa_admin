@@ -6,7 +6,7 @@ import { OrderItem } from "../order/order.type";
 
 export const ShopApi = createApi({
 	reducerPath: "shopApi",
-	tagTypes: ["shops", "products"],
+	tagTypes: ["shops", "products", "orderByShop"],
 	baseQuery: baseQueryWithLogout,
 	endpoints: (build) => ({
 		getShopsList: build.query<PaginationResults<Shop>, TypeQuery>({
@@ -76,6 +76,7 @@ export const ShopApi = createApi({
 				method: "GET",
 				params: { ...query },
 			}),
+			providesTags: ["orderByShop"],
 		}),
 	}),
 });

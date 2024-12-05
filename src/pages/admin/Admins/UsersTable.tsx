@@ -14,6 +14,7 @@ import { InputSearch } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "react-toastify";
 import { useState } from "react";
+import countries from "./countries.json";
 
 const rolesFormatter = (role: ROLE) => (
 	<span className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-xs">
@@ -48,8 +49,6 @@ const UsersTable = ({ role }: { role: ROLE }) => {
 		q: search,
 	});
 	const [updateUserStatus] = useUpdateUserStatusMutation();
-
-	// console.log(result);
 
 	const actionFormatter = (_cell: string, row: User) => (
 		<div className="flex items-center gap-3">
@@ -108,10 +107,12 @@ const UsersTable = ({ role }: { role: ROLE }) => {
 			header: "Téléphone",
 			name: "phone_number",
 		},
-		// role === ROLE.supplier && {
-		// 	header: "Boutique",
-		// 	name: "shop_name",
-		// },
+		role === ROLE.forwarder && {
+			header: "Pays",
+			name: "country",
+			formatter: (value: string) =>
+				countries[value as keyof typeof countries] || "",
+		},
 		{
 			header: "Type",
 			name: "role",

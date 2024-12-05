@@ -2,20 +2,19 @@ import Table, { Column } from "@/components/ui/Table";
 import { Badge } from "@/components/ui/badge";
 import {
 	cn,
-	formatAmount,
 	formatDate,
-	formatOrderStatus,
-	formatOrderStatusToBadge,
+	formatOrderItemStatus,
+	formatOrderItemStatusToBadge,
+	formatPriceToUsd,
 	getInitialsOfName,
 } from "@/lib/utils";
-import { useChangeOrderStatusMutation } from "@/redux/api/order/order.api";
+import { useChangeOrderStatusBySupplierMutation } from "@/redux/api/order/order.api";
 import {
 	Order,
 	OrderItem,
+	OrderItemStatus,
 	OrderQuery,
-	OrderStatus,
 } from "@/redux/api/order/order.type";
-import { User } from "@/redux/api/user/user.type";
 import {
 	DropdownMenu,
 	DropdownMenuTrigger,
@@ -24,8 +23,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ChevronDownIcon } from "lucide-react";
 import { toast } from "react-toastify";
-import { useGetOrdersByShopQuery } from "@/redux/api/shop/shop.api";
-import { useAppSelector } from "@/redux/hooks";
+import { ShopApi, useGetOrdersByShopQuery } from "@/redux/api/shop/shop.api";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { User } from "@/redux/api/user/user.type";
 
 const OrdersTable = ({ limit, order_number, shop_id }: OrderQuery) => {
 	const { shop } = useAppSelector((s) => s?.user);
@@ -34,18 +34,39 @@ const OrdersTable = ({ limit, order_number, shop_id }: OrderQuery) => {
 		q: order_number,
 		shop: shop_id ?? shop?.id,
 	});
-	const [changeOrderStatus] = useChangeOrderStatusMutation();
-	console.log(orders);
+	const [changeOrderStatus] = useChangeOrderStatusBySupplierMutation();
+	const dispatch = useAppDispatch();
 
-	const statusFormatter = (cell: OrderStatus) => {
+	const statusFormatter = (cell: OrderItemStatus) => {
 		return (
-			<Badge className={cn(formatOrderStatusToBadge(cell))}>
-				{formatOrderStatus(cell)}
+			<Badge className={cn(formatOrderItemStatusToBadge(cell))}>
+				{formatOrderItemStatus(cell)}
 			</Badge>
 		);
 	};
 
-	const clientFormatter = (cell: User) => {
+	const clientFormatter = (cell: Order) => {
+		return (
+			<div className="flex items-center gap-3">
+				<span className="min-w-8 min-h-8 p-1 rounded-full flex items-center justify-center bg-[#C3FF97] text-[#306708] font-medium text-sm">
+					{getInitialsOfName(
+						cell?.user?.firstname +
+							" " +
+							cell?.user?.lastname
+					)}
+				</span>
+				<div>
+					<h5 className="text-dark font-semibold">
+						{cell?.user?.firstname}{" "}
+						{cell?.user?.lastname}
+					</h5>
+					<p>{cell?.user?.email}</p>
+				</div>
+			</div>
+		);
+	};
+
+	const forwarderFormatter = (cell: User) => {
 		return (
 			<div className="flex items-center gap-3">
 				<span className="min-w-8 min-h-8 p-1 rounded-full flex items-center justify-center bg-[#C3FF97] text-[#306708] font-medium text-sm">
@@ -58,23 +79,28 @@ const OrdersTable = ({ limit, order_number, shop_id }: OrderQuery) => {
 						{cell?.firstname} {cell?.lastname}
 					</h5>
 					<p>{cell?.email}</p>
+					<p>{cell?.phone_number}</p>
 				</div>
 			</div>
 		);
 	};
 
-	const changeStatus = async (status: OrderStatus, row: Order) => {
-		const res = await changeOrderStatus({ id: row.id, status });
+	const changeStatus = async (status: OrderItemStatus, row: OrderItem) => {
+		const res = await changeOrderStatus({
+			id: row.id,
+			status,
+		});
 		if ("data" in res) {
 			console.log(res.data);
 			toast.success("Statut de commande modifié");
+			dispatch(ShopApi.util.invalidateTags(["orderByShop"]));
 		}
 		if (res.error) {
 			console.log(res.error);
 		}
 	};
 
-	const actionFormatter = (_cell: string, row: Order) => {
+	const actionFormatter = (_cell: string, row: OrderItem) => {
 		return (
 			<DropdownMenu>
 				<DropdownMenuTrigger asChild>
@@ -84,14 +110,13 @@ const OrdersTable = ({ limit, order_number, shop_id }: OrderQuery) => {
 					</button>
 				</DropdownMenuTrigger>
 				<DropdownMenuContent>
-					{Object.values(OrderStatus)
+					{Object.values(OrderItemStatus)
 						.filter(
 							(status) =>
-								status ===
-									OrderStatus.SHIPPED ||
-								status === OrderStatus.DELIVERED
+								status !==
+								OrderItemStatus.PENDING
 						)
-						?.map((status) => (
+						.map((status) => (
 							<DropdownMenuItem
 								key={status}
 								onClick={() =>
@@ -99,7 +124,7 @@ const OrdersTable = ({ limit, order_number, shop_id }: OrderQuery) => {
 								}
 							>
 								<span>
-									{formatOrderStatus(
+									{formatOrderItemStatus(
 										status
 									)}
 								</span>
@@ -115,7 +140,12 @@ const OrdersTable = ({ limit, order_number, shop_id }: OrderQuery) => {
 			header: "Numéro de suivi",
 			name: "order_items_code",
 		},
-		{ header: "Client", name: "user", formatter: clientFormatter },
+		{ header: "Client", name: "order", formatter: clientFormatter },
+		{
+			header: "Transitaire",
+			name: "forwarder",
+			formatter: forwarderFormatter,
+		},
 		{
 			header: "Produit",
 			name: "product",
@@ -129,7 +159,8 @@ const OrdersTable = ({ limit, order_number, shop_id }: OrderQuery) => {
 		{
 			header: "Total",
 			name: "price",
-			formatter: (cell, row) => formatAmount(cell * row?.quantity),
+			formatter: (cell, row) =>
+				formatPriceToUsd(cell * row?.quantity),
 		},
 		{
 			header: "Statut",

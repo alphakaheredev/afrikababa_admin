@@ -7,7 +7,7 @@ import {
 } from "@/redux/api/chat/chat.api";
 import Alert from "@/components/common/Alert";
 import chatImg from "@/assets/images/admin/chat/chat.png";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Chat as ChatType, Conversation } from "@/redux/api/chat/chat.type";
 import { useAppSelector } from "@/redux/hooks";
 import { formatDistanceToNow } from "date-fns";
@@ -27,6 +27,7 @@ const Chat = () => {
 	const [conversation, setConversation] = useState<Conversation>();
 	const [fetchConversation, { isLoading: isFetchingConversation }] =
 		useLazyGetConversationQuery();
+	const messagesEndRef = useRef<HTMLDivElement>(null);
 
 	const getConversation = async (conversation: Conversation) => {
 		const { data } = await fetchConversation({
@@ -55,6 +56,14 @@ const Chat = () => {
 			channel.unbind("new-message", messageHandler);
 			pusher.unsubscribe(`conversation.${conversation.id}`);
 		};
+	}, [conversation]);
+
+	useEffect(() => {
+		if (conversation) {
+			messagesEndRef.current?.scrollIntoView({
+				behavior: "smooth",
+			});
+		}
 	}, [conversation]);
 
 	return (
@@ -170,7 +179,7 @@ const Chat = () => {
 								fontSize={22}
 							/>
 						</div>
-						<ScrollArea className="px-5 h-[80vh] overflow-y-auto pt-8 pb-3">
+						<ScrollArea className="scroll-area-class px-5 h-[60vh] overflow-y-auto pt-8 pb-3">
 							<div>
 								{conversation?.messages?.map(
 									(chat) => {
@@ -216,12 +225,15 @@ const Chat = () => {
 									}
 								)}
 							</div>
+							<div ref={messagesEndRef} />
+						</ScrollArea>
+						<div className="px-5">
 							<FormSendChat
 								conversationId={
 									conversation?.id
 								}
 							/>
-						</ScrollArea>
+						</div>
 					</>
 				) : (
 					<>

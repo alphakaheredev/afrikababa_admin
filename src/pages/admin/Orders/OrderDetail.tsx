@@ -13,7 +13,6 @@ import OrdersItemsTable from "./OrdersItemsTable";
 
 const OrderDetail = () => {
 	const item = useLocation().state as Order;
-	console.log(item);
 	return (
 		<>
 			<div className="flex items-center gap-2 mb-12">

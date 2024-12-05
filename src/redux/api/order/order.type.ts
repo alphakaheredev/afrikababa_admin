@@ -27,6 +27,13 @@ export type Order = {
 	created_at: string;
 };
 
+export enum OrderItemStatus {
+	// DELIVERED = "livre",
+	AVAILABLE = "disponible",
+	UNAVAILABLE = "indisponible",
+	PENDING = "PENDING",
+}
+
 export type OrderItem = {
 	id: number;
 	product: Product;
@@ -38,6 +45,8 @@ export type OrderItem = {
 	status: OrderStatus;
 	status_transitaire: OrderStatus;
 	created_at: string;
+	order: OrderItemStatus;
+	forwarder: User;
 	destination_country: string;
 };
 

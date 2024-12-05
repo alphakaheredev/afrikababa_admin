@@ -133,7 +133,6 @@ export const useCrudShop = (item?: Shop) => {
 		});
 
 		if ("data" in res) {
-			console.log(res.data);
 			const shop = res.data?.data as Shop;
 			dispatch(onSetShop(shop));
 			if (item) {
@@ -273,8 +272,6 @@ export const useEditPaymentInfos = () => {
 
 	useEffect(() => {
 		if (shop) {
-			console.log(shop);
-
 			setValue("paypal_details", shop.paypal_details);
 			// bank
 			setValue("bank_account_number", shop.bank_account_number);

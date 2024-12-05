@@ -1,5 +1,5 @@
 import { ConditionType } from "@/redux/api/condition/condition.type";
-import { OrderStatus } from "@/redux/api/order/order.type";
+import { OrderItemStatus, OrderStatus } from "@/redux/api/order/order.type";
 import { RefundStatus } from "@/redux/api/refund/refund.type";
 import { ROLE, User } from "@/redux/api/user/user.type";
 import { type ClassValue, clsx } from "clsx";
@@ -120,6 +120,15 @@ export function formatOrderStatus(status: OrderStatus) {
 	return status;
 }
 
+// format order item status
+export function formatOrderItemStatus(status: OrderItemStatus) {
+	if (status === OrderItemStatus.AVAILABLE) return "Disponible";
+	if (status === OrderItemStatus.UNAVAILABLE) return "Indisponible";
+	// if (status === OrderItemStatus.DELIVERED) return "Livré";
+	if (status === OrderItemStatus.PENDING) return "En attente";
+	return status;
+}
+
 // format order status to badge
 export function formatOrderStatusToBadge(status: OrderStatus) {
 	if (status === OrderStatus.PENDING) return "bg-gray-900";
@@ -132,6 +141,15 @@ export function formatOrderStatusToBadge(status: OrderStatus) {
 	if (status === OrderStatus.IN_PROGRESS) return "bg-gray-500";
 	if (status === OrderStatus.REFUNDED) return "bg-teal-500";
 	if (status === OrderStatus.READY) return "bg-blue-500";
+	return "bg-gray-500";
+}
+
+// format order item status to badge
+export function formatOrderItemStatusToBadge(status: OrderItemStatus) {
+	if (status === OrderItemStatus.AVAILABLE) return "bg-teal-500";
+	if (status === OrderItemStatus.UNAVAILABLE) return "bg-red-500";
+	// if (status === OrderItemStatus.DELIVERED) return "bg-teal-500";
+	if (status === OrderItemStatus.PENDING) return "bg-gray-900";
 	return "bg-gray-500";
 }
 
@@ -162,7 +180,7 @@ export function formatRefundStatus(status: RefundStatus) {
 
 export function formatRefundStatusToBadge(status: RefundStatus) {
 	if (status === RefundStatus.PENDING) return "bg-gray-200 text-gray-800";
-	if (status === RefundStatus.TRAITED) return "bg-green-600";
+	if (status === RefundStatus.TRAITED) return "bg-green-500";
 	if (status === RefundStatus.IN_PROGRESS)
 		return "bg-blue-200 text-blue-800";
 	return "bg-gray-500";
@@ -197,7 +215,7 @@ export function appendDataToFormData(formData: FormData, data: any) {
 }
 
 // format price to usd
-export function formatPriceToUsd(price: number) {
+export function formatPriceToUsd(price?: number | string) {
 	if (!price) return "";
 	return `${price.toLocaleString("en-US")} $`;
 }

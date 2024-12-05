@@ -3,8 +3,6 @@ import { formatAmount, getImageUrl } from "@/lib/utils";
 import { Link } from "react-router-dom";
 
 const CartItem = ({ item }: { item: Product }) => {
-	console.log(item);
-
 	return (
 		<Link
 			to={`/admin/produits/${item?.id}`}

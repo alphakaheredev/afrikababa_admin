@@ -23,7 +23,6 @@ const useSendMessage = (conversationId: number) => {
 	});
 
 	const onSubmit = async (data: ChatFormData) => {
-		console.log(data);
 		const response = await sendMessage({
 			conversation_id: conversationId,
 			message: data.message,

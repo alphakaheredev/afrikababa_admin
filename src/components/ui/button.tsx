@@ -3,6 +3,7 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import { IconEdit } from "../common/Icons";
 import { Link, LinkProps, useNavigate } from "react-router-dom";
 import { BsArrowLeft, BsEye } from "react-icons/bs";
+import { cn } from "@/lib/utils";
 
 type Props = React.ButtonHTMLAttributes<HTMLButtonElement>;
 
@@ -45,7 +46,10 @@ export const ButtonAdd: React.FC<Props> = ({ children, ...rest }) => {
 	return (
 		<button
 			{...rest}
-			className="bg-dark px-4 py-3 text-white whitespace-nowrap font-normal text-sm leading-5"
+			className={cn(
+				"bg-dark px-4 py-3 text-white whitespace-nowrap font-normal text-sm leading-5",
+				rest.className
+			)}
 		>
 			{children}
 		</button>
