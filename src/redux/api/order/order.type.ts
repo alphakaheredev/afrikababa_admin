@@ -34,6 +34,11 @@ export type OrderItem = {
 	price: number;
 	order_items_code: string;
 	shop: Shop;
+	user: User;
+	status: OrderStatus;
+	status_transitaire: OrderStatus;
+	created_at: string;
+	destination_country: string;
 };
 
 export type OrderQuery = TypeQuery & {

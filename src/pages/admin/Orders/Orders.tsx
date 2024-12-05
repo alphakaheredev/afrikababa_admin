@@ -6,7 +6,6 @@ import { useAppSelector } from "@/redux/hooks";
 const Orders = () => {
 	const { search, handleSearch } = useSearch();
 	const { shop } = useAppSelector((state) => state.user);
-	console.log(shop);
 	return (
 		<>
 			<div className="flex flex-col md:flex-row md:items-center gap-2 justify-between mb-8">

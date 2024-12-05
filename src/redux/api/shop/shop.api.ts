@@ -2,7 +2,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import { Shop, ShopFormData, ShopStats } from "./shop.type";
 import { PaginationResults, TypeQuery } from "@/lib/type";
 import { baseQueryWithLogout } from "@/lib/baseQuery";
-import { Order } from "../order/order.type";
+import { OrderItem } from "../order/order.type";
 
 export const ShopApi = createApi({
 	reducerPath: "shopApi",
@@ -68,7 +68,7 @@ export const ShopApi = createApi({
 		}),
 
 		getOrdersByShop: build.query<
-			PaginationResults<Order>,
+			OrderItem[],
 			TypeQuery & { shop?: number }
 		>({
 			query: ({ shop, ...query }) => ({

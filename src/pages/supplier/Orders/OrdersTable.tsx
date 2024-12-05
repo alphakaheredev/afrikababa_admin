@@ -8,9 +8,13 @@ import {
 	formatOrderStatusToBadge,
 	getInitialsOfName,
 } from "@/lib/utils";
-import { Link } from "react-router-dom";
 import { useChangeOrderStatusMutation } from "@/redux/api/order/order.api";
-import { Order, OrderQuery, OrderStatus } from "@/redux/api/order/order.type";
+import {
+	Order,
+	OrderItem,
+	OrderQuery,
+	OrderStatus,
+} from "@/redux/api/order/order.type";
 import { User } from "@/redux/api/user/user.type";
 import {
 	DropdownMenu,
@@ -31,6 +35,7 @@ const OrdersTable = ({ limit, order_number, shop_id }: OrderQuery) => {
 		shop: shop_id ?? shop?.id,
 	});
 	const [changeOrderStatus] = useChangeOrderStatusMutation();
+	console.log(orders);
 
 	const statusFormatter = (cell: OrderStatus) => {
 		return (
@@ -55,24 +60,6 @@ const OrdersTable = ({ limit, order_number, shop_id }: OrderQuery) => {
 					<p>{cell?.email}</p>
 				</div>
 			</div>
-		);
-	};
-
-	const orderItemsFormatter = (_cell: string, row: Order) => {
-		return (
-			<div>
-				{row?.order_items
-					.map((item) => item?.product?.name)
-					.join(", ")}
-			</div>
-		);
-	};
-
-	const redirectFormatter = (cell: string, row: Order) => {
-		return (
-			<Link to={`${cell}`} state={row}>
-				{cell}
-			</Link>
 		);
 	};
 
@@ -104,7 +91,7 @@ const OrdersTable = ({ limit, order_number, shop_id }: OrderQuery) => {
 									OrderStatus.SHIPPED ||
 								status === OrderStatus.DELIVERED
 						)
-						.map((status) => (
+						?.map((status) => (
 							<DropdownMenuItem
 								key={status}
 								onClick={() =>
@@ -123,17 +110,16 @@ const OrdersTable = ({ limit, order_number, shop_id }: OrderQuery) => {
 		);
 	};
 
-	const columns: Column<Order>[] = [
+	const columns: Column<OrderItem>[] = [
 		{
 			header: "Numéro de suivi",
-			name: "order_number",
-			formatter: redirectFormatter,
+			name: "order_items_code",
 		},
 		{ header: "Client", name: "user", formatter: clientFormatter },
 		{
-			header: "Produits",
-			name: "order_items",
-			formatter: orderItemsFormatter,
+			header: "Produit",
+			name: "product",
+			formatter: (cell) => cell?.name,
 		},
 		{
 			header: "Date de commande",
@@ -142,8 +128,8 @@ const OrdersTable = ({ limit, order_number, shop_id }: OrderQuery) => {
 		},
 		{
 			header: "Total",
-			name: "total_price",
-			formatter: (cell) => formatAmount(cell),
+			name: "price",
+			formatter: (cell, row) => formatAmount(cell * row?.quantity),
 		},
 		{
 			header: "Statut",
@@ -153,13 +139,14 @@ const OrdersTable = ({ limit, order_number, shop_id }: OrderQuery) => {
 		{
 			header: "Action",
 			name: "actions",
+			// @ts-ignore
 			formatter: actionFormatter,
 		},
 	];
 
 	return (
-		<Table<Order>
-			data={orders?.data}
+		<Table<OrderItem>
+			data={orders}
 			columns={columns}
 			isLoading={isLoading}
 		/>
