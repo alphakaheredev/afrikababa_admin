@@ -1,17 +1,13 @@
 import { CiGlobe, CiSearch } from "react-icons/ci";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import FormSendChat from "./FormSendChat";
-import {
-	// useGetChatsListQuery,s
-	useLazyGetChatsListQuery,
-	useLazyGetConversationQuery,
-} from "@/redux/api/chat/chat.api";
+import { useLazyGetChatsListQuery } from "@/redux/api/chat/chat.api";
 import Alert from "@/components/common/Alert";
 import chatImg from "@/assets/images/admin/chat/chat.png";
 import { useEffect, useRef, useState } from "react";
 import { Chat as ChatType, Conversation } from "@/redux/api/chat/chat.type";
 import { useAppSelector } from "@/redux/hooks";
-import { formatDistanceToNow } from "date-fns";
+import { format, formatDistanceToNow } from "date-fns";
 import { fr } from "date-fns/locale";
 import {
 	cn,
@@ -26,16 +22,12 @@ const Chat = () => {
 	const [chatsList, setChatsList] = useState<Conversation[]>([]);
 	const { user } = useAppSelector((state) => state.user);
 	const [conversation, setConversation] = useState<Conversation>();
-	const [fetchConversation, { isLoading: isFetchingConversation }] =
-		useLazyGetConversationQuery();
-	const [fetchChatsList, { isLoading, data }] = useLazyGetChatsListQuery();
+	const [fetchChatsList, { isLoading, data, isSuccess }] =
+		useLazyGetChatsListQuery();
 	const messagesEndRef = useRef<HTMLDivElement>(null);
 
 	const getConversation = async (conversation: Conversation) => {
-		const { data } = await fetchConversation({
-			user_two_id: conversation.customer.id,
-		});
-		setConversation(data);
+		setConversation(conversation);
 	};
 	useEffect(() => {
 		fetchChatsList();
@@ -44,26 +36,37 @@ const Chat = () => {
 	useEffect(() => {
 		if (data && data.length > 0) {
 			setChatsList(data);
-			getConversation(data[0]);
 		}
 	}, [data]);
 
 	useEffect(() => {
-		if (!conversation) return;
+		if (isSuccess && conversation && chatsList.length > 0) {
+			const newConversation: Conversation | undefined =
+				chatsList.find((itm) => itm.id === conversation?.id);
+			if (newConversation) {
+				setConversation(newConversation);
+			}
+		}
+	}, [isSuccess, conversation, chatsList]);
 
-		const channel = pusher.subscribe(`conversation.${conversation.id}`);
+	useEffect(() => {
+		chatsList?.map((itm) => {
+			const channel = pusher.subscribe(`conversation.${itm.id}`);
 
-		const messageHandler = () => {
-			getConversation(conversation);
-			fetchChatsList();
-		};
+			const messageHandler = () => {
+				fetchChatsList();
+				if (conversation?.id === itm.id) {
+					getConversation(itm);
+				}
+			};
 
-		channel.bind("new-message", messageHandler);
+			channel.bind("new-message", messageHandler);
 
-		return () => {
-			channel.unbind("new-message", messageHandler);
-			pusher.unsubscribe(`conversation.${conversation.id}`);
-		};
+			setTimeout(() => {
+				channel.unbind("new-message", messageHandler);
+				pusher.unsubscribe(`conversation.${itm.id}`);
+			}, 5000);
+		});
 	}, [conversation]);
 
 	useEffect(() => {
@@ -139,7 +142,7 @@ const Chat = () => {
 										</div>
 									</div>
 									<p className="text-th-gray-c9 text-sm font-normal group-hover:text-slate-300 transition-colors duration-300">
-										{formatDistanceToNow(
+										{format(
 											new Date(
 												itm?.messages?.[
 													itm
@@ -148,7 +151,7 @@ const Chat = () => {
 														1
 												]?.created_at
 											),
-											{ locale: fr }
+											"HH:mm"
 										)}
 									</p>
 								</div>
@@ -256,7 +259,7 @@ const Chat = () => {
 					</>
 				) : (
 					<>
-						{isFetchingConversation ? (
+						{isLoading ? (
 							<div className="animate-pulse">
 								<div className="mb-8 border-b border-th-gray-e6 border-dashed flex items-center space-x-5 py-4 px-4">
 									<div className="flex items-center space-x-3">
