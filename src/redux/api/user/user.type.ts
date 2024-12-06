@@ -41,3 +41,12 @@ export interface AuthState {
 	shop?: Shop | null;
 	token?: string | null;
 }
+
+
+export interface CountryForwarder {
+	forwarder: User;
+	country: string;
+	id: number;
+	created_at: string;
+	updated_at: string;
+}

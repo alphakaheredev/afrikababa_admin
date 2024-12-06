@@ -1,11 +1,11 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { ROLE, User, UserFormData } from "./user.type";
+import { CountryForwarder, ROLE, User, UserFormData } from "./user.type";
 import { PaginationResults, TypeQuery } from "@/lib/type";
 import { baseQueryWithLogout } from "@/lib/baseQuery";
 
 export const UserApi = createApi({
 	reducerPath: "userApi",
-	tagTypes: ["users"],
+	tagTypes: ["users", "countryForwarders"],
 	baseQuery: baseQueryWithLogout,
 	endpoints: (build) => ({
 		getUsersList: build.query<PaginationResults<User>, TypeQuery>({
@@ -47,7 +47,7 @@ export const UserApi = createApi({
 					};
 				}
 			},
-			invalidatesTags: ["users"],
+			invalidatesTags: ["users", "countryForwarders"],
 		}),
 
 		deleteUser: build.mutation<User, number>({
@@ -69,6 +69,36 @@ export const UserApi = createApi({
 			}),
 			invalidatesTags: ["users"],
 		}),
+
+		getForwardersList: build.query<
+			PaginationResults<CountryForwarder>,
+			TypeQuery
+		>({
+			query: () => ({
+				url: `transitaire_pays`,
+				method: "GET",
+			}),
+			providesTags: ["countryForwarders"],
+			transformResponse: (response: {
+				data: PaginationResults<CountryForwarder>;
+			}) => {
+				return {
+					data: response.data.data.map((user) => ({
+						...user,
+						role: ROLE.forwarder,
+					})),
+					meta: response.data.meta,
+				};
+			},
+		}),
+
+		deleteCountryForwarder: build.mutation<CountryForwarder, number>({
+			query: (id) => ({
+				url: `transitaire_pays/${id}`,
+				method: "DELETE",
+			}),
+			invalidatesTags: ["countryForwarders"],
+		}),
 	}),
 });
 
@@ -78,4 +108,6 @@ export const {
 	useDeleteUserMutation,
 	useUpdateUserStatusMutation,
 	useLazyGetUsersListQuery,
+	useGetForwardersListQuery,
+	useDeleteCountryForwarderMutation,
 } = UserApi;

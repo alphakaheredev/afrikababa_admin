@@ -1,10 +1,9 @@
-import UsersTable from "../Admins/UsersTable";
-import { ROLE } from "@/redux/api/user/user.type";
+import ForwardersTable from "../Admins/ForwardersTable";
 
 const Transitaires = () => {
 	return (
 		<>
-			<UsersTable role={ROLE.forwarder} />
+			<ForwardersTable />
 		</>
 	);
 };
