@@ -21,7 +21,6 @@ import {
 } from "@/lib/utils";
 import { pusher } from "@/redux/api/chat/pusher.config";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { toast } from "react-toastify";
 
 const Chat = () => {
 	const [chatsList, setChatsList] = useState<Conversation[]>([]);
@@ -32,7 +31,7 @@ const Chat = () => {
 	const [fetchChatsList, { isLoading, data, isSuccess }] =
 		useLazyGetChatsListQuery();
 	const messagesEndRef = useRef<HTMLDivElement>(null);
-
+	console.log("conversation", chatsList);
 	const getConversation = async (conversation: Conversation) => {
 		setConversation(conversation);
 	};
@@ -103,68 +102,74 @@ const Chat = () => {
 				<div className="px-3">
 					{!isLoading ? (
 						chatsList && chatsList?.length > 0 ? (
-							chatsList.map((itm) => (
-								<div
-									className={cn(
-										"flex items-center justify-between mb-5 border-b border-th-gray-c9 border-dashed py-3 px-3 cursor-pointer hover:bg-slate-50 transition-colors duration-300 group",
-										conversation?.id ===
-											itm.id &&
-											"bg-slate-100"
-									)}
-									key={itm.id}
-									onClick={() =>
-										getConversation(itm)
-									}
-								>
-									<div className="flex items-center space-x-2">
-										<div className="bg-slate-200 w-8 h-8 rounded-full flex items-center justify-center">
-											<img
-												src={getUserAvatarUrl(
-													itm
-														?.customer
-														?.avatar_url
-												)}
-												alt={getUserName(
-													itm?.customer
-												)}
-												className="w-6 h-6 object-cover rounded"
-											/>
+							chatsList
+								?.filter((itm) => itm.customer)
+								?.map((itm) => (
+									<div
+										className={cn(
+											"flex items-center justify-between mb-5 border-b border-th-gray-c9 border-dashed py-3 px-3 cursor-pointer hover:bg-slate-50 transition-colors duration-300 group",
+											conversation?.id ===
+												itm.id &&
+												"bg-slate-100"
+										)}
+										key={itm.id}
+										onClick={() =>
+											getConversation(
+												itm
+											)
+										}
+									>
+										<div className="flex items-center space-x-2">
+											<div className="bg-slate-200 w-8 h-8 rounded-full flex items-center justify-center">
+												<img
+													src={getUserAvatarUrl(
+														itm
+															?.customer
+															?.avatar_url
+													)}
+													alt={getUserName(
+														itm?.customer
+													)}
+													className="w-6 h-6 object-cover rounded"
+												/>
+											</div>
+											<div>
+												<h3 className="font-medium text-sm">
+													{getUserName(
+														itm?.customer
+													)}
+												</h3>
+												<p className="text-th-gray-c9 text-sm font-normal">
+													{
+														itm
+															?.messages?.[
+															itm
+																?.messages
+																?.length -
+																1
+														]
+															?.message
+													}
+												</p>
+											</div>
 										</div>
-										<div>
-											<h3 className="font-medium text-sm">
-												{getUserName(
-													itm?.customer
-												)}
-											</h3>
-											<p className="text-th-gray-c9 text-sm font-normal">
-												{
-													itm
-														?.messages?.[
+										<p className="text-th-gray-c9 text-sm font-normal group-hover:text-slate-300 transition-colors duration-300">
+											{formatDistanceToNow(
+												new Date(
+													itm?.messages?.[
 														itm
 															?.messages
 															?.length -
 															1
-													]
-														?.message
+													]?.created_at
+												),
+												{
+													locale: fr,
 												}
-											</p>
-										</div>
+											)}
+										</p>
 									</div>
-									<p className="text-th-gray-c9 text-sm font-normal group-hover:text-slate-300 transition-colors duration-300">
-										{formatDistanceToNow(
-											new Date(
-												itm?.messages?.[
-													itm
-														?.messages
-														?.length -
-														1
-												]?.created_at
-											),
-											{ locale: fr }
-										)}
-									</p>
-								</div>
-							))
+								))
 						) : (
 							<Alert />
 						)
