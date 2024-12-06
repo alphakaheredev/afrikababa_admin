@@ -2,7 +2,8 @@ import { CiGlobe, CiSearch } from "react-icons/ci";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import FormSendChat from "./FormSendChat";
 import {
-	useGetChatsListQuery,
+	// useGetChatsListQuery,s
+	useLazyGetChatsListQuery,
 	useLazyGetConversationQuery,
 } from "@/redux/api/chat/chat.api";
 import Alert from "@/components/common/Alert";
@@ -22,11 +23,12 @@ import { pusher } from "@/redux/api/chat/pusher.config";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 const Chat = () => {
+	const [chatsList, setChatsList] = useState<Conversation[]>([]);
 	const { user } = useAppSelector((state) => state.user);
-	const { data, isLoading } = useGetChatsListQuery();
 	const [conversation, setConversation] = useState<Conversation>();
 	const [fetchConversation, { isLoading: isFetchingConversation }] =
 		useLazyGetConversationQuery();
+	const [fetchChatsList, { isLoading, data }] = useLazyGetChatsListQuery();
 	const messagesEndRef = useRef<HTMLDivElement>(null);
 
 	const getConversation = async (conversation: Conversation) => {
@@ -35,9 +37,13 @@ const Chat = () => {
 		});
 		setConversation(data);
 	};
+	useEffect(() => {
+		fetchChatsList();
+	}, []);
 
 	useEffect(() => {
 		if (data && data.length > 0) {
+			setChatsList(data);
 			getConversation(data[0]);
 		}
 	}, [data]);
@@ -48,6 +54,7 @@ const Chat = () => {
 		const channel = pusher.subscribe(`conversation.${conversation.id}`);
 		const messageHandler = () => {
 			getConversation(conversation);
+			fetchChatsList();
 		};
 
 		channel.bind("new-message", messageHandler);
@@ -82,8 +89,8 @@ const Chat = () => {
 				</div>
 				<div className="px-3">
 					{!isLoading ? (
-						data && data?.length > 0 ? (
-							data.map((itm) => (
+						chatsList && chatsList?.length > 0 ? (
+							chatsList.map((itm) => (
 								<div
 									className={cn(
 										"flex items-center justify-between mb-5 border-b border-th-gray-c9 border-dashed py-3 px-3 cursor-pointer hover:bg-slate-50 transition-colors duration-300 group",
@@ -110,16 +117,35 @@ const Chat = () => {
 												className="w-6 h-6 object-cover rounded"
 											/>
 										</div>
-										<h3 className="font-medium text-sm">
-											{getUserName(
-												itm?.customer
-											)}
-										</h3>
+										<div>
+											<h3 className="font-medium text-sm">
+												{getUserName(
+													itm?.customer
+												)}
+											</h3>
+											<p className="text-th-gray-c9 text-sm font-normal">
+												{
+													itm
+														?.messages?.[
+														itm
+															?.messages
+															?.length -
+															1
+													]
+														?.message
+												}
+											</p>
+										</div>
 									</div>
 									<p className="text-th-gray-c9 text-sm font-normal group-hover:text-slate-300 transition-colors duration-300">
 										{formatDistanceToNow(
 											new Date(
-												itm?.messages?.[0]?.created_at
+												itm?.messages?.[
+													itm
+														?.messages
+														?.length -
+														1
+												]?.created_at
 											),
 											{ locale: fr }
 										)}
@@ -141,8 +167,6 @@ const Chat = () => {
 								)}
 						</>
 					)}
-
-					{/* <ModalSelectProvider /> */}
 				</div>
 			</div>
 			<div className="w-3/4  mx-1 my-1 card-shadow relative">

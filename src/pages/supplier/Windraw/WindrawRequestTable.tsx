@@ -51,6 +51,11 @@ const WindrawRequestTable = () => {
 								? "cursor-not-allowed  bg-gray-300"
 								: ""
 						}
+						title={
+							Number(shop?.balance) === 0
+								? "Votre solde doit être supérieur à 0 pour effectuer une demande de retrait"
+								: ""
+						}
 					>
 						Effectuer une demande de retrait
 					</ButtonAdd>

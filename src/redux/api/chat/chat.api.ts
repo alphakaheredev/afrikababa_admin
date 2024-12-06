@@ -121,4 +121,5 @@ export const {
 	useGetChatsByUserQuery,
 	useGetConversationQuery,
 	useLazyGetConversationQuery,
+	useLazyGetChatsListQuery,
 } = ChatApi;

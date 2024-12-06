@@ -171,7 +171,6 @@ export const useCrudProduct = (item?: Product) => {
 
 		// Handle response
 		if ("data" in res) {
-			console.log(res.data);
 			toast.success(
 				`Produit ${item?.id ? "modifié" : "ajouté"} avec succès`
 			);
