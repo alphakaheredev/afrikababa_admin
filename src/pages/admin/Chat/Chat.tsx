@@ -52,6 +52,7 @@ const Chat = () => {
 		if (!conversation) return;
 
 		const channel = pusher.subscribe(`conversation.${conversation.id}`);
+
 		const messageHandler = () => {
 			getConversation(conversation);
 			fetchChatsList();
@@ -206,37 +207,32 @@ const Chat = () => {
 						<ScrollArea className="scroll-area-class px-5 h-[60vh] overflow-y-auto pt-8 pb-3">
 							<div>
 								{conversation?.messages?.map(
-									(chat) => {
-										if (
-											chat?.user_id !==
-											user?.id
-										) {
-											return (
-												<CustomerMessageItem
-													item={
-														chat
-													}
-													key={
-														chat.id
-													}
-													avatar={
-														conversation
-															?.customer
-															?.avatar_url
-													}
-													username={getUserName(
-														conversation?.customer
-													)}
-												/>
-											);
-										}
-										return (
-											<ProviderMessageItem
+									(chat) =>
+										chat?.user_id !==
+										user?.id ? (
+											<CustomerMessageItem
+												key={
+													chat.id
+												}
 												item={
 													chat
 												}
+												avatar={
+													conversation
+														?.customer
+														?.avatar_url
+												}
+												username={getUserName(
+													conversation?.customer
+												)}
+											/>
+										) : (
+											<ProviderMessageItem
 												key={
 													chat.id
+												}
+												item={
+													chat
 												}
 												avatar={
 													user?.avatar_url
@@ -245,8 +241,7 @@ const Chat = () => {
 													user?.firstname
 												}
 											/>
-										);
-									}
+										)
 								)}
 							</div>
 							<div ref={messagesEndRef} />

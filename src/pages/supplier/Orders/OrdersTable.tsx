@@ -2,7 +2,6 @@ import Table, { Column } from "@/components/ui/Table";
 import { Badge } from "@/components/ui/badge";
 import {
 	cn,
-	formatDate,
 	formatOrderItemStatus,
 	formatOrderItemStatusToBadge,
 	formatPriceToUsd,
@@ -26,6 +25,8 @@ import { toast } from "react-toastify";
 import { ShopApi, useGetOrdersByShopQuery } from "@/redux/api/shop/shop.api";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { User } from "@/redux/api/user/user.type";
+import { Link } from "react-router-dom";
+import { format } from "date-fns";
 
 const OrdersTable = ({ limit, order_number, shop_id }: OrderQuery) => {
 	const { shop } = useAppSelector((s) => s?.user);
@@ -78,8 +79,7 @@ const OrdersTable = ({ limit, order_number, shop_id }: OrderQuery) => {
 					<h5 className="text-dark font-semibold">
 						{cell?.firstname} {cell?.lastname}
 					</h5>
-					<p>{cell?.email}</p>
-					<p>{cell?.phone_number}</p>
+					<p>{cell?.adresse}</p>
 				</div>
 			</div>
 		);
@@ -135,10 +135,23 @@ const OrdersTable = ({ limit, order_number, shop_id }: OrderQuery) => {
 		);
 	};
 
+	const redirectFormatter = (cell: string, row: OrderItem) => {
+		return (
+			<Link
+				to={`${cell?.split("/")[0]}`}
+				state={row}
+				className="hover:underline text-primary"
+			>
+				{cell}
+			</Link>
+		);
+	};
+
 	const columns: Column<OrderItem>[] = [
 		{
 			header: "Numéro de suivi",
 			name: "order_items_code",
+			formatter: redirectFormatter,
 		},
 		{ header: "Client", name: "order", formatter: clientFormatter },
 		{
@@ -154,7 +167,7 @@ const OrdersTable = ({ limit, order_number, shop_id }: OrderQuery) => {
 		{
 			header: "Date de commande",
 			name: "created_at",
-			formatter: (cell) => formatDate(cell),
+			formatter: (cell) => format(cell, "MM/dd/yyyy HH:mm"),
 		},
 		{
 			header: "Total",

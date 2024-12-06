@@ -42,10 +42,10 @@ export type OrderItem = {
 	order_items_code: string;
 	shop: Shop;
 	user: User;
-	status: OrderStatus;
+	status: OrderItemStatus;
 	status_transitaire: OrderStatus;
 	created_at: string;
-	order: OrderItemStatus;
+	order: Order;
 	forwarder: User;
 	destination_country: string;
 };

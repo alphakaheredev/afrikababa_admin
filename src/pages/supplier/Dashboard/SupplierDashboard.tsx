@@ -4,12 +4,18 @@ import { Fragment } from "react/jsx-runtime";
 import CardStat from "@/pages/admin/Dashboard/CardStat";
 import { useAppSelector } from "@/redux/hooks";
 import { supplierPaths } from "@/routes/paths";
-import { formatDateToDayMonthYear, getBannerUrl, getLogo } from "@/lib/utils";
+import {
+	formatDateToDayMonthYear,
+	formatPriceToUsd,
+	getBannerUrl,
+	getLogo,
+} from "@/lib/utils";
 import { useGetShopStatsQuery } from "@/redux/api/shop/shop.api";
 
 const SupplierDashboard = () => {
 	const { shop } = useAppSelector((state) => state.user);
 	const { data } = useGetShopStatsQuery(shop?.id as number);
+
 	return (
 		<Fragment>
 			{shop ? (
@@ -90,14 +96,26 @@ const SupplierDashboard = () => {
 									}
 									borderColor="border-b-[#0A4362]"
 								/>
-								{/* <CardStat
-									title="Total de ventes"
-									value={data?.total_orders}
-									borderColor="border-b-th-primary"
-								/> */}
 								<CardStat
-									title="Total de commandes"
-									value={data?.total_orders}
+									title="Total de ventes"
+									value={formatPriceToUsd(
+										data?.revenu_total ??
+											0
+									)}
+									borderColor="border-b-th-primary"
+								/>
+								<CardStat
+									title="Revenu total"
+									value={formatPriceToUsd(
+										shop?.revenu_total
+									)}
+									borderColor="border-b-[#CB30CB]"
+								/>
+								<CardStat
+									title="Solde"
+									value={formatPriceToUsd(
+										shop?.balance
+									)}
 									borderColor="border-b-th-[#711500]"
 								/>
 							</div>

@@ -41,6 +41,8 @@ export type Shop = {
 	western_union_city: string;
 	western_union_phone_number: string;
 	created_at: string;
+	revenu_total: number;
+	solde: number;
 };
 
 export type ShopFormData = {
@@ -79,4 +81,6 @@ export interface ShopStats {
 	total_products: number;
 	total_orders: number;
 	total_sellers: number;
+	revenu_total: number;
+	solde: number;
 }

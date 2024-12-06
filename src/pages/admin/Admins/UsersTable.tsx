@@ -14,7 +14,7 @@ import { InputSearch } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "react-toastify";
 import { useState } from "react";
-import countries from "./countries.json";
+import countries from "@/lib/countries.json";
 
 const rolesFormatter = (role: ROLE) => (
 	<span className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-xs">

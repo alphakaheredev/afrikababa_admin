@@ -1,6 +1,6 @@
 import ButtonSubmit from "@/components/ui/buttonSubmit";
 import Input from "@/components/ui/input";
-import img from "@/assets/images/auth/man.png";
+// import img from "@/assets/images/auth/man.png";
 import { Link } from "react-router-dom";
 import "../auth.css";
 import { FaArrowRightLong } from "react-icons/fa6";
@@ -10,7 +10,7 @@ const Register = () => {
 	const { register, onSubmit, errors, isLoading } = useRegisterForm();
 	return (
 		<div className="flex h-screen">
-			<div className="flex items-center justify-center w-full lg:w-1/2 px-3">
+			<div className="flex items-center justify-center w-full px-3">
 				<div className="bg-white py-6 px-6 shadow-2xl w-full max-w-xl">
 					<h1 className="text-dark font-medium text-2xl mb-2">
 						Créez un nouveau compte
@@ -104,9 +104,9 @@ const Register = () => {
 					</div>
 				</div>
 			</div>
-			<div className="hidden lg:w-1/2 lg:flex justify-end">
+			{/* <div className="hidden lg:w-1/2 lg:flex justify-end">
 				<img src={img} alt="login page image" />
-			</div>
+			</div> */}
 		</div>
 	);
 };

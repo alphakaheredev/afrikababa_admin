@@ -11,7 +11,7 @@ import Input from "@/components/ui/input";
 import { ModalProps } from "@/lib/type";
 import { ROLE, User } from "@/redux/api/user/user.type";
 import { useCrudUser } from "./useCrudUser";
-import countries from "./countries.json";
+import countries from "@/lib/countries.json";
 import Label from "@/components/ui/label";
 import Select from "react-select";
 import { Error } from "@/components/common/Error";

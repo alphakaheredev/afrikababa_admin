@@ -60,7 +60,7 @@ export const supplierPaths = {
 	editCategory: "categories/modifier/:id",
 	refunds: "remboursements",
 	orders: "commandes",
-	detailOrder: "commandes/detail/:id",
+	detailOrder: "commandes/:id",
 	transactions: "transactions",
 	customers: "clients",
 	discounts: "coupons",
