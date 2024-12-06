@@ -21,19 +21,24 @@ import {
 } from "@/lib/utils";
 import { pusher } from "@/redux/api/chat/pusher.config";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { toast } from "react-toastify";
 
 const Chat = () => {
 	const [chatsList, setChatsList] = useState<Conversation[]>([]);
 	const { user } = useAppSelector((state) => state.user);
 	const [conversation, setConversation] = useState<Conversation>();
-	const [fetchConversation, { isLoading: isFetchingConversation }] =
+	const [fetch, { isLoading: isFetchingConversation }] =
 		useLazyGetConversationQuery();
-	const [fetchChatsList, { isLoading, data }] = useLazyGetChatsListQuery();
+	const [fetchChatsList, { isLoading, data, isSuccess }] =
+		useLazyGetChatsListQuery();
 	const messagesEndRef = useRef<HTMLDivElement>(null);
 
 	const getConversation = async (conversation: Conversation) => {
-		const { data } = await fetchConversation({
-			user_two_id: conversation.customer.id,
+		setConversation(conversation);
+	};
+	const fetchConversation = async (conversation: Conversation) => {
+		const { data } = await fetch({
+			user_two_id: conversation?.customer?.id,
 		});
 		setConversation(data);
 	};
@@ -44,27 +49,34 @@ const Chat = () => {
 	useEffect(() => {
 		if (data && data.length > 0) {
 			setChatsList(data);
-			getConversation(data[0]);
 		}
 	}, [data]);
 
 	useEffect(() => {
-		if (!conversation) return;
+		if (conversation && isSuccess) {
+			fetchConversation(conversation);
+		}
+	}, [conversation, isSuccess]);
 
-		const channel = pusher.subscribe(`conversation.${conversation.id}`);
+	useEffect(() => {
+		chatsList?.map((itm) => {
+			const channel = pusher.subscribe(`conversation.${itm.id}`);
 
-		const messageHandler = () => {
-			getConversation(conversation);
-			fetchChatsList();
-		};
+			const messageHandler = () => {
+				fetchChatsList();
+				if (itm.id === conversation?.id) {
+					getConversation(itm);
+				}
+			};
 
-		channel.bind("new-message", messageHandler);
+			channel.bind("new-message", messageHandler);
 
-		return () => {
-			channel.unbind("new-message", messageHandler);
-			pusher.unsubscribe(`conversation.${conversation.id}`);
-		};
-	}, [conversation]);
+			return () => {
+				channel.unbind("new-message", messageHandler);
+				pusher.unsubscribe(`conversation.${itm.id}`);
+			};
+		});
+	}, [chatsList]);
 
 	useEffect(() => {
 		if (conversation) {
