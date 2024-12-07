@@ -97,7 +97,7 @@ export const useCrudShop = (item?: Shop) => {
 		let file = e.target.files?.[0];
 		if (file) {
 			setCover(file);
-			setValue("banner", file);
+			setValue("banner", file); 
 		}
 	};
 
