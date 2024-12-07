@@ -15,11 +15,12 @@ interface Props {
 const FilterProductSection: React.FC<Props> = ({ handleFilter, user }) => {
 	const { data: shops } = useGetShopsListQuery({});
 	const { data: categories } = useGetCategorysListQuery({});
+	const isSupplierUser = isSupplier(user);
 
 	return (
 		<div className="p-4 bg-white rounded shadow-md mb-12 mx-1">
 			<div className="grid grid-cols-1 lg:grid-cols-2 gap-4 py-3 px-3">
-				{!isSupplier(user) && (
+				{!isSupplierUser && (
 					<FilterSelect
 						id="group"
 						label="Filtre par boutique"
@@ -35,9 +36,20 @@ const FilterProductSection: React.FC<Props> = ({ handleFilter, user }) => {
 				)}
 				<FilterSelect
 					id="group"
-					label="Filtre par catégorie"
+					label={
+						isSupplierUser
+							? "Filter by category"
+							: "Filtre par catégorie"
+					}
 					options={[
-						{ label: "Toutes", value: undefined },
+						{
+							label: `${
+								isSupplierUser
+									? "All"
+									: "Toutes"
+							}`,
+							value: undefined,
+						},
 						...(categories?.data.map((category) => ({
 							label: category.name,
 							value: category.id.toString(),

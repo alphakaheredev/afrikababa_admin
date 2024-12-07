@@ -8,8 +8,8 @@ const FormInfoBancaire = () => {
 	return (
 		<form className="space-y-4" onSubmit={onSubmit}>
 			<Input
-				label="Numéro de compte bancaire"
-				placeholder="Entrez votre numéro de compte bancaire"
+				label="Bank account number"
+				placeholder="Enter your bank account number"
 				type="text"
 				id="bank_account_number"
 				{...register("bank_account_number")}
@@ -17,8 +17,8 @@ const FormInfoBancaire = () => {
 				required
 			/>
 			<Input
-				label="Nom de la banque"
-				placeholder="Entrez le nom de la banque"
+				label="Bank name"
+				placeholder="Enter the bank name"
 				type="text"
 				id="bank_name"
 				{...register("bank_name")}
@@ -26,8 +26,8 @@ const FormInfoBancaire = () => {
 				required
 			/>
 			<Input
-				label="Code SWIFT"
-				placeholder="Entrez le code SWIFT"
+				label="Swift code"
+				placeholder="Enter the swift code"
 				type="text"
 				id="swift_code"
 				{...register("bank_swift_code")}
@@ -35,8 +35,8 @@ const FormInfoBancaire = () => {
 				required
 			/>
 			<Input
-				label="Code de la banque(IBAN)"
-				placeholder="Entrez le code de la banque"
+				label="Bank code (IBAN)"
+				placeholder="Enter the bank code"
 				type="text"
 				id="bank_code"
 				{...register("bank_code")}
@@ -44,8 +44,8 @@ const FormInfoBancaire = () => {
 				required
 			/>
 			<Input
-				label="Adresse du banque"
-				placeholder="Entrez l'adresse du banque"
+				label="Bank address"
+				placeholder="Enter the bank address"
 				type="text"
 				id="bank_address"
 				{...register("bank_address")}
@@ -53,8 +53,8 @@ const FormInfoBancaire = () => {
 				required
 			/>
 			<Input
-				label="Votre adresse"
-				placeholder="Entrez votre adresse"
+				label="Your address"
+				placeholder="Enter your address"
 				type="text"
 				id="address"
 				{...register("address")}
@@ -64,7 +64,7 @@ const FormInfoBancaire = () => {
 			<div className="flex justify-end pt-5">
 				<ButtonSubmit
 					isLoading={isLoading}
-					label="Enregistrer"
+					label="Save"
 					className="w-fit"
 					onClick={() => handleTypeChange("bank")}
 				/>

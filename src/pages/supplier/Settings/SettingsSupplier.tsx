@@ -21,7 +21,7 @@ const SettingsSupplier = () => {
 		<Tabs defaultValue="payment" className="w-full">
 			<TabsList className="w-full justify-start bg-gray-100 space-x-4">
 				<TabsTrigger value="payment">
-					Paramètres de paiement
+					Payment settings
 				</TabsTrigger>
 			</TabsList>
 			<TabsContent value="payment">
@@ -45,8 +45,8 @@ const SettingsSupplier = () => {
 						<AccordionContent className="text-th-gray text-sm font-normal pt-5">
 							<form onSubmit={onSubmit}>
 								<Input
-									label="Adresse email de votre paypal"
-									placeholder="Entrez votre adresse email"
+									label="Your paypal email address"
+									placeholder="Enter your email address"
 									type="email"
 									id="paypal_email"
 									{...register(
@@ -64,7 +64,7 @@ const SettingsSupplier = () => {
 										isLoading={
 											isLoading
 										}
-										label="Enregistrer"
+										label="Save"
 										className="w-fit"
 										onClick={() =>
 											handleTypeChange(
@@ -89,7 +89,7 @@ const SettingsSupplier = () => {
 									alt="paypal"
 									className="w-8 h-8"
 								/>
-								<span>Virement bancaire</span>
+								<span>Bank transfer</span>
 							</div>
 						</AccordionTrigger>
 

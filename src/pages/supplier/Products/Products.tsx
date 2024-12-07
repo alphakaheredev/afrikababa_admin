@@ -57,16 +57,16 @@ const SupplierProducts = () => {
 			)}
 			<div className="flex flex-col md:flex-row md:items-center gap-2 justify-between mb-8">
 				<h3 className="text-dark font-semibold">
-					Touts les produits
+					All products
 				</h3>
 				<div className="flex items-center justify-end gap-3 lg:w-2/3">
 					<InputSearch
-						placeholder="Recherchez par nom"
+						placeholder="Search by name"
 						onChange={handleSearch}
 					/>
 					{isSupplier(user as User) && (
 						<ButtonAddLink to="ajouter">
-							Ajouter un produit
+							Add a product
 						</ButtonAddLink>
 					)}
 				</div>

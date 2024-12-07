@@ -1,14 +1,13 @@
 import { CiGlobe, CiSearch } from "react-icons/ci";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import FormSendChat from "./FormSendChat";
-import { useLazyGetChatsListQuery } from "@/redux/api/chat/chat.api";
+import { useLazyGetChatsListQuery, useLazyGetConversationQuery } from "@/redux/api/chat/chat.api";
 import Alert from "@/components/common/Alert";
 import chatImg from "@/assets/images/admin/chat/chat.png";
 import { useEffect, useRef, useState } from "react";
 import { Chat as ChatType, Conversation } from "@/redux/api/chat/chat.type";
 import { useAppSelector } from "@/redux/hooks";
-import { format, formatDistanceToNow } from "date-fns";
-import { fr } from "date-fns/locale";
+import { formatDistanceToNow } from "date-fns";
 import {
 	cn,
 	getInitialsOfName,
@@ -22,12 +21,19 @@ const Chat = () => {
 	const [chatsList, setChatsList] = useState<Conversation[]>([]);
 	const { user } = useAppSelector((state) => state.user);
 	const [conversation, setConversation] = useState<Conversation>();
+	const [fetch] = useLazyGetConversationQuery();
 	const [fetchChatsList, { isLoading, data, isSuccess }] =
 		useLazyGetChatsListQuery();
 	const messagesEndRef = useRef<HTMLDivElement>(null);
-
+	console.log("conversation", chatsList);
 	const getConversation = async (conversation: Conversation) => {
 		setConversation(conversation);
+	};
+	const fetchConversation = async (conversation: Conversation) => {
+		const { data } = await fetch({
+			user_two_id: conversation?.customer?.id,
+		});
+		setConversation(data);
 	};
 	useEffect(() => {
 		fetchChatsList();
@@ -40,14 +46,10 @@ const Chat = () => {
 	}, [data]);
 
 	useEffect(() => {
-		if (isSuccess && conversation && chatsList.length > 0) {
-			const newConversation: Conversation | undefined =
-				chatsList.find((itm) => itm.id === conversation?.id);
-			if (newConversation) {
-				setConversation(newConversation);
-			}
+		if (conversation && isSuccess) {
+			fetchConversation(conversation);
 		}
-	}, [isSuccess, conversation, chatsList]);
+	}, [conversation, isSuccess]);
 
 	useEffect(() => {
 		chatsList?.map((itm) => {
@@ -55,19 +57,19 @@ const Chat = () => {
 
 			const messageHandler = () => {
 				fetchChatsList();
-				if (conversation?.id === itm.id) {
+				if (itm.id === conversation?.id) {
 					getConversation(itm);
 				}
 			};
 
 			channel.bind("new-message", messageHandler);
 
-			setTimeout(() => {
+			return () => {
 				channel.unbind("new-message", messageHandler);
 				pusher.unsubscribe(`conversation.${itm.id}`);
-			}, 5000);
+			};
 		});
-	}, [conversation]);
+	}, [chatsList]);
 
 	useEffect(() => {
 		if (conversation) {
@@ -84,7 +86,7 @@ const Chat = () => {
 					<input
 						type="search"
 						className="w-full py-3 px-3 text-sm"
-						placeholder="Recherchez par utilisateur..."
+						placeholder="Search by user..."
 					/>
 					<CiSearch
 						className="absolute right-0 top-4 text-th-gray-c9"
@@ -94,68 +96,71 @@ const Chat = () => {
 				<div className="px-3">
 					{!isLoading ? (
 						chatsList && chatsList?.length > 0 ? (
-							chatsList.map((itm) => (
-								<div
-									className={cn(
-										"flex items-center justify-between mb-5 border-b border-th-gray-c9 border-dashed py-3 px-3 cursor-pointer hover:bg-slate-50 transition-colors duration-300 group",
-										conversation?.id ===
-											itm.id &&
-											"bg-slate-100"
-									)}
-									key={itm.id}
-									onClick={() =>
-										getConversation(itm)
-									}
-								>
-									<div className="flex items-center space-x-2">
-										<div className="bg-slate-200 w-8 h-8 rounded-full flex items-center justify-center">
-											<img
-												src={getUserAvatarUrl(
-													itm
-														?.customer
-														?.avatar_url
-												)}
-												alt={getUserName(
-													itm?.customer
-												)}
-												className="w-6 h-6 object-cover rounded"
-											/>
+							chatsList
+								?.filter((itm) => itm.customer)
+								?.map((itm) => (
+									<div
+										className={cn(
+											"flex items-center justify-between mb-5 border-b border-th-gray-c9 border-dashed py-3 px-3 cursor-pointer hover:bg-slate-50 transition-colors duration-300 group",
+											conversation?.id ===
+												itm.id &&
+												"bg-slate-100"
+										)}
+										key={itm.id}
+										onClick={() =>
+											getConversation(
+												itm
+											)
+										}
+									>
+										<div className="flex items-center space-x-2">
+											<div className="bg-slate-200 w-8 h-8 rounded-full flex items-center justify-center">
+												<img
+													src={getUserAvatarUrl(
+														itm
+															?.customer
+															?.avatar_url
+													)}
+													alt={getUserName(
+														itm?.customer
+													)}
+													className="w-6 h-6 object-cover rounded"
+												/>
+											</div>
+											<div>
+												<h3 className="font-medium text-sm">
+													{getUserName(
+														itm?.customer
+													)}
+												</h3>
+												<p className="text-th-gray-c9 text-sm font-normal">
+													{
+														itm
+															?.messages?.[
+															itm
+																?.messages
+																?.length -
+																1
+														]
+															?.message
+													}
+												</p>
+											</div>
 										</div>
-										<div>
-											<h3 className="font-medium text-sm">
-												{getUserName(
-													itm?.customer
-												)}
-											</h3>
-											<p className="text-th-gray-c9 text-sm font-normal">
-												{
-													itm
-														?.messages?.[
+										<p className="text-th-gray-c9 text-sm font-normal group-hover:text-slate-300 transition-colors duration-300">
+											{formatDistanceToNow(
+												new Date(
+													itm?.messages?.[
 														itm
 															?.messages
 															?.length -
 															1
-													]
-														?.message
-												}
-											</p>
-										</div>
+													]?.created_at
+												)
+											)}
+										</p>
 									</div>
-									<p className="text-th-gray-c9 text-sm font-normal group-hover:text-slate-300 transition-colors duration-300">
-										{format(
-											new Date(
-												itm?.messages?.[
-													itm
-														?.messages
-														?.length -
-														1
-												]?.created_at
-											),
-											"HH:mm"
-										)}
-									</p>
-								</div>
-							))
+								))
 						) : (
 							<Alert />
 						)
@@ -321,8 +326,7 @@ function CustomerMessageItem({ item, avatar, username }: MessageItemProps) {
 				</div>
 				<p className="text-th-gray-c9 text-sm">
 					{formatDistanceToNow(new Date(item.created_at), {
-						addSuffix: true,
-						locale: fr,
+						addSuffix: false,
 					})}
 				</p>
 			</div>
@@ -341,8 +345,7 @@ function ProviderMessageItem({ item, avatar, username }: MessageItemProps) {
 				</div>
 				<p className="text-th-gray-c9 text-sm">
 					{formatDistanceToNow(new Date(item.created_at), {
-						addSuffix: true,
-						locale: fr,
+						addSuffix: false,
 					})}
 				</p>
 			</div>

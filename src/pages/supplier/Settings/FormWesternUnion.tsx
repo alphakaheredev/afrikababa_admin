@@ -8,8 +8,8 @@ const FormWesternUnion = () => {
 	return (
 		<form className="space-y-4" onSubmit={onSubmit}>
 			<Input
-				label="Prénom"
-				placeholder="Entrez votre prénom"
+				label="First name"
+				placeholder="Enter your firstname"
 				type="text"
 				id="western_union_firstname"
 				{...register("western_union_firstname")}
@@ -17,8 +17,8 @@ const FormWesternUnion = () => {
 				required
 			/>
 			<Input
-				label="Nom"
-				placeholder="Entrez votre nom"
+				label="Last name"
+				placeholder="Enter your lastname"
 				type="text"
 				id="western_union_lastname"
 				{...register("western_union_lastname")}
@@ -26,8 +26,8 @@ const FormWesternUnion = () => {
 				required
 			/>
 			<Input
-				label="Ville"
-				placeholder="Entrez la ville"
+				label="City"
+				placeholder="Enter the city"
 				type="text"
 				id="western_union_city"
 				{...register("western_union_city")}
@@ -35,8 +35,8 @@ const FormWesternUnion = () => {
 				required
 			/>
 			<Input
-				label="Numéro de téléphone"
-				placeholder="Entrez le numéro de téléphone"
+				label="Phone number"
+				placeholder="Enter your phone number"
 				type="text"
 				id="western_union_phone_number"
 				{...register("western_union_phone_number")}
@@ -46,7 +46,7 @@ const FormWesternUnion = () => {
 			<div className="flex justify-end pt-5">
 				<ButtonSubmit
 					isLoading={isLoading}
-					label="Enregistrer"
+					label="Save"
 					className="w-fit"
 					onClick={() => handleTypeChange("western_union")}
 				/>

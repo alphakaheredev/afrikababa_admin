@@ -9,7 +9,7 @@ const EditShop = () => {
 	return (
 		<React.Fragment>
 			<h1 className="text-dark font-semibold text-xl">
-				Edition de votre boutique
+				Edit your shop
 			</h1>
 			<Divider margin="my-5" />
 			<ShopForm item={item} />

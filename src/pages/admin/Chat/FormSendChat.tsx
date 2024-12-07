@@ -9,7 +9,7 @@ const FormSendChat = ({ conversationId }: { conversationId: number }) => {
 			<form action="" className="relative" onSubmit={onSubmit}>
 				<Textarea
 					label=""
-					placeholder="Tapez votre message ici"
+					placeholder="Type your message here"
 					className="min-h-28 bg-[#F5F5F5] pr-10"
 					{...register("message")}
 					error={errors.message?.message}

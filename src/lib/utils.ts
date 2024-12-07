@@ -122,10 +122,10 @@ export function formatOrderStatus(status: OrderStatus) {
 
 // format order item status
 export function formatOrderItemStatus(status: OrderItemStatus) {
-	if (status === OrderItemStatus.AVAILABLE) return "Disponible";
-	if (status === OrderItemStatus.UNAVAILABLE) return "Indisponible";
+	if (status === OrderItemStatus.AVAILABLE) return "Available";
+	if (status === OrderItemStatus.UNAVAILABLE) return "Unavailable";
 	// if (status === OrderItemStatus.DELIVERED) return "Livré";
-	if (status === OrderItemStatus.PENDING) return "En attente";
+	if (status === OrderItemStatus.PENDING) return "Pending";
 	return status;
 }
 

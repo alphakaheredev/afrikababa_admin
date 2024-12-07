@@ -10,7 +10,7 @@ const EditProduct = () => {
 	return (
 		<React.Fragment>
 			<h1 className="text-dark font-semibold text-xl">
-				Modifier le produit
+				Edit a product
 			</h1>
 			<Divider margin="my-5" />
 			<ProductForm item={item} />

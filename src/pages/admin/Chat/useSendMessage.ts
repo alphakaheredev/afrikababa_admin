@@ -9,7 +9,7 @@ const useSendMessage = (conversationId: number) => {
 	const [sendMessage, { isLoading }] = useSendMessageMutation();
 
 	const schema = yup.object().shape({
-		message: yup.string().required("Message est requis"),
+		message: yup.string().required("Message is required"),
 	});
 
 	const {
@@ -29,9 +29,9 @@ const useSendMessage = (conversationId: number) => {
 		});
 		if (response.data) {
 			reset();
-			console.log("Message envoyé avec succès");
+			console.log("Message sent successfully");
 		} else {
-			toast.error("Erreur lors de l'envoi du message");
+			toast.error("Error sending message");
 		}
 	};
 

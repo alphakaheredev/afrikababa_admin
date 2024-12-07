@@ -32,23 +32,20 @@ function ModalSelectProvider() {
 			<DialogTrigger asChild>
 				<button className="flex items-center justify-center space-x-1 w-full absolute bottom-5 ">
 					<IconEdit />
-					<span>Rédigez votre message</span>
+					<span>Write your message</span>
 				</button>
 			</DialogTrigger>
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>
-					<DialogTitle>
-						Démarrez votre conversation
-					</DialogTitle>
+					<DialogTitle>Start your conversation</DialogTitle>
 					<DialogDescription hidden>
-						Choisissez un client pour commencer une
-						conversation
+						Choose a customer to start a conversation
 					</DialogDescription>
 				</DialogHeader>
 				<div>
 					<Input
 						label=""
-						placeholder="Trouvez un client"
+						placeholder="Find a customer"
 						id="name"
 						variant="primary"
 						onChange={handleSearch}

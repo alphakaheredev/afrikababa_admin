@@ -22,11 +22,11 @@ setLocale(fr);
 
 // Define the validation schema for the product form
 const schema = yup.object().shape({
-	name: yup.string().required("Le nom est obligatoire"),
+	name: yup.string().required("Name is required"),
 	description: yup.string().label("Description"),
-	price: yup.number().required("Le prix est obligatoire"),
+	price: yup.number().required("Price is required"),
 	main_image: yup.mixed(),
-	category_id: yup.number().required("La catégorie est obligatoire"),
+	category_id: yup.number().required("Category is required"),
 });
 
 export const useCrudProduct = (item?: Product) => {
@@ -172,7 +172,7 @@ export const useCrudProduct = (item?: Product) => {
 		// Handle response
 		if ("data" in res) {
 			toast.success(
-				`Produit ${item?.id ? "modifié" : "ajouté"} avec succès`
+				`Product ${item?.id ? "updated" : "added"} successfully`
 			);
 
 			if (images.length > 0) {
@@ -197,8 +197,7 @@ export const useCrudProduct = (item?: Product) => {
 			// Error case
 			const error = res.error as any;
 			let errorMessage = error?.data?.message;
-			let message =
-				errorMessage ?? "Une erreur inconnue est survenue";
+			let message = errorMessage ?? "An unknown error has occurred";
 			toast.error(message);
 		}
 	};

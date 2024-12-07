@@ -105,7 +105,7 @@ const OrdersTable = ({ limit, order_number, shop_id }: OrderQuery) => {
 			<DropdownMenu>
 				<DropdownMenuTrigger asChild>
 					<button className="flex items-center gap-2 bg-dark text-white px-3 py-2">
-						<span>Changer le statut</span>
+						<span>Change status</span>
 						<ChevronDownIcon className="w-4 h-4" />
 					</button>
 				</DropdownMenuTrigger>
@@ -149,23 +149,23 @@ const OrdersTable = ({ limit, order_number, shop_id }: OrderQuery) => {
 
 	const columns: Column<OrderItem>[] = [
 		{
-			header: "Numéro de suivi",
+			header: "Tracking number",
 			name: "order_items_code",
 			formatter: redirectFormatter,
 		},
-		{ header: "Client", name: "order", formatter: clientFormatter },
+		{ header: "Customer", name: "order", formatter: clientFormatter },
 		{
-			header: "Transitaire",
+			header: "Forwarder",
 			name: "forwarder",
 			formatter: forwarderFormatter,
 		},
 		{
-			header: "Produit",
+			header: "Product",
 			name: "product",
 			formatter: (cell) => cell?.name,
 		},
 		{
-			header: "Date de commande",
+			header: "Order date",
 			name: "created_at",
 			formatter: (cell) => format(cell, "MM/dd/yyyy HH:mm"),
 		},
@@ -176,7 +176,7 @@ const OrdersTable = ({ limit, order_number, shop_id }: OrderQuery) => {
 				formatPriceToUsd(cell * row?.quantity),
 		},
 		{
-			header: "Statut",
+			header: "Status",
 			name: "status",
 			formatter: statusFormatter,
 		},

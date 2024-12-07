@@ -14,8 +14,8 @@ import { useAppSelector } from "@/redux/hooks";
 setLocale(fr);
 
 export const schema = yup.object().shape({
-	amount: yup.string().required().label("Montant"),
-	payment_methode: yup.string().required().label("Methode de paiement"),
+	amount: yup.string().required().label("Amount"),
+	payment_methode: yup.string().required().label("Payment method"),
 });
 
 export const useCrudWindraw = (closeModal: () => void) => {
@@ -51,13 +51,13 @@ export const useCrudWindraw = (closeModal: () => void) => {
 
 		if ("data" in res) {
 			closeModal();
-			toast.success(`Demande effectuée avec succès !`);
+			toast.success(`Request successful !`);
 			reset();
 		} else if ("error" in res) {
 			const error = res.error as QueryError;
 			let errorMessage = error?.data?.error;
 			const message =
-				errorMessage ?? "Une erreur inconnue est survenue";
+				errorMessage ?? "An unknown error has occurred";
 			toast.error(message);
 		}
 	};
