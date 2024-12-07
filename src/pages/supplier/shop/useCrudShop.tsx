@@ -19,40 +19,32 @@ yup.setLocale(fr);
 export const useCrudShop = (item?: Shop) => {
 	const schema = yup.object().shape({
 		isEdit: yup.boolean().default(!!item),
-		company_name: yup.string().required().label("Nom de la boutique"),
-		sales_manager_name: yup.string().label("Nom du vendeur"),
+		company_name: yup.string().required().label("Shop name"),
+		sales_manager_name: yup.string().label("Sales manager name"),
 		company_registration: yup
 			.string()
 			.required()
-			.label("Numéro d'enregistrement"),
-		address: yup.string().required().label("Adresse de la boutique"),
-		phone_number: yup.string().required().label("Numéro de contact"),
+			.label("Registration number"),
+		address: yup.string().required().label("Shop address"),
+		phone_number: yup.string().required().label("Contact number"),
 		email_address: yup
 			.string()
 			.email()
 			.required()
-			.label("Adresse e-mail"),
-		company_website: yup.string().label("Site web de la boutique"),
+			.label("Email address"),
+		company_website: yup.string().label("Shop website"),
 		logo: yup.mixed().when("isEdit", {
 			is: true,
 			then: () => yup.mixed().nullable(),
-			otherwise: () =>
-				yup.mixed().required().label("Logo de la boutique"),
+			otherwise: () => yup.mixed().required().label("Shop logo"),
 		}),
 		banner: yup.mixed().when("isEdit", {
 			is: true,
 			then: () => yup.mixed().nullable(),
-			otherwise: () =>
-				yup.mixed().required().label("Image de couverture"),
+			otherwise: () => yup.mixed().required().label("Cover image"),
 		}),
-		description: yup
-			.string()
-			.required()
-			.label("Description de la boutique"),
-		business_license: yup
-			.mixed()
-			.label("Permis d'exploitation")
-			.nullable(),
+		description: yup.string().required().label("Shop description"),
+		business_license: yup.mixed().label("Business license").nullable(),
 	});
 	const { user } = useAppSelector((state) => state.user);
 	const [phone, setPhone] = useState<string>("");
@@ -137,17 +129,17 @@ export const useCrudShop = (item?: Shop) => {
 			dispatch(onSetShop(shop));
 			if (item) {
 				toast.success(
-					"Votre boutique a été modifiée avec succès"
+					"Your shop has been updated successfully"
 				);
 				navigate(`/fournisseur/${supplierPaths.dashboard}`);
 			} else {
 				Swal.fire({
-					title: "Votre boutique a été créée avec succès",
-					text: "Vous pouvez désormais commencer à ajouter vos produits",
+					title: "Your shop has been created successfully",
+					text: "You can now start adding your products",
 					icon: "success",
-					confirmButtonText: "Ajouter un produit",
+					confirmButtonText: "Add a product",
 					confirmButtonColor: colors.primary,
-					cancelButtonText: "Plus tard",
+					cancelButtonText: "Later",
 				}).then((result) => {
 					if (result.isConfirmed) {
 						navigate(
@@ -161,7 +153,7 @@ export const useCrudShop = (item?: Shop) => {
 				});
 			}
 		} else {
-			toast.error("Une erreur est survenue");
+			toast.error("An unknown error has occurred");
 		}
 	};
 
@@ -311,9 +303,9 @@ export const useEditPaymentInfos = () => {
 		if ("data" in res) {
 			const shop = res.data?.data as Shop;
 			dispatch(onSetShop(shop));
-			toast.success("Informations mises à jour avec succès");
+			toast.success("Informations updated successfully");
 		} else {
-			toast.error("Une erreur est survenue");
+			toast.error("An unknown error has occurred");
 		}
 	};
 

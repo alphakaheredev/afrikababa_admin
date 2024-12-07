@@ -13,52 +13,52 @@ export const routes = [
 		category: "",
 		items: [
 			{
-				label: "Tableau de bord",
+				label: "Dashboard",
 				icon: <BsGrid fontSize={22} />,
 				path: supplierPaths.dashboard,
 			},
 		],
 	},
 	{
-		category: "GESTION PRODUITS",
+		category: "PRODUCT MANAGEMENT",
 		items: [
 			{
-				label: "Produits",
+				label: "Products",
 				icon: <IconProduct />,
 				path: supplierPaths.products,
 			},
 		],
 	},
 	{
-		category: "GESTION DES COMMANDES",
+		category: "ORDER MANAGEMENT",
 		items: [
 			{
-				label: "Commandes",
+				label: "Orders",
 				icon: <IconCartCheck />,
 				path: supplierPaths.orders,
 			},
 			{
-				label: "Démandes de retrait",
+				label: "Withdrawal requests",
 				icon: <IconExchange />,
 				path: supplierPaths.withdrawalRequests,
 			},
 		],
 	},
 	{
-		category: "GESTION DES FONCTIONNALITÉS",
+		category: "FUNCTIONALITY MANAGEMENT",
 		items: [
 			{
-				label: "Messages",
+				label: "Chat",
 				icon: <FaRegEnvelope fontSize={22} />,
 				path: supplierPaths.chat,
 			},
 		],
 	},
 	{
-		category: "ADMINISTRATION DU SITE",
+		category: "SITE ADMINISTRATION",
 		items: [
 			{
-				label: "Paramètres",
+				label: "Settings",
 				icon: <FiSettings fontSize={22} />,
 				path: supplierPaths.settings,
 			},

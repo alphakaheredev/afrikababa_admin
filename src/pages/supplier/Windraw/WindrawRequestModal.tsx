@@ -19,31 +19,29 @@ const WindrawRequestModal: React.FC<{ isOpen: boolean; close: () => void }> = (
 		<Dialog open={isOpen} onOpenChange={close}>
 			<DialogContent className="max-w-3xl">
 				<DialogHeader className="mb-5">
-					<DialogTitle>
-						Effectuer une demande de retrait
-					</DialogTitle>
+					<DialogTitle>Request a withdrawal</DialogTitle>
 				</DialogHeader>
 				<form onSubmit={onSubmit} className="space-y-5">
 					<Input
-						label="Montant"
+						label="Amount"
 						type="number"
 						id="amount"
-						placeholder="Montant"
+						placeholder="Amount"
 						required
 						{...register("amount")}
 						error={errors?.amount}
 					/>
 					<Select
-						label="Méthode de paiement"
+						label="Payment method"
 						id="paiememt"
-						placeholder="Méthode de paiement"
+						placeholder="Payment method"
 						required
 						{...register("payment_methode")}
 						error={errors?.payment_methode}
 						options={[
 							{ label: "Paypal", value: "paypal" },
 							{
-								label: "Virement bancaire",
+								label: "Bank transfer",
 								value: "virement_bancaire",
 							},
 							{

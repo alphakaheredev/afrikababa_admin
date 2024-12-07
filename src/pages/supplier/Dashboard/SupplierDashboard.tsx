@@ -62,15 +62,14 @@ const SupplierDashboard = () => {
 							className="bg-[#FB8885] hover:bg-orange-400 text-white p-3 font-normal"
 							state={{ item: shop }}
 						>
-							Modifiez la boutique
+							Edit your shop
 						</Link>
 					</div>
 					<div className="grid grid-cols-12 gap-5">
 						<div className="col-span-4 card-shadow m-1">
 							<div className="border-b border-t-th-gray-e6 border-dashed p-3 mb-3">
 								<p className="text-th-gray font-normal text-sm">
-									Boutique enregistrée
-									depuis le
+									Shop registered since
 								</p>
 								<p className="text-dark font-semibold text-base">
 									{formatDateToDayMonthYear(
@@ -90,14 +89,14 @@ const SupplierDashboard = () => {
 						<div className="col-span-8 card-shadow m-1 p-3">
 							<div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
 								<CardStat
-									title="Total de produits"
+									title="Total products"
 									value={
 										data?.total_products
 									}
 									borderColor="border-b-[#0A4362]"
 								/>
 								<CardStat
-									title="Total de ventes"
+									title="Total sales"
 									value={formatPriceToUsd(
 										data?.revenu_total ??
 											0
@@ -105,14 +104,14 @@ const SupplierDashboard = () => {
 									borderColor="border-b-th-primary"
 								/>
 								<CardStat
-									title="Revenu total"
+									title="Total revenue"
 									value={formatPriceToUsd(
 										shop?.revenu_total
 									)}
 									borderColor="border-b-[#CB30CB]"
 								/>
 								<CardStat
-									title="Solde"
+									title="Balance"
 									value={formatPriceToUsd(
 										shop?.balance
 									)}
@@ -126,18 +125,18 @@ const SupplierDashboard = () => {
 				<div className="flex flex-col items-center gap-5 justify-center h-[40vh]">
 					<div className="text-center">
 						<h1 className="text-xl font-medium">
-							Vous n'avez pas de boutique
+							You don't have a shop
 						</h1>
 						<p className="text-sm text-th-gray">
-							Créez votre boutique pour commencer à
-							vendre vos produits
+							Create your shop to start selling your
+							products
 						</p>
 					</div>
 					<Link
 						to={`/fournisseur/${supplierPaths.createBoutique}`}
 						className="bg-th-primary border-1 -th-primary px-5 py-2 text-white font-medium text-sm"
 					>
-						Créer ma boutique
+						Create your shop
 					</Link>
 				</div>
 			)}

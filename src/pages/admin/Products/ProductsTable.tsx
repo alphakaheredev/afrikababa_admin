@@ -31,20 +31,20 @@ const ProductsTable = ({
 
 	const handleDelete = (id: number) => {
 		Swal.fire({
-			title: "Voulez-vous vraiment supprimer ce produit ?",
+			title: "Are you sure you want to delete this product?",
 			icon: "question",
 			showCancelButton: true,
-			confirmButtonText: "OUI",
-			cancelButtonText: "NON",
+			confirmButtonText: "YES",
+			cancelButtonText: "NO",
 			showLoaderOnConfirm: true,
 			iconColor: colors.info,
 			confirmButtonColor: colors.danger,
 			preConfirm: async () => {
 				const res = await deleteItem(id);
 				if ("data" in res) {
-					toast.success("Produit supprimé avec succès");
+					toast.success("Product deleted successfully");
 				} else {
-					toast.error("Une erreur est survenue");
+					toast.error("An error occurred");
 				}
 			},
 		});
@@ -57,9 +57,9 @@ const ProductsTable = ({
 				status: checked ? "active" : "inactive",
 			});
 			if ("data" in res) {
-				toast.success("Statut du produit modifié");
+				toast.success("Product status updated");
 			} else {
-				toast.error("Une erreur est survenue");
+				toast.error("An error occurred");
 			}
 		};
 		return (
@@ -103,25 +103,23 @@ const ProductsTable = ({
 	const columns: Column<Product>[] = [
 		{ header: "Identifiant", name: "id" },
 		{
-			header: "Produit",
+			header: `${isSupplier ? "Product" : "Produit"}`,
 			name: "name",
 			formatter: nameProductFormatter,
 		},
 		{
-			header: "Catégories",
+			header: `${isSupplier ? "Categories" : "Catégories"}`,
 			name: "category",
 			formatter: (cell: Category) => cell?.name,
 		},
 		{
-			header: "Boutique",
+			header: `${isSupplier ? "Shop" : "Boutique"}`,
 			name: "shop",
 			formatter: (cell: Shop) => cell?.company_name,
 		},
 		{ header: "Statut", name: "status", formatter: statusFormatter },
-
-		// { header: "Type de produits", name: "type" },
 		{
-			header: "Prix unitaire",
+			header: `${isSupplier ? "Unit price" : "Prix unitaire"}`,
 			name: "price",
 			formatter: (cell: number) => formatPriceToUsd(cell),
 		},

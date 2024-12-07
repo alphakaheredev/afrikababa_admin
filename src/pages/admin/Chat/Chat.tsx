@@ -12,7 +12,6 @@ import { useEffect, useRef, useState } from "react";
 import { Chat as ChatType, Conversation } from "@/redux/api/chat/chat.type";
 import { useAppSelector } from "@/redux/hooks";
 import { formatDistanceToNow } from "date-fns";
-import { fr } from "date-fns/locale";
 import {
 	cn,
 	getInitialsOfName,
@@ -92,7 +91,7 @@ const Chat = () => {
 					<input
 						type="search"
 						className="w-full py-3 px-3 text-sm"
-						placeholder="Recherchez par utilisateur..."
+						placeholder="Search by user..."
 					/>
 					<CiSearch
 						className="absolute right-0 top-4 text-th-gray-c9"
@@ -162,10 +161,7 @@ const Chat = () => {
 															?.length -
 															1
 													]?.created_at
-												),
-												{
-													locale: fr,
-												}
+												)
 											)}
 										</p>
 									</div>
@@ -335,8 +331,7 @@ function CustomerMessageItem({ item, avatar, username }: MessageItemProps) {
 				</div>
 				<p className="text-th-gray-c9 text-sm">
 					{formatDistanceToNow(new Date(item.created_at), {
-						addSuffix: true,
-						locale: fr,
+						addSuffix: false,
 					})}
 				</p>
 			</div>
@@ -355,8 +350,7 @@ function ProviderMessageItem({ item, avatar, username }: MessageItemProps) {
 				</div>
 				<p className="text-th-gray-c9 text-sm">
 					{formatDistanceToNow(new Date(item.created_at), {
-						addSuffix: true,
-						locale: fr,
+						addSuffix: false,
 					})}
 				</p>
 			</div>

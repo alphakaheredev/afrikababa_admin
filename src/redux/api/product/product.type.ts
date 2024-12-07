@@ -34,6 +34,8 @@ export type Product = {
 	video_url: string;
 	video: string;
 	product_media: ProductMedia[];
+	color: string;
+	size: string;
 };
 
 export type ProductFormData = Pick<
@@ -46,6 +48,8 @@ export type ProductFormData = Pick<
 	| "category_id"
 	| "video"
 	| "status"
+	| "color"
+	| "size"
 > & {
 	main_image_url: File;
 	product_weight: number;

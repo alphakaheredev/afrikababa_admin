@@ -1,6 +1,6 @@
 import Table, { Column } from "@/components/ui/Table";
 import { ButtonDelete } from "@/components/ui/button";
-import { formatPriceToUsd, getUserName } from "@/lib/utils";
+import { formatPriceToUsd } from "@/lib/utils";
 import { useGetWithdrawalRequestsByShopQuery } from "@/redux/api/windraw/windraw.api";
 import { WindrawRequest } from "@/redux/api/windraw/windraw.type";
 import { useAppSelector } from "@/redux/hooks";
@@ -19,19 +19,19 @@ const WindrawRequestTable = () => {
 
 	const columns: Column<WindrawRequest>[] = [
 		{
-			header: "Identifiant",
+			header: "ID",
 			name: "id",
 			formatter: (value: string) => `#ID: ${value}`,
 		},
-		{
-			header: "Fournisseur",
-			name: "shop",
-			formatter: (_cell: string, row: WindrawRequest) =>
-				getUserName(row.shop.user),
-		},
-		{ header: "Montant", name: "amount" },
-		{ header: "Méthode de paiement", name: "payment_methode" },
-		{ header: "Statut", name: "status" },
+		// {
+		// 	header: "Supplier",
+		// 	name: "shop",
+		// 	formatter: (_cell: string, row: WindrawRequest) =>
+		// 		getUserName(row.shop.user),
+		// },
+		{ header: "Amount", name: "amount" },
+		{ header: "Payment method", name: "payment_methode" },
+		{ header: "Status", name: "status" },
 		{ header: "Action", name: "id", formatter: actionFormatter },
 	];
 
@@ -39,7 +39,7 @@ const WindrawRequestTable = () => {
 		<>
 			<div className="flex flex-col md:flex-row md:items-center gap-2 justify-between mb-8">
 				<h3 className="text-dark font-semibold">
-					Demandes de retrait (Votre solde est de :{" "}
+					Withdrawal requests (Your balance is:{" "}
 					{formatPriceToUsd(shop?.balance || 0)})
 				</h3>
 				<div className="flex items-center justify-end gap-3 lg:w-2/3">
@@ -53,11 +53,11 @@ const WindrawRequestTable = () => {
 						}
 						title={
 							Number(shop?.balance) === 0
-								? "Votre solde doit être supérieur à 0 pour effectuer une demande de retrait"
+								? "Your balance must be greater than 0 to request a withdrawal"
 								: ""
 						}
 					>
-						Effectuer une demande de retrait
+						Request a withdrawal
 					</ButtonAdd>
 				</div>
 			</div>

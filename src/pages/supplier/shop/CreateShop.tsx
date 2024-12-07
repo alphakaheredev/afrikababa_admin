@@ -23,7 +23,7 @@ const CreateShop = () => {
 	return (
 		<React.Fragment>
 			<h1 className="text-dark font-semibold text-xl">
-				Création de votre boutique
+				Create your shop
 			</h1>
 			<Divider margin="my-5" />
 			<ShopForm />
@@ -53,13 +53,13 @@ export function ShopForm({ item }: { item?: Shop }) {
 				<FormLeftCol>
 					<LabelWithDescription
 						label="Logo"
-						description="Téléchargez le logo de votre boutique par ici"
+						description="Upload your shop logo here"
 					/>
 				</FormLeftCol>
 				<FormRightCol className="">
 					<div>
 						<InputFile
-							label="Téléchargez votre image"
+							label="Upload your image"
 							id="logo"
 							onChange={handleLogoChange}
 							accept="image/*"
@@ -79,14 +79,14 @@ export function ShopForm({ item }: { item?: Shop }) {
 			<FormRow>
 				<FormLeftCol>
 					<LabelWithDescription
-						label="Image de couverture"
-						description="La dimension de l'image de couverture doit être de 1170 x 450 px"
+						label="Cover image"
+						description="The cover image dimension must be 1170 x 450 px"
 					/>
 				</FormLeftCol>
 				<FormRightCol className="">
 					<div>
 						<InputFile
-							label="Téléchargez votre image"
+							label="Upload your image"
 							id="cover"
 							onChange={handleCoverChange}
 							accept="image/*"
@@ -108,13 +108,13 @@ export function ShopForm({ item }: { item?: Shop }) {
 				<FormLeftCol>
 					<LabelWithDescription
 						label="Business license"
-						description="Téléchargez votre business license au format PDF ou image"
+						description="Upload your business license in PDF or image format"
 					/>
 				</FormLeftCol>
 				<FormRightCol className="">
 					<div>
 						<InputFile
-							label="Téléchargez votre business license"
+							label="Upload your business license"
 							id="business_license"
 							onChange={handleBusinessLicenseChange}
 							accept="application/pdf"
@@ -151,23 +151,23 @@ export function ShopForm({ item }: { item?: Shop }) {
 			<FormRow>
 				<FormLeftCol>
 					<LabelWithDescription
-						label="Informations de base"
-						description="Ajoutez ici quelques informations de base sur votre boutique"
+						label="Basic information"
+						description="Add here some basic information about your shop"
 					/>
 				</FormLeftCol>
 				<FormRightCol>
 					<div className="space-y-5">
 						<Input
-							label="Nom de la boutique"
-							id="nom_boutique"
+							label="Shop name"
+							id="company_name"
 							type="text"
 							required
 							{...register("company_name")}
 							error={errors.company_name?.message}
 						/>
 						<Input
-							label="Email de la boutique"
-							id="email_boutique"
+							label="Shop email"
+							id="email_address"
 							type="email"
 							required
 							{...register("email_address")}
@@ -180,8 +180,8 @@ export function ShopForm({ item }: { item?: Shop }) {
 							error={errors.description?.message}
 						/>
 						<Input
-							label="Numéro de registre de commerce"
-							id="enregistrement_boutique"
+							label="Business registration number"
+							id="company_registration"
 							type="text"
 							{...register("company_registration")}
 							error={
@@ -196,8 +196,8 @@ export function ShopForm({ item }: { item?: Shop }) {
 			<FormRow>
 				<FormLeftCol>
 					<LabelWithDescription
-						label="Adresse de la boutique"
-						description="Ajoutez l'adresse de votre boutique physique à partir d'ici"
+						label="Shop address"
+						description="Add your physical shop address here"
 					/>
 				</FormLeftCol>
 				<FormRightCol>
@@ -214,7 +214,7 @@ export function ShopForm({ item }: { item?: Shop }) {
 					}
 				/> */}
 						<Input
-							label="Ville"
+							label="City"
 							id="city"
 							type="text"
 							required
@@ -222,7 +222,7 @@ export function ShopForm({ item }: { item?: Shop }) {
 							error={errors.city?.message}
 						/>
 						<Input
-							label="Adresse"
+							label="Address"
 							id="address"
 							type="text"
 							required
@@ -233,50 +233,17 @@ export function ShopForm({ item }: { item?: Shop }) {
 				</FormRightCol>
 			</FormRow>
 			<Divider margin="my-5" />
-			{/* <FormRow>
-		<FormLeftCol>
-			<LabelWithDescription
-				label="Mode de paiement accepté"
-				description="Ajoutez vos informations de paiement à partir d'ici"
-			/>
-		</FormLeftCol>
-		<FormRightCol>
-			<RadioGroup className="flex gap-5 h-full m-0">
-				{[...Array(3)].map((_item, i) => {
-					return (
-						<label
-							key={i}
-							htmlFor={`mode_paiement_${i}`}
-							className="flex items-center justify-between border border-th-gray-c9 w-full px-2 py-1 rounded-lg cursor-pointer"
-						>
-							<img
-								src={hp}
-								alt="mode_paiement_logo"
-								className="w-5 object-contain"
-							/>
-							<RadioGroupItem
-								id={`mode_paiement_${i}`}
-								value={`mode_paiement_${i}`}
-								className="my-0"
-							/>
-						</label>
-					);
-				})}
-			</RadioGroup>
-		</FormRightCol>
-	</FormRow>
-	<Divider margin="my-5" /> */}
 			<FormRow>
 				<FormLeftCol>
 					<LabelWithDescription
-						label="Paramètres de la boutique"
-						description="Ajoutez les informations sur les paramètres de votre boutique à partir d'ici"
+						label="Shop settings"
+						description="Add your shop settings here"
 					/>
 				</FormLeftCol>
 				<FormRightCol>
 					<div className="space-y-5">
 						<Input
-							label="Site web"
+							label="Website"
 							id="website"
 							type="url"
 							{...register("company_website")}
@@ -285,9 +252,7 @@ export function ShopForm({ item }: { item?: Shop }) {
 							}
 						/>
 						<div>
-							<Label required>
-								Numéro de contact
-							</Label>
+							<Label required>Contact number</Label>
 							<PhoneInput
 								country={"cn"}
 								value={phone}
@@ -309,7 +274,7 @@ export function ShopForm({ item }: { item?: Shop }) {
 			<div className="flex justify-end pt-10">
 				<ButtonSubmit
 					className="ml-auto w-min"
-					label="Enregistrez"
+					label="Save"
 					isLoading={isLoading}
 				/>
 			</div>

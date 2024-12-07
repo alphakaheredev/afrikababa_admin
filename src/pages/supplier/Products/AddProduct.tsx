@@ -22,7 +22,7 @@ const AddProduct = () => {
 	return (
 		<React.Fragment>
 			<h1 className="text-dark font-semibold text-xl">
-				Ajouter produit
+				Add a product
 			</h1>
 			<Divider margin="my-5" />
 			<ProductForm />
@@ -56,14 +56,14 @@ export function ProductForm({ item }: { item?: Product }) {
 			<FormRow>
 				<FormLeftCol>
 					<LabelWithDescription
-						label="Image principale"
-						description="Téléchargez ici l'image vedette de votre produit. La taille de l'image ne doit pas dépasser 2 Mo."
+						label="Main image"
+						description="Upload here the main image of your product. The image size should not exceed 2 MB."
 					/>
 				</FormLeftCol>
 				<FormRightCol>
 					<div>
 						<InputFile
-							label="Ajouter une image"
+							label="Upload main image"
 							id="main_image"
 							onChange={handleChangeMainImage}
 							accept="image/*"
@@ -82,14 +82,14 @@ export function ProductForm({ item }: { item?: Product }) {
 			<FormRow>
 				<FormLeftCol>
 					<LabelWithDescription
-						label="Galerie"
-						description="Téléchargez ici les images supplémentaires de votre produit"
+						label="Gallery"
+						description="Upload here the additional images of your product"
 					/>
 				</FormLeftCol>
 				<FormRightCol>
 					<div>
 						<InputFile
-							label="Ajouter les images"
+							label="Upload images"
 							id="cover"
 							onChange={handleChangeImages}
 							accept="image/*"
@@ -132,14 +132,14 @@ export function ProductForm({ item }: { item?: Product }) {
 			<FormRow>
 				<FormLeftCol>
 					<LabelWithDescription
-						label="Vidéo"
-						description="Ajouter un lien vidéo"
+						label="Video"
+						description="Add here the video link of your product"
 					/>
 				</FormLeftCol>
 				<FormRightCol>
 					<div className="space-y-5">
 						<Input
-							label="Ajouter un lien vidéo"
+							label="Add video link"
 							id="video"
 							type="url"
 							{...register("video")}
@@ -152,18 +152,18 @@ export function ProductForm({ item }: { item?: Product }) {
 			<FormRow>
 				<FormLeftCol>
 					<LabelWithDescription
-						label="Catégorie"
-						description="Sélectionnez la catégorie du produit"
+						label="Category"
+						description="Select the category of your product"
 					/>
 				</FormLeftCol>
 				<FormRightCol>
 					<div className="space-y-5">
 						<Select
-							label="Catégorie"
+							label="Category"
 							id="category"
 							options={categories}
 							required
-							placeholder="Sélectionner une catégorie"
+							placeholder="Select a category"
 							onChange={handleChangeCategory}
 							error={errors.category_id?.message}
 							value={item?.category_id}
@@ -176,25 +176,19 @@ export function ProductForm({ item }: { item?: Product }) {
 				<FormLeftCol>
 					<LabelWithDescription
 						label="Description"
-						description="Modifiez la description de votre produit et les informations nécessaires à partir d'ici"
+						description="Modify the description of your product and the necessary information from here"
 					/>
 				</FormLeftCol>
 				<FormRightCol>
 					<div className="space-y-5">
 						<Input
-							label="Nom"
-							id="nom"
+							label="Name"
+							id="name"
 							type="text"
 							required
 							{...register("name")}
 							error={errors.name?.message}
 						/>
-						{/* <Input
-							label="Unité"
-							id="nom"
-							type="text"
-							required
-						/> */}
 						<div>
 							<Label>Description</Label>
 							<ReactQuill
@@ -221,7 +215,7 @@ export function ProductForm({ item }: { item?: Product }) {
 									htmlFor="publish"
 									className="text-th-gray text-sm cursor-pointer"
 								>
-									Publié
+									Published
 								</label>
 							</div>
 							<div className="space-x-2">
@@ -238,7 +232,7 @@ export function ProductForm({ item }: { item?: Product }) {
 									htmlFor="brouillon"
 									className="text-th-gray text-sm cursor-pointer"
 								>
-									Brouillon
+									Draft
 								</label>
 							</div>
 						</RadioGroup>
@@ -249,14 +243,14 @@ export function ProductForm({ item }: { item?: Product }) {
 			<FormRow>
 				<FormLeftCol>
 					<LabelWithDescription
-						label="Informations supplémentaires du produit"
-						description="Modifiez les informations supplémentaires du produit"
+						label="Additional product information"
+						description="Modify the additional information of your product"
 					/>
 				</FormLeftCol>
 				<FormRightCol>
 					<div className="space-y-5">
 						<Input
-							label="Prix (USD)"
+							label="Price (USD)"
 							id="price"
 							type="text"
 							required
@@ -265,33 +259,46 @@ export function ProductForm({ item }: { item?: Product }) {
 						/>
 
 						<Input
-							label="Largeur"
-							id="largeur"
+							label="Width"
+							id="width"
 							type="number"
 							{...register("product_width")}
 							error={errors.product_width?.message}
 						/>
 						<Input
-							label="Longueur"
-							id="longueur"
+							label="Length"
+							id="length"
 							type="number"
 							{...register("product_length")}
 							error={errors.product_length?.message}
 						/>
 						<Input
-							label="Hauteur"
-							id="hauteur"
+							label="Height"
+							id="height"
 							type="number"
 							{...register("product_height")}
 							error={errors.product_height?.message}
 						/>
 						<Input
-							label="Poids"
-							id="poids"
+							label="Weight"
+							id="weight"
 							type="number"
-							required
 							{...register("product_weight")}
 							error={errors.product_weight?.message}
+						/>
+						<Input
+							label="Color"
+							id="color"
+							type="text"
+							{...register("color")}
+							error={errors.color?.message}
+						/>
+						<Input
+							label="Size"
+							id="size"
+							type="text"
+							{...register("size")}
+							error={errors.size?.message}
 						/>
 					</div>
 				</FormRightCol>
